@@ -1,0 +1,52 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ALLOWED_HOSTS	responsibility/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:28
+AUTH_PASSWORD_VALIDATORS	responsibility/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:87
+AppConfig	experiment/apps.py	/^from django.apps import AppConfig$/;"	kind:namespace	line:1
+BASE_DIR	responsibility/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
+DATABASES	responsibility/settings.py	/^DATABASES = {$/;"	kind:variable	line:76
+DEBUG	responsibility/settings.py	/^DEBUG = True$/;"	kind:variable	line:26
+ExperimentConfig	experiment/apps.py	/^class ExperimentConfig(AppConfig):$/;"	kind:class	line:4
+INSTALLED_APPS	responsibility/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:33
+LANGUAGE_CODE	responsibility/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:106
+MIDDLEWARE	responsibility/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:42
+ROOT_URLCONF	responsibility/settings.py	/^ROOT_URLCONF = 'responsibility.urls'$/;"	kind:variable	line:52
+STATIC_URL	responsibility/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:120
+TEMPLATES	responsibility/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:54
+TIME_ZONE	responsibility/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:108
+TestCase	experiment/tests.py	/^from django.test import TestCase$/;"	kind:namespace	line:1
+USE_I18N	responsibility/settings.py	/^USE_I18N = True$/;"	kind:variable	line:110
+USE_L10N	responsibility/settings.py	/^USE_L10N = True$/;"	kind:variable	line:112
+USE_TZ	responsibility/settings.py	/^USE_TZ = True$/;"	kind:variable	line:114
+WSGI_APPLICATION	responsibility/settings.py	/^WSGI_APPLICATION = 'responsibility.wsgi.application'$/;"	kind:variable	line:70
+__init__.py	experiment/__init__.py	1;"	kind:file	line:1
+__init__.py	experiment/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	responsibility/__init__.py	1;"	kind:file	line:1
+admin	experiment/admin.py	/^from django.contrib import admin$/;"	kind:namespace	line:1
+admin	responsibility/urls.py	/^from django.contrib import admin$/;"	kind:namespace	line:17
+admin.py	experiment/admin.py	1;"	kind:file	line:1
+application	responsibility/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+apps.py	experiment/apps.py	1;"	kind:file	line:1
+django	manage.py	/^            import django$/;"	kind:namespace	line:14
+execute_from_command_line	manage.py	/^        from django.core.management import execute_from_command_line$/;"	kind:namespace	line:8
+get_wsgi_application	responsibility/wsgi.py	/^from django.core.wsgi import get_wsgi_application$/;"	kind:namespace	line:12
+manage.py	manage.py	1;"	kind:file	line:1
+models	experiment/models.py	/^from django.db import models$/;"	kind:namespace	line:1
+models.py	experiment/models.py	1;"	kind:file	line:1
+name	experiment/apps.py	/^    name = 'experiment'$/;"	kind:variable	line:5
+os	manage.py	/^import os$/;"	kind:namespace	line:2
+os	responsibility/settings.py	/^import os$/;"	kind:namespace	line:13
+os	responsibility/wsgi.py	/^import os$/;"	kind:namespace	line:10
+render	experiment/views.py	/^from django.shortcuts import render$/;"	kind:namespace	line:1
+settings.py	responsibility/settings.py	1;"	kind:file	line:1
+sys	manage.py	/^import sys$/;"	kind:namespace	line:3
+tests.py	experiment/tests.py	1;"	kind:file	line:1
+url	responsibility/urls.py	/^from django.conf.urls import url$/;"	kind:namespace	line:16
+urlpatterns	responsibility/urls.py	/^urlpatterns = [$/;"	kind:variable	line:19
+urls.py	responsibility/urls.py	1;"	kind:file	line:1
+views.py	experiment/views.py	1;"	kind:file	line:1
+wsgi.py	responsibility/wsgi.py	1;"	kind:file	line:1
