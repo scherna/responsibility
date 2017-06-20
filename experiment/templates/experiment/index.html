@@ -1,0 +1,10 @@
+{% load static %}
+
+{% block content %}
+    <h2>Experiment Conditions</h2>
+    <ul>
+        {% for experiment_condition in object_list %}
+            <li><a href="{% url 'experiment:experiment' experiment_condition.id %}">{{ experiment_condition.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

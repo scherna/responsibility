@@ -28,6 +28,7 @@ class ExperimentCondition(models.Model):
     alert_duration = models.FloatField('Alert Duration (seconds)', default=5.0)
     alert_delay = models.FloatField('Alert Delay (seconds)', default=0.0)
     trial_duration = models.FloatField('Total Trial Duration (seconds)', default=5.0)
+    trial_delay = models.FloatField('Delay Between Trials (seconds)', default=3.0)
     display_last_points = models.BooleanField('Display Points from Last Trial', default=True)
     display_total_points = models.BooleanField('Display Cumulative Points', default=True)
     display_num_trial = models.BooleanField('Display Number of Trial in Block', default=True)

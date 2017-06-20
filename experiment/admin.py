@@ -7,7 +7,7 @@ class ExperimentConditionAdmin(admin.ModelAdmin):
         (None ,{'fields':['name', 'num_trials']}),
         ('System Parameters' ,{'fields':['p_signal','d_user',('d_alert','beta_alert'),('mean','sd')]}),
         ('Payoff Matrix' ,{'fields':[('v_hit_s','v_hit_n','v_miss_s','v_miss_n','v_cr_s','v_cr_n','v_fa_s','v_fa_n')], 'classes':['matrix']}),
-        ('Display Parameters' ,{'fields':['stimulus',('alert_signal_color','alert_noise_color'),('stimulus_duration','stimulus_delay'),('alert_duration','alert_delay'),'trial_duration',('display_last_points','display_total_points','display_num_trial')]}),
+        ('Display Parameters' ,{'fields':['stimulus',('alert_signal_color','alert_noise_color'),('stimulus_duration','stimulus_delay'),('alert_duration','alert_delay'),('trial_duration','trial_delay'),('display_last_points','display_total_points','display_num_trial')]}),
     ]
     class Media:
         css = {

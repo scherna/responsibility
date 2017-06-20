@@ -1,0 +1,13 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'experiment/experiment.css' %}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var data = "{{data|safe|escapejs}}";
+</script>
+<script type="text/javascript" src="{% static 'experiment/experiment.js' %}"></script>
+{% block content %}
+    <h2>{{object.name}}</h2>
+    <div class="trial-num"></div>
+    <div class="alert"></div>
+    <div class="stimulus-number"></div>
+{% endblock %}
