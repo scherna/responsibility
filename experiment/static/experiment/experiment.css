@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+}
+
+.stimulus-number {
+    display: none;
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.stimulus-alert {
+    display: none;
+    width: 25%;
+    padding-top: 25%;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.trial-num {
+    font-size: 16px;
+    display: none;
+}
+
+.score {
+    font-size: 16px;
+    display: none;
+}
+
+.button-accept {
+    display: none;
+}
+
+.button-reject {
+    display: none;
+}

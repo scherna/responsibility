@@ -1,13 +1,36 @@
 {% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{% static 'experiment/experiment.css' %}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var data = "{{data|safe|escapejs}}";
 </script>
 <script type="text/javascript" src="{% static 'experiment/experiment.js' %}"></script>
 {% block content %}
-    <h2>{{object.name}}</h2>
-    <div class="trial-num"></div>
-    <div class="alert"></div>
-    <div class="stimulus-number"></div>
+    <body>
+        <div class="container-fluid">
+            <div class="page-header"><h1>{{object.name}}</h1></div>
+            <button type="button" class="button-begin btn btn-primary">Begin Experiment</button>
+            <div class="row">
+                <div class="col-xs-4 col-md-1 col-md-offset-4">
+                    <div class="trial-num">Trial#: <span></span></div>
+                </div>
+                <div class="col-xs-4 col-md-2">
+                    <div class="stimulus-alert center-block"></div>
+                </div>
+                <div class="col-xs-4 col-md-1">
+                    <div class="score">Score: <span></span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="stimulus-number"></div>
+            </div>
+            <div class="row">
+                <button type="button" class="button-accept btn btn-primary">Accept</button>
+                <button type="button" class="button-reject btn btn-primary">Reject</button>
+            </div>
+        </div>
+    </body>
 {% endblock %}
