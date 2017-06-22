@@ -2,10 +2,26 @@ body {
     text-align: center;
 }
 
+.page-header {
+    margin-top: 20px;
+}
+
 .stimulus-number {
     display: none;
-    margin-top: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     font-size: 24px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.stimulus-rectangle {
+    display: none;
+    margin-top: 20px;
+    padding-top: 100%;
+    border: 1px solid black;
+    border-radius: 3px;
 }
 
 .stimulus-alert {
@@ -13,7 +29,7 @@ body {
     width: 25%;
     padding-top: 25%;
     border: 1px solid black;
-    border-radius: 2px;
+    border-radius: 25%;
 }
 
 .trial-num {
@@ -26,10 +42,17 @@ body {
     display: none;
 }
 
+.outcome {
+    font-size:16px;
+    display:none;
+}
+
 .button-accept {
     display: none;
+    margin-top: 30px;
 }
 
 .button-reject {
     display: none;
+    margin-top: 30px;
 }

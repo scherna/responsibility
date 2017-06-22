@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import timedelta
+from colorfield.fields import ColorField
 
 class ExperimentCondition(models.Model):
     name = models.CharField('Name of Experiment Condition', max_length=200)
@@ -20,9 +21,8 @@ class ExperimentCondition(models.Model):
     sd = models.FloatField('Standard Deviation', default=0.5)
     stimulus_choices = (('num', 'Numbers'), ('rect', 'Rectangles'))
     stimulus = models.CharField('Choice of Stimulus', max_length=200, choices=stimulus_choices, default='num')
-    alert_color_choices = (('blank','No color'), ('red', 'Red'), ('green', 'Green'))
-    alert_signal_color = models.CharField('Alert Color for Signal', max_length=200, choices=alert_color_choices, default='red')
-    alert_noise_color = models.CharField('Alert Color for Noise', max_length=200, choices=alert_color_choices, default='green')
+    alert_signal_color = ColorField('Alert Color for Signal', default="#f44141")
+    alert_noise_color = ColorField('Alert Color for Noise', default="#4ef442")
     stimulus_duration = models.FloatField('Stimulus Duration (seconds)', default=5.0)
     stimulus_delay = models.FloatField('Stimulus Delay (seconds)', default=0.0)
     alert_duration = models.FloatField('Alert Duration (seconds)', default=5.0)
@@ -31,4 +31,4 @@ class ExperimentCondition(models.Model):
     trial_delay = models.FloatField('Delay Between Trials (seconds)', default=3.0)
     display_last_points = models.BooleanField('Display Points from Last Trial', default=True)
     display_total_points = models.BooleanField('Display Cumulative Points', default=True)
-    display_num_trial = models.BooleanField('Display Number of Trial in Block', default=True)
+    display_trial_num = models.BooleanField('Display Number of Trial in Block', default=True)

@@ -4,49 +4,132 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+0001_initial.py	experiment/migrations/0001_initial.py	1;"	kind:file	line:1
+0002_experimentcondition_trial_delay.py	experiment/migrations/0002_experimentcondition_trial_delay.py	1;"	kind:file	line:1
 ALLOWED_HOSTS	responsibility/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:28
-AUTH_PASSWORD_VALIDATORS	responsibility/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:87
+AUTH_PASSWORD_VALIDATORS	responsibility/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:88
 AppConfig	experiment/apps.py	/^from django.apps import AppConfig$/;"	kind:namespace	line:1
 BASE_DIR	responsibility/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
-DATABASES	responsibility/settings.py	/^DATABASES = {$/;"	kind:variable	line:76
+DATABASES	responsibility/settings.py	/^DATABASES = {$/;"	kind:variable	line:77
 DEBUG	responsibility/settings.py	/^DEBUG = True$/;"	kind:variable	line:26
+ExperimentAdminSite	experiment/admin.py	/^class ExperimentAdminSite(admin.AdminSite):$/;"	kind:class	line:18
+ExperimentCondition	experiment/admin.py	/^from .models import ExperimentCondition$/;"	kind:namespace	line:2
+ExperimentCondition	experiment/models.py	/^class ExperimentCondition(models.Model):$/;"	kind:class	line:4
+ExperimentCondition	experiment/views.py	/^from .models import ExperimentCondition$/;"	kind:namespace	line:5
+ExperimentConditionAdmin	experiment/admin.py	/^class ExperimentConditionAdmin(admin.ModelAdmin):$/;"	kind:class	line:5
 ExperimentConfig	experiment/apps.py	/^class ExperimentConfig(AppConfig):$/;"	kind:class	line:4
+ExperimentView	experiment/views.py	/^class ExperimentView(generic.DetailView):$/;"	kind:class	line:14
+HttpResponse	experiment/views.py	/^from django.http import HttpResponse$/;"	kind:namespace	line:2
 INSTALLED_APPS	responsibility/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:33
-LANGUAGE_CODE	responsibility/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:106
-MIDDLEWARE	responsibility/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:42
-ROOT_URLCONF	responsibility/settings.py	/^ROOT_URLCONF = 'responsibility.urls'$/;"	kind:variable	line:52
-STATIC_URL	responsibility/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:120
-TEMPLATES	responsibility/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:54
-TIME_ZONE	responsibility/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:108
+IndexView	experiment/views.py	/^class IndexView(generic.ListView):$/;"	kind:class	line:10
+LANGUAGE_CODE	responsibility/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:107
+MIDDLEWARE	responsibility/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:43
+Media	experiment/admin.py	/^    class Media:$/;"	kind:class	line:12
+Migration	experiment/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	experiment/migrations/0002_experimentcondition_trial_delay.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+ROOT_URLCONF	responsibility/settings.py	/^ROOT_URLCONF = 'responsibility.urls'$/;"	kind:variable	line:53
+STATIC_URL	responsibility/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:121
+TEMPLATES	responsibility/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:55
+TIME_ZONE	responsibility/settings.py	/^TIME_ZONE = 'Asia\/Jerusalem'$/;"	kind:variable	line:109
 TestCase	experiment/tests.py	/^from django.test import TestCase$/;"	kind:namespace	line:1
-USE_I18N	responsibility/settings.py	/^USE_I18N = True$/;"	kind:variable	line:110
-USE_L10N	responsibility/settings.py	/^USE_L10N = True$/;"	kind:variable	line:112
-USE_TZ	responsibility/settings.py	/^USE_TZ = True$/;"	kind:variable	line:114
-WSGI_APPLICATION	responsibility/settings.py	/^WSGI_APPLICATION = 'responsibility.wsgi.application'$/;"	kind:variable	line:70
+USE_I18N	responsibility/settings.py	/^USE_I18N = True$/;"	kind:variable	line:111
+USE_L10N	responsibility/settings.py	/^USE_L10N = True$/;"	kind:variable	line:113
+USE_TZ	responsibility/settings.py	/^USE_TZ = True$/;"	kind:variable	line:115
+WSGI_APPLICATION	responsibility/settings.py	/^WSGI_APPLICATION = 'responsibility.wsgi.application'$/;"	kind:variable	line:71
 __init__.py	experiment/__init__.py	1;"	kind:file	line:1
 __init__.py	experiment/migrations/__init__.py	1;"	kind:file	line:1
 __init__.py	responsibility/__init__.py	1;"	kind:file	line:1
 admin	experiment/admin.py	/^from django.contrib import admin$/;"	kind:namespace	line:1
 admin	responsibility/urls.py	/^from django.contrib import admin$/;"	kind:namespace	line:17
 admin.py	experiment/admin.py	1;"	kind:file	line:1
+admin_site	experiment/admin.py	/^admin_site = ExperimentAdminSite()$/;"	kind:variable	line:22
+admin_site	responsibility/urls.py	/^from experiment.admin import admin_site$/;"	kind:namespace	line:18
+alert_color_choices	experiment/models.py	/^    alert_color_choices = (('blank','No color'), ('red', 'Red'), ('green', 'Green'))$/;"	kind:variable	line:23
+alert_delay	experiment/models.py	/^    alert_delay = models.FloatField('Alert Delay (seconds)', default=0.0)$/;"	kind:variable	line:29
+alert_duration	experiment/models.py	/^    alert_duration = models.FloatField('Alert Duration (seconds)', default=5.0)$/;"	kind:variable	line:28
+alert_noise_color	experiment/models.py	/^    alert_noise_color = models.CharField('Alert Color for Noise', max_length=200, choices=alert_color_choices, default='green')$/;"	kind:variable	line:25
+alert_signal_color	experiment/models.py	/^    alert_signal_color = models.CharField('Alert Color for Signal', max_length=200, choices=alert_color_choices, default='red')$/;"	kind:variable	line:24
+app_name	experiment/urls.py	/^app_name = 'experiment'$/;"	kind:variable	line:5
 application	responsibility/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
 apps.py	experiment/apps.py	1;"	kind:file	line:1
+beta_alert	experiment/models.py	/^    beta_alert = models.FloatField("Alert Criterion (beta)", default=0.5)$/;"	kind:variable	line:18
+css	experiment/admin.py	/^        css = {$/;"	kind:variable	line:13
+d_alert	experiment/models.py	/^    d_alert = models.FloatField("Alert Sensitivity (d')", default=1.0)$/;"	kind:variable	line:17
+d_user	experiment/models.py	/^    d_user = models.FloatField("User Sensitivity (d')", default=1.0)$/;"	kind:variable	line:16
+dependencies	experiment/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:12
+dependencies	experiment/migrations/0002_experimentcondition_trial_delay.py	/^    dependencies = [$/;"	kind:variable	line:10
+display_last_points	experiment/models.py	/^    display_last_points = models.BooleanField('Display Points from Last Trial', default=True)$/;"	kind:variable	line:32
+display_num_trial	experiment/models.py	/^    display_num_trial = models.BooleanField('Display Number of Trial in Block', default=True)$/;"	kind:variable	line:34
+display_total_points	experiment/models.py	/^    display_total_points = models.BooleanField('Display Cumulative Points', default=True)$/;"	kind:variable	line:33
 django	manage.py	/^            import django$/;"	kind:namespace	line:14
 execute_from_command_line	manage.py	/^        from django.core.management import execute_from_command_line$/;"	kind:namespace	line:8
+field	experiment/migrations/0002_experimentcondition_trial_delay.py	/^            field=models.FloatField(default=3.0, verbose_name='Delay Between Trials (seconds)'),$/;"	kind:variable	line:18
+fields	experiment/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:18
+fieldsets	experiment/admin.py	/^    fieldsets = [$/;"	kind:variable	line:6
+generic	experiment/views.py	/^from django.views import generic$/;"	kind:namespace	line:3
+get_context_data	experiment/views.py	/^    def get_context_data(self, **kwargs):$/;"	kind:member	line:18
 get_wsgi_application	responsibility/wsgi.py	/^from django.core.wsgi import get_wsgi_application$/;"	kind:namespace	line:12
+include	responsibility/urls.py	/^from django.conf.urls import include, url$/;"	kind:namespace	line:16
+initial	experiment/migrations/0001_initial.py	/^    initial = True$/;"	kind:variable	line:10
+js	experiment/admin.py	/^        js = ("experiment\/experiment_condition_admin.js",)$/;"	kind:variable	line:16
+json	experiment/views.py	/^import json$/;"	kind:namespace	line:8
 manage.py	manage.py	1;"	kind:file	line:1
+math	experiment/views.py	/^import math$/;"	kind:namespace	line:7
+mean	experiment/models.py	/^    mean = models.FloatField('Mean', default=5.0)$/;"	kind:variable	line:19
+migrations	experiment/migrations/0001_initial.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	experiment/migrations/0002_experimentcondition_trial_delay.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+model	experiment/views.py	/^    model = ExperimentCondition$/;"	kind:variable	line:12
+model	experiment/views.py	/^    model = ExperimentCondition$/;"	kind:variable	line:16
+model_name	experiment/migrations/0002_experimentcondition_trial_delay.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:16
+models	experiment/migrations/0001_initial.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	experiment/migrations/0002_experimentcondition_trial_delay.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
 models	experiment/models.py	/^from django.db import models$/;"	kind:namespace	line:1
 models.py	experiment/models.py	1;"	kind:file	line:1
 name	experiment/apps.py	/^    name = 'experiment'$/;"	kind:variable	line:5
+name	experiment/migrations/0001_initial.py	/^            name='ExperimentCondition',$/;"	kind:variable	line:17
+name	experiment/migrations/0002_experimentcondition_trial_delay.py	/^            name='trial_delay',$/;"	kind:variable	line:17
+name	experiment/models.py	/^    name = models.CharField('Name of Experiment Condition', max_length=200)$/;"	kind:variable	line:5
+num_trials	experiment/models.py	/^    num_trials = models.IntegerField('# Trials', default=5)$/;"	kind:variable	line:6
+operations	experiment/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:15
+operations	experiment/migrations/0002_experimentcondition_trial_delay.py	/^    operations = [$/;"	kind:variable	line:14
 os	manage.py	/^import os$/;"	kind:namespace	line:2
 os	responsibility/settings.py	/^import os$/;"	kind:namespace	line:13
 os	responsibility/wsgi.py	/^import os$/;"	kind:namespace	line:10
+p_signal	experiment/models.py	/^    p_signal = models.FloatField('Probability of Signal', default=0.5)$/;"	kind:variable	line:7
+random	experiment/views.py	/^import random$/;"	kind:namespace	line:6
 render	experiment/views.py	/^from django.shortcuts import render$/;"	kind:namespace	line:1
+sd	experiment/models.py	/^    sd = models.FloatField('Standard Deviation', default=0.5)$/;"	kind:variable	line:20
+serializers	experiment/views.py	/^from django.core import serializers$/;"	kind:namespace	line:4
 settings.py	responsibility/settings.py	1;"	kind:file	line:1
+site_header	experiment/admin.py	/^    site_header = 'Experiment Administration'$/;"	kind:variable	line:19
+site_title	experiment/admin.py	/^    site_title = 'Responsibility Experiment Administration'$/;"	kind:variable	line:20
+stimulus	experiment/models.py	/^    stimulus = models.CharField('Choice of Stimulus', max_length=200, choices=stimulus_choices, default='num')$/;"	kind:variable	line:22
+stimulus_choices	experiment/models.py	/^    stimulus_choices = (('num', 'Numbers'), ('rect', 'Rectangles'))$/;"	kind:variable	line:21
+stimulus_delay	experiment/models.py	/^    stimulus_delay = models.FloatField('Stimulus Delay (seconds)', default=0.0)$/;"	kind:variable	line:27
+stimulus_duration	experiment/models.py	/^    stimulus_duration = models.FloatField('Stimulus Duration (seconds)', default=5.0)$/;"	kind:variable	line:26
 sys	manage.py	/^import sys$/;"	kind:namespace	line:3
+template_name	experiment/views.py	/^    template_name = "experiment\/experiment.html"$/;"	kind:variable	line:15
+template_name	experiment/views.py	/^    template_name = "experiment\/index.html"$/;"	kind:variable	line:11
 tests.py	experiment/tests.py	1;"	kind:file	line:1
-url	responsibility/urls.py	/^from django.conf.urls import url$/;"	kind:namespace	line:16
-urlpatterns	responsibility/urls.py	/^urlpatterns = [$/;"	kind:variable	line:19
+timedelta	experiment/models.py	/^from datetime import timedelta$/;"	kind:namespace	line:2
+trial_delay	experiment/models.py	/^    trial_delay = models.FloatField('Delay Between Trials (seconds)', default=3.0)$/;"	kind:variable	line:31
+trial_duration	experiment/models.py	/^    trial_duration = models.FloatField('Total Trial Duration (seconds)', default=5.0)$/;"	kind:variable	line:30
+unicode_literals	experiment/migrations/0001_initial.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	experiment/migrations/0002_experimentcondition_trial_delay.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+url	experiment/urls.py	/^from django.conf.urls import url$/;"	kind:namespace	line:1
+url	responsibility/urls.py	/^from django.conf.urls import include, url$/;"	kind:namespace	line:16
+urlpatterns	experiment/urls.py	/^urlpatterns = [$/;"	kind:variable	line:6
+urlpatterns	responsibility/urls.py	/^urlpatterns = [$/;"	kind:variable	line:20
+urls.py	experiment/urls.py	1;"	kind:file	line:1
 urls.py	responsibility/urls.py	1;"	kind:file	line:1
+v_cr_n	experiment/models.py	/^    v_cr_n = models.FloatField(default=0.0)$/;"	kind:variable	line:13
+v_cr_s	experiment/models.py	/^    v_cr_s = models.FloatField(default=0.0)$/;"	kind:variable	line:12
+v_fa_n	experiment/models.py	/^    v_fa_n = models.FloatField(default=0.0)$/;"	kind:variable	line:15
+v_fa_s	experiment/models.py	/^    v_fa_s = models.FloatField(default=0.0)$/;"	kind:variable	line:14
+v_hit_n	experiment/models.py	/^    v_hit_n = models.FloatField(default=1.5)$/;"	kind:variable	line:9
+v_hit_s	experiment/models.py	/^    v_hit_s = models.FloatField(default=1.0)$/;"	kind:variable	line:8
+v_miss_n	experiment/models.py	/^    v_miss_n = models.FloatField(default=-1.0)$/;"	kind:variable	line:11
+v_miss_s	experiment/models.py	/^    v_miss_s = models.FloatField(default=-1.5)$/;"	kind:variable	line:10
+views	experiment/urls.py	/^from . import views$/;"	kind:namespace	line:3
 views.py	experiment/views.py	1;"	kind:file	line:1
 wsgi.py	responsibility/wsgi.py	1;"	kind:file	line:1

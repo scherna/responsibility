@@ -15,59 +15,71 @@ $(document).ready(function() {
         $(".trial-num span").text(trial_num + 1);
         $(".score").show();
         $(".score span").text(score);
+        $(".outcome").show();
         $(".stimulus-alert").show();
         changeAlertColor(alerts[trial_num]);
         $(".stimulus-number").show().text(stimuli[trial_num]);
+        $(".stimulus-rectangle").show()
         $(".button-accept").show();
         $(".button-reject").show();
+        $(".intro-text").hide();
         $(".button-begin").hide();
     });
     $(".button-accept").click(function() {
-        if (trial_num < obj.num_trials) {
-            responses.push(false);
-            var outcome = outcomeMap.false[signals[trial_num]][alerts[trial_num]];
-            outcomes.push(outcome);
-            score += obj["v_" + outcome];
-            $(".score span").text(score);
-            if (trial_num < obj.num_trials - 1) {
-                trial_num++;
-                $(".trial-num span").text(trial_num + 1);
-                changeAlertColor(alerts[trial_num]);
-                $(".stimulus-number").text(stimuli[trial_num]);
-            }
-            else {
-                trial_num++;
-                alert("Congratulations! You finished the experiment.");
-            }
-        }
+        buttonHandler(false);
     });
     $(".button-reject").click(function() {
-        if (trial_num < obj.num_trials) {
-            responses.push(true);
-            var outcome = outcomeMap.true[signals[trial_num]][alerts[trial_num]];
-            outcomes.push(outcome);
-            score += obj["v_" + outcome];
-            $(".score span").text(score);
-            if (trial_num < obj.num_trials - 1) {
-                trial_num++;
-                $(".trial-num span").text(trial_num + 1);
-                changeAlertColor(alerts[trial_num]);
-                $(".stimulus-number").text(stimuli[trial_num]);
-            }
-            else {
-                trial_num++;
-                alert("Congratulations! You finished the experiment.");
-            }
-        }
+        buttonHandler(true);
     });
 });
 
 function changeAlertColor(b) {
     if (b === true) {
-        $(".stimulus-alert").css("background-color", "red");
+        $(".stimulus-alert").css("background-color", obj.alert_signal_color);
     }
     else {
-        $(".stimulus-alert").css("background-color", "green");
+        $(".stimulus-alert").css("background-color", obj.alert_noise_color);
+    }
+}
+
+function changeOutcomeText(o) {
+    if ($(".outcome").hasClass("invisible")) {
+        $(".outcome").removeClass("invisible");
+    }
+    switch (o.slice(0, -2)) {
+        case "hit":
+            $(".outcome").text("Hit!");
+            break;
+        case "fa":
+            $(".outcome").text("False alarm...");
+            break;
+        case "miss":
+            $(".outcome").text("Miss...");
+            break;
+        case "cr":
+            $(".outcome").text("Correct rejection!");
+            break;
+    }
+}
+
+function buttonHandler(b) {
+    if (trial_num < obj.num_trials) {
+        responses.push(b);
+        var outcome = outcomeMap[b][signals[trial_num]][alerts[trial_num]];
+        outcomes.push(outcome);
+        changeOutcomeText(outcome);
+        score += obj["v_" + outcome];
+        $(".score span").text(score);
+        if (trial_num < obj.num_trials - 1) {
+            trial_num++;
+            $(".trial-num span").text(trial_num + 1);
+            changeAlertColor(alerts[trial_num]);
+            $(".stimulus-number").text(stimuli[trial_num]);
+        }
+        else {
+            trial_num++;
+            alert("Congratulations! You finished the experiment.");
+        }
     }
 }
 
