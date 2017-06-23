@@ -18,12 +18,15 @@ class ExperimentView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(ExperimentView, self).get_context_data(**kwargs)
         obj = context['object']
+        user_mean_s = obj.mean + 0.5 * obj.d_user * obj.sd
+        user_mean_n = obj.mean - 0.5 * obj.d_user * obj.sd
+        alert_mean_s = obj.mean + 0.5 * obj.d_alert * obj.sd
+        alert_mean_n = obj.mean - 0.5 * obj.d_alert * obj.sd
         signals = [random.random() < obj.p_signal for i in range(obj.num_trials)]
-        normal = [random.gauss(obj.mean, obj.sd) for i in range(obj.num_trials)]
-        alert_distribution = [normal[i] + 0.5 * obj.d_alert * obj.sd if s else normal[i] - 0.5 * obj.d_alert * obj.sd for (i,s) in enumerate(signals)]
+        alert_distribution = [random.gauss(alert_mean_s, obj.sd) if s else random.gauss(alert_mean_n, obj.sd) for (i,s) in enumerate(signals)]
         c = (math.log(obj.beta_alert) * obj.sd / obj.d_alert) + (obj.sd * obj.d_alert / 2)
-        stimuli = [round((normal[i] + 0.5 * obj.d_user * obj.sd),6) if s else round((normal[i] - 0.5 * obj.d_user * obj.sd),6) for (i,s) in enumerate(signals)]
-        alerts = [s > (obj.mean + obj.sd * c) for s in alert_distribution]
+        stimuli = [round(random.gauss(user_mean_s, obj.sd),6) if s else round(random.gauss(user_mean_n, obj.sd),6) for (i,s) in enumerate(signals)]
+        alerts = [a > (obj.mean + obj.sd * c) for a in alert_distribution]
         context['signals'] = signals
         context['alerts'] = alerts
         context['stimuli'] = stimuli

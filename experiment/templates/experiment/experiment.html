@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'experiment/spectre.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'experiment/experiment.css' %}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'experiment/jcanvas.min.js' %}"></script>
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <script type="text/javascript">
     var data = "{{data|safe|escapejs}}";
@@ -45,7 +46,9 @@
                     {% if object.stimulus == "num" %}
                         <div class="stimulus-number"></div>
                     {% elif object.stimulus == "rect" %}
-                        <div class="stimulus-rectangle"></div>
+                        <div class="stimulus-rectangle">
+                            <div class="rectangle"></div>
+                        </div>
                     {% endif %}
                 </div>
             </div>

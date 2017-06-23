@@ -20,6 +20,8 @@ $(document).ready(function() {
         changeAlertColor(alerts[trial_num]);
         $(".stimulus-number").show().text(stimuli[trial_num]);
         $(".stimulus-rectangle").show()
+        $(".rectangle").show().height(stimuli[trial_num] + "%");
+        randomizeRectPosition();
         $(".button-accept").show();
         $(".button-reject").show();
         $(".intro-text").hide();
@@ -75,12 +77,21 @@ function buttonHandler(b) {
             $(".trial-num span").text(trial_num + 1);
             changeAlertColor(alerts[trial_num]);
             $(".stimulus-number").text(stimuli[trial_num]);
+            $(".rectangle").height(stimuli[trial_num] + "%");
+            randomizeRectPosition();
         }
         else {
             trial_num++;
             alert("Congratulations! You finished the experiment.");
         }
     }
+}
+
+function randomizeRectPosition() {
+    var availableHeight = $(".stimulus-rectangle").width() - $(".rectangle").height();
+    var availableWidth = $(".stimulus-rectangle").width() - $(".rectangle").width();
+    $(".rectangle").css("top", (Math.random() * availableHeight).toString());
+    $(".rectangle").css("left", (Math.random() * availableWidth).toString());
 }
 
 outcomeMap = {

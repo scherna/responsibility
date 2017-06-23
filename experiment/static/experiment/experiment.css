@@ -18,10 +18,20 @@ body {
 
 .stimulus-rectangle {
     display: none;
+    position: relative;
     margin-top: 20px;
     padding-top: 100%;
     border: 1px solid black;
     border-radius: 3px;
+}
+
+.rectangle {
+    display: none;
+    position: absolute;
+    top: 0px;
+    width:15%;
+    background-color: grey;
+    border: 1px solid black;
 }
 
 .stimulus-alert {
@@ -56,3 +66,4 @@ body {
     display: none;
     margin-top: 30px;
 }
+
