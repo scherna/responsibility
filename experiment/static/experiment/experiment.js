@@ -7,6 +7,9 @@ var trial_num = -1;
 var score = 0;
 var responses = [];
 var outcomes = [];
+var alertTimeout;
+var stimulusTimeout;
+var trialTimeout;
 
 $(document).ready(function() {
     $(".button-begin").click(function() {
@@ -16,27 +19,45 @@ $(document).ready(function() {
         $(".score").show();
         $(".score span").text(score);
         $(".outcome").show();
-        $(".stimulus-alert").show();
         changeAlertColor(alerts[trial_num]);
-        $(".stimulus-number").show().text(stimuli[trial_num]);
-        $(".stimulus-rectangle").show()
-        $(".rectangle").show().height(stimuli[trial_num] + "%");
+        $(".number").text(stimuli[trial_num]);
+        $(".stimulus-rectangle").show();
+        $(".stimulus-number").show();
+        $(".stimulus-alert").show();
+        $(".rectangle").height(stimuli[trial_num] + "%");
         randomizeRectPosition();
+        hideStimulus();
+        hideAlert();
         $(".button-accept").show();
         $(".button-reject").show();
         $(".intro-text").hide();
         $(".button-begin").hide();
+        setTimeout(showStimulus, obj.stimulus_delay * 1000);
+        stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);
+        setTimeout(showAlert, obj.alert_delay * 1000);
+        alertTimeout = setTimeout(hideAlert, (obj.alert_delay + obj.alert_duration) * 1000);
+        trialTimeout = setTimeout(completeTrial, obj.trial_duration * 1000, "N/A");
     });
     $(".button-accept").click(function() {
-        buttonHandler(false);
+        clearTimeout(stimulusTimeout);
+        hideStimulus();
+        clearTimeout(alertTimeout);
+        hideAlert();
+        clearTimeout(trialTimeout);
+        completeTrial(false);
     });
     $(".button-reject").click(function() {
-        buttonHandler(true);
+        clearTimeout(stimulusTimeout);
+        hideStimulus();
+        clearTimeout(alertTimeout);
+        hideAlert();
+        clearTimeout(trialTimeout);
+        completeTrial(true);
     });
 });
 
 function changeAlertColor(b) {
-    if (b === true) {
+    if (b) {
         $(".stimulus-alert").css("background-color", obj.alert_signal_color);
     }
     else {
@@ -61,30 +82,64 @@ function changeOutcomeText(o) {
         case "cr":
             $(".outcome").text("Correct rejection!");
             break;
+        default:
+            $(".outcome").text("Did not complete in time...");
     }
 }
 
-function buttonHandler(b) {
+function completeTrial(b) {
     if (trial_num < obj.num_trials) {
-        responses.push(b);
-        var outcome = outcomeMap[b][signals[trial_num]][alerts[trial_num]];
-        outcomes.push(outcome);
-        changeOutcomeText(outcome);
-        score += obj["v_" + outcome];
-        $(".score span").text(score);
+        if (b !== "N/A") {
+            responses.push(b);
+            var outcome = outcomeMap[b][signals[trial_num]][alerts[trial_num]];
+            outcomes.push(outcome);
+            changeOutcomeText(outcome);
+            score += obj["v_" + outcome];
+            $(".score span").text(score);
+        }
+        else {
+            responses.push(b);
+            outcomes.push(b);
+            changeOutcomeText(b);
+        }
         if (trial_num < obj.num_trials - 1) {
             trial_num++;
             $(".trial-num span").text(trial_num + 1);
             changeAlertColor(alerts[trial_num]);
-            $(".stimulus-number").text(stimuli[trial_num]);
+            $(".number").text(stimuli[trial_num]);
             $(".rectangle").height(stimuli[trial_num] + "%");
             randomizeRectPosition();
+            setTimeout(function() {
+                setTimeout(showStimulus, obj.stimulus_delay * 1000);
+                stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);
+                setTimeout(showAlert, obj.alert_delay * 1000);
+                alertTimeout = setTimeout(hideAlert, (obj.alert_delay + obj.alert_duration) * 1000);
+                trialTimeout = setTimeout(completeTrial, obj.trial_duration * 1000, "N/A");
+            }, obj.trial_delay * 1000);
         }
         else {
             trial_num++;
             alert("Congratulations! You finished the experiment.");
         }
     }
+}
+
+function hideStimulus() {
+    $(".number").addClass("invisible");
+    $(".rectangle").addClass("invisible");
+}
+
+function showStimulus() {
+    $(".number").removeClass("invisible");
+    $(".rectangle").removeClass("invisible");
+}
+
+function hideAlert() {
+    $(".stimulus-alert").addClass("invisible");
+}
+
+function showAlert() {
+    $(".stimulus-alert").removeClass("invisible");
 }
 
 function randomizeRectPosition() {
