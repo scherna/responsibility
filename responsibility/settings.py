@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'colorfield',
+    'adminsortable2',
+    'sortedm2m',
 ]
 
 MIDDLEWARE = [

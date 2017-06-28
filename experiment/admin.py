@@ -1,6 +1,14 @@
 from django.contrib import admin
-from .models import ExperimentCondition
+from adminsortable2.admin import SortableInlineAdminMixin
+from .models import ExperimentCondition, Questionnaire, Question, Choice
 # Register your models here.
+class ChoiceInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = Choice
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    fields = ('name', 'text')
+    inlines = [ChoiceInline]
 
 class ExperimentConditionAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -21,3 +29,5 @@ class ExperimentAdminSite(admin.AdminSite):
 
 admin_site = ExperimentAdminSite()
 admin_site.register(ExperimentCondition, ExperimentConditionAdmin)
+admin_site.register(Questionnaire)
+admin_site.register(Question, QuestionAdmin)

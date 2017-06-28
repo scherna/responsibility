@@ -1,8 +1,12 @@
 from django.db import models
 from datetime import timedelta
 from colorfield.fields import ColorField
+from sortedm2m.fields import SortedManyToManyField
 
 class ExperimentCondition(models.Model):
+    def __str__(self):
+        return self.name 
+
     name = models.CharField('Name of Experiment Condition', max_length=200)
     num_trials = models.IntegerField('# Trials', default=5)
     p_signal = models.FloatField('Probability of Signal', default=0.5)
@@ -32,3 +36,26 @@ class ExperimentCondition(models.Model):
     display_last_points = models.BooleanField('Display Points from Last Trial', default=True)
     display_total_points = models.BooleanField('Display Cumulative Points', default=True)
     display_trial_num = models.BooleanField('Display Number of Trial in Block', default=True)
+
+class Questionnaire(models.Model):
+    def __str__(self):
+        return self.name 
+
+    name = models.CharField('Name of Questionnaire', max_length=200)
+    questions = SortedManyToManyField('Question')
+
+class Question(models.Model):
+    def __str__(self):
+        return self.name 
+        
+    name = models.CharField('Name of Question', max_length=200)
+    text = models.CharField('Question Text', max_length=200)
+    answer = models.CharField('User Response', max_length=200)
+
+class Choice(models.Model):
+    text = models.CharField('Choice Text', max_length=200)
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+
+    class Meta(object):
+        ordering = ('order',)
