@@ -24,7 +24,7 @@ $(document).ready(function() {
         $(".stimulus-rectangle").show();
         $(".stimulus-number").show();
         $(".stimulus-alert").show();
-        $(".rectangle").height(stimuli[trial_num] + "%");
+        $(".rectangle").height(stimuli[trial_num] + "%").show();
         randomizeRectPosition();
         hideStimulus();
         hideAlert();

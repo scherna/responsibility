@@ -24,9 +24,9 @@ class ExperimentView(generic.DetailView):
         alert_mean_n = obj.mean - 0.5 * obj.d_alert * obj.sd
         signals = [random.random() < obj.p_signal for i in range(obj.num_trials)]
         alert_distribution = [random.gauss(alert_mean_s, obj.sd) if s else random.gauss(alert_mean_n, obj.sd) for (i,s) in enumerate(signals)]
-        c = (math.log(obj.beta_alert) * obj.sd / obj.d_alert) + (obj.sd * obj.d_alert / 2)
-        stimuli = [round(random.gauss(user_mean_s, obj.sd),6) if s else round(random.gauss(user_mean_n, obj.sd),6) for (i,s) in enumerate(signals)]
-        alerts = [a > (obj.mean + obj.sd * c) for a in alert_distribution]
+        c = (math.log(obj.beta_alert) / obj.d_alert)
+        stimuli = [round(random.gauss(user_mean_s, obj.sd), obj.num_dec_places) if s else round(random.gauss(user_mean_n, obj.sd), obj.num_dec_places) for (i,s) in enumerate(signals)]
+        alerts = [a > c for a in alert_distribution]
         context['signals'] = signals
         context['alerts'] = alerts
         context['stimuli'] = stimuli

@@ -2,11 +2,23 @@ from django.db import models
 from datetime import timedelta
 from colorfield.fields import ColorField
 from sortedm2m.fields import SortedManyToManyField
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import fields
 
-class ExperimentCondition(models.Model):
+class Experiment(models.Model):
+    name = models.CharField('Name of Experiment', max_length=200)
+    modules = SortedManyToManyField('Module')
+
+class Module(models.Model):
     def __str__(self):
         return self.name 
 
+    name = models.CharField('Name of Module', max_length=200)
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = fields.GenericForeignKey('content_type', 'object_id')
+
+class ExperimentCondition(models.Model):
     name = models.CharField('Name of Experiment Condition', max_length=200)
     num_trials = models.IntegerField('# Trials', default=5)
     p_signal = models.FloatField('Probability of Signal', default=0.5)
@@ -25,6 +37,7 @@ class ExperimentCondition(models.Model):
     sd = models.FloatField('Standard Deviation', default=0.5)
     stimulus_choices = (('num', 'Numbers'), ('rect', 'Rectangles'))
     stimulus = models.CharField('Choice of Stimulus', max_length=200, choices=stimulus_choices, default='num')
+    num_dec_places = models.IntegerField('# Decimal Places to Use for Stimulus', default=1)
     alert_signal_color = ColorField('Alert Color for Signal', default="#f44141")
     alert_noise_color = ColorField('Alert Color for Noise', default="#4ef442")
     stimulus_duration = models.FloatField('Stimulus Duration (seconds)', default=5.0)
@@ -36,18 +49,37 @@ class ExperimentCondition(models.Model):
     display_last_points = models.BooleanField('Display Points from Last Trial', default=True)
     display_total_points = models.BooleanField('Display Cumulative Points', default=True)
     display_trial_num = models.BooleanField('Display Number of Trial in Block', default=True)
+    module = fields.GenericRelation(Module)
 
-class Questionnaire(models.Model):
     def __str__(self):
         return self.name 
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(ExperimentCondition, self).save(args, kwargs)
+            m = Module(content_object=self, name=self.name)
+            m.save()
+        super(ExperimentCondition, self).save(args, kwargs)
+
+class Questionnaire(models.Model):
     name = models.CharField('Name of Questionnaire', max_length=200)
     questions = SortedManyToManyField('Question')
+    module = fields.GenericRelation(Module)
+
+    def __str__(self):
+        return self.name 
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Questionnaire, self).save(args, kwargs)
+            m = Module(content_object=self, name=self.name)
+            m.save()
+        super(Questionnaire, self).save(args, kwargs)
 
 class Question(models.Model):
     def __str__(self):
         return self.name 
-        
+
     name = models.CharField('Name of Question', max_length=200)
     text = models.CharField('Question Text', max_length=200)
     answer = models.CharField('User Response', max_length=200)
