@@ -7,7 +7,6 @@ body {
 }
 
 .stimulus-number {
-    display: none;
     margin-top: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -17,7 +16,6 @@ body {
 }
 
 .stimulus-rectangle {
-    display: none;
     position: relative;
     margin-top: 20px;
     padding-top: 100%;
@@ -26,7 +24,6 @@ body {
 }
 
 .rectangle {
-    display: none;
     position: absolute;
     top: 0px;
     width:15%;
@@ -35,7 +32,6 @@ body {
 }
 
 .stimulus-alert {
-    display: none;
     width: 25%;
     padding-top: 25%;
     border: 1px solid black;
@@ -44,26 +40,21 @@ body {
 
 .trial-num {
     font-size: 16px;
-    display: none;
 }
 
 .score {
     font-size: 16px;
-    display: none;
 }
 
 .outcome {
     font-size:16px;
-    display:none;
 }
 
 .button-accept {
-    display: none;
     margin-top: 30px;
 }
 
 .button-reject {
-    display: none;
     margin-top: 30px;
 }
 

@@ -2,35 +2,40 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from django.core import serializers
-from .models import ExperimentCondition
+from .models import ExperimentCondition, Experiment, Questionnaire, TextBlock
 import random
 import math
 import json
 
 class IndexView(generic.ListView):
     template_name = "experiment/index.html"
-    model = ExperimentCondition
+    model = Experiment
 
 class ExperimentView(generic.DetailView):
     template_name = "experiment/experiment.html"
-    model = ExperimentCondition
+    model = Experiment
 
     def get_context_data(self, **kwargs):
         context = super(ExperimentView, self).get_context_data(**kwargs)
         obj = context['object']
-        user_mean_s = obj.mean + 0.5 * obj.d_user * obj.sd
-        user_mean_n = obj.mean - 0.5 * obj.d_user * obj.sd
-        alert_mean_s = obj.mean + 0.5 * obj.d_alert * obj.sd
-        alert_mean_n = obj.mean - 0.5 * obj.d_alert * obj.sd
-        signals = [random.random() < obj.p_signal for i in range(obj.num_trials)]
-        alert_distribution = [random.gauss(alert_mean_s, obj.sd) if s else random.gauss(alert_mean_n, obj.sd) for (i,s) in enumerate(signals)]
-        c = (math.log(obj.beta_alert) / obj.d_alert)
-        stimuli = [round(random.gauss(user_mean_s, obj.sd), obj.num_dec_places) if s else round(random.gauss(user_mean_n, obj.sd), obj.num_dec_places) for (i,s) in enumerate(signals)]
-        alerts = [a > c for a in alert_distribution]
-        context['signals'] = signals
-        context['alerts'] = alerts
-        context['stimuli'] = stimuli
-        context['alert_dist'] = alert_distribution
-        context['c'] = c
-        context['data'] = json.dumps({"obj":serializers.serialize("json", [obj]),"signals":signals,"alerts":alerts,"stimuli":stimuli})
+        modules = []
+        for module in obj.modules.all():
+            content = module.content_object
+            if type(content) is ExperimentCondition:
+                user_mean_s = content.mean + 0.5 * content.d_user * content.sd
+                user_mean_n = content.mean - 0.5 * content.d_user * content.sd
+                alert_mean_s = content.mean + 0.5 * content.d_alert * content.sd
+                alert_mean_n = content.mean - 0.5 * content.d_alert * content.sd
+                signals = [random.random() < content.p_signal for i in range(content.num_trials)]
+                alert_distribution = [random.gauss(alert_mean_s, content.sd) if s else random.gauss(alert_mean_n, content.sd) for (i,s) in enumerate(signals)]
+                c = (math.log(content.beta_alert) / content.d_alert)
+                stimuli = [round(random.gauss(user_mean_s, content.sd), content.num_dec_places) if s else round(random.gauss(user_mean_n, content.sd), content.num_dec_places) for (i,s) in enumerate(signals)]
+                alerts = [a > content.mean + c for a in alert_distribution]
+                modules.append({"obj":json.loads(serializers.serialize("json", [content])),"signals":signals,"alerts":alerts,"stimuli":stimuli})
+            elif type(content) is Questionnaire:
+                questions = [[q.text, q.choices.split(",")] for q in content.questions.all()]
+                modules.append({"obj":json.loads(serializers.serialize("json", [content])), "questions":questions})
+            elif type(content) is TextBlock:
+                modules.append(json.loads(serializers.serialize("json", [content])))
+        context['modules'] = json.dumps(modules)
         return context

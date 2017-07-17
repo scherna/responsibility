@@ -7,7 +7,7 @@
 <script type="text/javascript" src="{% static 'experiment/jcanvas.min.js' %}"></script>
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <script type="text/javascript">
-    var data = "{{data|safe|escapejs}}";
+    var modules = "{{modules|escapejs}}";
 </script>
 <script type="text/javascript" src="{% static 'experiment/experiment.js' %}"></script>
 {% block content %}
@@ -17,50 +17,7 @@
                 <h1>{{object.name}}</h1>
             </div>
             <div class="divider"></div>
-            <div class="columns intro-text">
-                <div class="column col-xl-3 hide-xs"></div>
-                <div class="column col-xl-6 col-xs-12">
-                    <p style="text-align:justify;">{% lorem %}</p>
-                </div>
-            </div>
-            <button type="button" class="button-begin btn btn-primary">Begin Experiment</button>
-            <div class="columns">
-                <div class="column col-xl-4 hide-xs"></div>
-                <div class="column col-xl-1 col-xs-3">
-                    {% if object.display_trial_num %}
-                        <div class="trial-num">Trial#: <span></span></div>
-                    {% endif %}
-                </div>
-                <div class="column col-xl-2 col-xs-6">
-                    <div class="stimulus-alert centered"></div>
-                </div>
-                <div class="column col-xl-1 col-xs-3">
-                    {% if object.display_total_points %}
-                        <div class="score">Score: <span></span></div>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column col-xl-4 hide-xs"></div>
-                <div class="column col-xl-4 col-xs-12">
-                    {% if object.stimulus == "num" %}
-                        <div class="stimulus-number">
-                            <div class="number"></div>
-                        </div>
-                    {% elif object.stimulus == "rect" %}
-                        <div class="stimulus-rectangle">
-                            <div class="rectangle"></div>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            {% if object.display_last_points %}
-                <div class="outcome invisible">Hidden</div>
-            {% endif %}
-            <div class="columns">
-                <div class="column col-xl-5 col-xs-1"></div>
-                <div class="column col-xl-1 col-xs-5"><button type="button" class="button-accept btn btn-primary">Accept</button></div>
-                <div class="column col-xl-1 col-xs-5"><button type="button" class="button-reject btn btn-primary">Reject</button></div>
+            <div class="content">
             </div>
         </div>
     </body>

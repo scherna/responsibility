@@ -9,14 +9,32 @@ class Experiment(models.Model):
     name = models.CharField('Name of Experiment', max_length=200)
     modules = SortedManyToManyField('Module')
 
-class Module(models.Model):
     def __str__(self):
         return self.name 
 
+class Module(models.Model):
     name = models.CharField('Name of Module', max_length=200)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = fields.GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.name 
+
+class TextBlock(models.Model):
+    name = models.CharField('Name of Text Block', max_length=200)
+    text = models.TextField()
+    module = fields.GenericRelation(Module)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(TextBlock, self).save(*args, **kwargs)
+            m = Module(content_object=self, name=self.name)
+            m.save()
+        super(TextBlock, self).save(*args, **kwargs)
 
 class ExperimentCondition(models.Model):
     name = models.CharField('Name of Experiment Condition', max_length=200)
@@ -33,7 +51,7 @@ class ExperimentCondition(models.Model):
     d_user = models.FloatField("User Sensitivity (d')", default=1.0)
     d_alert = models.FloatField("Alert Sensitivity (d')", default=1.0)
     beta_alert = models.FloatField("Alert Criterion (beta)", default=0.5)
-    mean = models.FloatField('Mean', default=5.0)
+    mean = models.FloatField('Mean (between signal/noise distributions)', default=5.0)
     sd = models.FloatField('Standard Deviation', default=0.5)
     stimulus_choices = (('num', 'Numbers'), ('rect', 'Rectangles'))
     stimulus = models.CharField('Choice of Stimulus', max_length=200, choices=stimulus_choices, default='num')
@@ -56,10 +74,10 @@ class ExperimentCondition(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            super(ExperimentCondition, self).save(args, kwargs)
+            super(ExperimentCondition, self).save(*args, **kwargs)
             m = Module(content_object=self, name=self.name)
             m.save()
-        super(ExperimentCondition, self).save(args, kwargs)
+        super(ExperimentCondition, self).save(*args, **kwargs)
 
 class Questionnaire(models.Model):
     name = models.CharField('Name of Questionnaire', max_length=200)
@@ -71,23 +89,15 @@ class Questionnaire(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            super(Questionnaire, self).save(args, kwargs)
+            super(Questionnaire, self).save(*args, **kwargs)
             m = Module(content_object=self, name=self.name)
             m.save()
-        super(Questionnaire, self).save(args, kwargs)
+        super(Questionnaire, self).save(*args, **kwargs)
 
 class Question(models.Model):
-    def __str__(self):
-        return self.name 
-
     name = models.CharField('Name of Question', max_length=200)
     text = models.CharField('Question Text', max_length=200)
-    answer = models.CharField('User Response', max_length=200)
+    choices = models.CharField('Answer Choices (separated by commas) / leave blank for open answer', max_length=200, blank=True)
 
-class Choice(models.Model):
-    text = models.CharField('Choice Text', max_length=200)
-    order = models.PositiveIntegerField(default=0, blank=False, null=False)
-    question = models.ForeignKey('Question', on_delete=models.CASCADE)
-
-    class Meta(object):
-        ordering = ('order',)
+    def __str__(self):
+        return self.name 

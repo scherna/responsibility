@@ -1,16 +1,16 @@
-table {
+.matrix table {
     margin-top: 10px;
 }
 
-th {
+.matrix th {
     text-align: center;
     border: 1px solid #888;
 }
 
-td {
+.matrix td {
     border: 1px solid #888;
 }
 
-input[type=number] {
+.matrix input[type=number] {
     width: 40px;
 }

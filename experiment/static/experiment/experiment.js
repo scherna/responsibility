@@ -1,43 +1,130 @@
-data = JSON.parse(data);
-var signals = data.signals;
-var alerts = data.alerts;
-var stimuli = data.stimuli;
-var obj = JSON.parse(data.obj)[0].fields;
-var trial_num = -1;
-var score = 0;
-var responses = [];
-var outcomes = [];
+modules = JSON.parse(modules);
+var moduleNum = 0;
+var obj;
+var signals;
+var alerts;
+var stimuli;
+var trialNum;
+var score;
+var responses;
+var outcomes;
 var alertTimeout;
 var stimulusTimeout;
 var trialTimeout;
 
 $(document).ready(function() {
-    $(".button-begin").click(function() {
-        trial_num = 0;
-        $(".trial-num").show();
-        $(".trial-num span").text(trial_num + 1);
-        $(".score").show();
-        $(".score span").text(score);
-        $(".outcome").show();
-        changeAlertColor(alerts[trial_num]);
-        $(".number").text(stimuli[trial_num]);
-        $(".stimulus-rectangle").show();
-        $(".stimulus-number").show();
-        $(".stimulus-alert").show();
-        $(".rectangle").height(stimuli[trial_num] + "%").show();
-        randomizeRectPosition();
-        hideStimulus();
-        hideAlert();
-        $(".button-accept").show();
-        $(".button-reject").show();
-        $(".intro-text").hide();
-        $(".button-begin").hide();
-        setTimeout(showStimulus, obj.stimulus_delay * 1000);
-        stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);
-        setTimeout(showAlert, obj.alert_delay * 1000);
-        alertTimeout = setTimeout(hideAlert, (obj.alert_delay + obj.alert_duration) * 1000);
-        trialTimeout = setTimeout(completeTrial, obj.trial_duration * 1000, "N/A");
+    renderModule(modules[moduleNum]);
+});
+
+function renderModule(module) {
+    if (module.constructor === Array) {
+        if (module[0].model === "experiment.textblock") {
+            renderTextBlock(module);
+        }
+    }
+    else {
+        if (module.obj[0].model === 'experiment.experimentcondition') {
+            renderExperimentBlock(module);
+        }
+        else {
+            renderQuestionnaire(module);
+        }
+    }
+}
+
+function renderQuestionnaire(module) {
+    var questions = module.questions;
+    var myHtml = `<div class="columns">
+                    <div class="column col-xl-3 hide-xs"></div>
+                    <div class="column col-xl-6 col-xs-12">
+                        <form style="text-align:left;">`;
+    questions.forEach(function(q, i) {
+        if (q[1][0] === '') {
+            myHtml += `<div class="form-group">
+                        <label class="form-label" for="question-${i}">${q[0]}</label>
+                        <input class="form-input" type="text" id="question-${i}"/>
+                     </div>`;
+        }
+        else {
+            myHtml += `<div class="form-group">
+                        <label class="form-label">${q[0]}</label>`;
+            q[1].forEach(function(c, j) {
+                myHtml += `<label class="form-radio">
+                            <input type="radio" name="question-${i}" />
+                            <i class="form-icon"></i> ${c}
+                        </label>`;
+            });
+            myHtml += `</div>`;
+        }
+    }, this);
+    myHtml += `</form></div></div><button type="button" class="button-next btn btn-primary">Next</button>`;
+    $(".content").html(myHtml);
+}
+
+function renderTextBlock(module) {
+    var text = module[0].fields.text;
+    $(".content").html(`<div class="columns intro-text">
+                            <div class="column col-xl-3 hide-xs"></div>
+                            <div class="column col-xl-6 col-xs-12">
+                                <p style="text-align:justify;">${text}</p>
+                            </div>
+                        </div>
+                        <button type="button" class="button-next btn btn-primary">Next</button>`);
+    $(".button-next").click(function() {
+        moduleNum++;
+        renderModule(modules[moduleNum]);
     });
+}
+
+function renderExperimentBlock(module) {
+    obj = module.obj[0].fields;
+    signals = module.signals;
+    alerts = module.alerts;
+    stimuli = module.stimuli;
+    trialNum = 0;
+    score = 0;
+    responses = [];
+    outcomes = [];
+    alertTimeout;
+    stimulusTimeout;
+    trialTimeout;
+    $(".content").html(`<div class="columns">
+                            <div class="column col-xl-4 hide-xs"></div>
+                            <div class="column col-xl-1 col-xs-3">
+                                ${obj.display_trial_num ? '<div class="trial-num">Trial#: <span></span></div>' : ''}
+                            </div>
+                            <div class="column col-xl-2 col-xs-6">
+                                <div class="stimulus-alert centered"></div>
+                            </div>
+                            <div class="column col-xl-1 col-xs-3">
+                                ${obj.display_total_points ? '<div class="score">Score: <span></span></div>' : ''}
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column col-xl-4 hide-xs"></div>
+                            <div class="column col-xl-4 col-xs-12">
+                                ${obj.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
+                            </div>
+                        </div>
+                        ${obj.display_last_points ? '<div class="outcome invisible">Hidden</div>' : ''}
+                        <div class="columns">
+                            <div class="column col-xl-5 col-xs-1"></div>
+                            <div class="column col-xl-1 col-xs-5"><button type="button" class="button-accept btn btn-primary">Accept</button></div>
+                            <div class="column col-xl-1 col-xs-5"><button type="button" class="button-reject btn btn-primary">Reject</button></div>
+                        </div>`);
+    $(".trial-num span").text(trialNum + 1);
+    $(".score span").text(score);
+    changeAlertColor(alerts[trialNum]);
+    $(".number").text(stimuli[trialNum]);
+    $(".rectangle").height(stimuli[trialNum] + "%");
+    randomizeRectPosition();
+    hideStimulus();
+    hideAlert();
+    setTimeout(showStimulus, obj.stimulus_delay * 1000);
+    stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);
+    setTimeout(showAlert, obj.alert_delay * 1000);
+    alertTimeout = setTimeout(hideAlert, (obj.alert_delay + obj.alert_duration) * 1000);
+    trialTimeout = setTimeout(completeTrial, obj.trial_duration * 1000, "N/A");
     $(".button-accept").click(function() {
         clearTimeout(stimulusTimeout);
         hideStimulus();
@@ -54,7 +141,7 @@ $(document).ready(function() {
         clearTimeout(trialTimeout);
         completeTrial(true);
     });
-});
+}
 
 function changeAlertColor(b) {
     if (b) {
@@ -88,10 +175,10 @@ function changeOutcomeText(o) {
 }
 
 function completeTrial(b) {
-    if (trial_num < obj.num_trials) {
+    if (trialNum < obj.num_trials) {
         if (b !== "N/A") {
             responses.push(b);
-            var outcome = outcomeMap[b][signals[trial_num]][alerts[trial_num]];
+            var outcome = outcomeMap[b][signals[trialNum]][alerts[trialNum]];
             outcomes.push(outcome);
             changeOutcomeText(outcome);
             score += obj["v_" + outcome];
@@ -102,12 +189,12 @@ function completeTrial(b) {
             outcomes.push(b);
             changeOutcomeText(b);
         }
-        if (trial_num < obj.num_trials - 1) {
-            trial_num++;
-            $(".trial-num span").text(trial_num + 1);
-            changeAlertColor(alerts[trial_num]);
-            $(".number").text(stimuli[trial_num]);
-            $(".rectangle").height(stimuli[trial_num] + "%");
+        if (trialNum < obj.num_trials - 1) {
+            trialNum++;
+            $(".trial-num span").text(trialNum + 1);
+            changeAlertColor(alerts[trialNum]);
+            $(".number").text(stimuli[trialNum]);
+            $(".rectangle").height(stimuli[trialNum] + "%");
             randomizeRectPosition();
             setTimeout(function() {
                 setTimeout(showStimulus, obj.stimulus_delay * 1000);
@@ -118,8 +205,9 @@ function completeTrial(b) {
             }, obj.trial_delay * 1000);
         }
         else {
-            trial_num++;
-            alert("Congratulations! You finished the experiment.");
+            trialNum++;
+            moduleNum++;
+            renderModule(modules[moduleNum]);
         }
     }
 }
