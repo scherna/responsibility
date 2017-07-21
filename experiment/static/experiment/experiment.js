@@ -1,4 +1,3 @@
-modules = JSON.parse(modules);
 var moduleNum = 0;
 var obj;
 var signals;
@@ -11,24 +10,49 @@ var outcomes;
 var alertTimeout;
 var stimulusTimeout;
 var trialTimeout;
+var trialBeginTime;
+var trialEndTime;
+var results = {
+    'experiment_id': experimentId,
+    'experiment_blocks': [],
+    'questionnaires': [],
+};
 
 $(document).ready(function() {
-    renderModule(modules[moduleNum]);
+    renderModule(moduleNum);
 });
 
-function renderModule(module) {
-    if (module.constructor === Array) {
-        if (module[0].model === "experiment.textblock") {
-            renderTextBlock(module);
+function renderModule(moduleNum) {
+    if (moduleNum < modules.length) {
+        var module = modules[moduleNum];
+        if (module.constructor === Array) {
+            if (module[0].model === "experiment.textblock") {
+                renderTextBlock(module);
+            }
+        }
+        else {
+            if (module.obj[0].model === 'experiment.experimentcondition') {
+                renderExperimentBlock(module);
+            }
+            else {
+                renderQuestionnaire(module);
+            }
         }
     }
     else {
-        if (module.obj[0].model === 'experiment.experimentcondition') {
-            renderExperimentBlock(module);
-        }
-        else {
-            renderQuestionnaire(module);
-        }
+        var csrftoken = $.cookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        results['experiment_blocks'] = JSON.stringify(results['experiment_blocks'])
+        results['questionnaires'] = JSON.stringify(results['questionnaires'])
+        $.post("/experiment/postresults/", results, function() {
+            $(".content").html('<h5>Your results have been successfully uploaded. Thank you for your participation.</h5>');
+        });
     }
 }
 
@@ -37,28 +61,46 @@ function renderQuestionnaire(module) {
     var myHtml = `<div class="columns">
                     <div class="column col-xl-3 hide-xs"></div>
                     <div class="column col-xl-6 col-xs-12">
-                        <form style="text-align:left;">`;
-    questions.forEach(function(q, i) {
+                        <form style="text-align:left;" id="myForm">`;
+    questions.forEach(function(q) {
         if (q[1][0] === '') {
             myHtml += `<div class="form-group">
-                        <label class="form-label" for="question-${i}">${q[0]}</label>
-                        <input class="form-input" type="text" id="question-${i}"/>
+                        <label class="form-label" for="${q[2]}">${q[0]}</label>
+                        <input class="form-input" type="text" id="${q[2]}" name="${q[2]}" required/>
                      </div>`;
         }
         else {
             myHtml += `<div class="form-group">
                         <label class="form-label">${q[0]}</label>`;
-            q[1].forEach(function(c, j) {
+            q[1].forEach(function(c) {
                 myHtml += `<label class="form-radio">
-                            <input type="radio" name="question-${i}" />
+                            <input type="radio" name="${q[2]}" value="${c}" required/>
                             <i class="form-icon"></i> ${c}
                         </label>`;
             });
             myHtml += `</div>`;
         }
     }, this);
-    myHtml += `</form></div></div><button type="button" class="button-next btn btn-primary">Next</button>`;
+    myHtml += `<button type="submit" class="btn btn-primary" style="text-align:center;">Next</button></form></div></div>`;
     $(".content").html(myHtml);
+    $("#myForm").submit(function(event) {
+        event.preventDefault();
+        var qs = [];
+        questions.forEach(function(q) {
+            var answer;
+            if (q[1][0] === '') {
+                answer = $(`#${q[2]}`).val();
+            }
+            else {
+                answer = $(`input[name=${q[2]}]:checked`).val();
+            }
+            qs.push({'id':q[2], 'answer':answer})
+        });
+        results['questionnaires'].push({'id':module.obj[0].pk, 'questions':qs});
+        moduleNum++;
+        renderModule(moduleNum);
+        return false;
+    });
 }
 
 function renderTextBlock(module) {
@@ -72,7 +114,7 @@ function renderTextBlock(module) {
                         <button type="button" class="button-next btn btn-primary">Next</button>`);
     $(".button-next").click(function() {
         moduleNum++;
-        renderModule(modules[moduleNum]);
+        renderModule(moduleNum);
     });
 }
 
@@ -125,6 +167,8 @@ function renderExperimentBlock(module) {
     setTimeout(showAlert, obj.alert_delay * 1000);
     alertTimeout = setTimeout(hideAlert, (obj.alert_delay + obj.alert_duration) * 1000);
     trialTimeout = setTimeout(completeTrial, obj.trial_duration * 1000, "N/A");
+    trialBeginTime = Date.now();
+    results['experiment_blocks'].push({'id':module.obj[0].pk, 'score':0, 'trials':[]});
     $(".button-accept").click(function() {
         clearTimeout(stimulusTimeout);
         hideStimulus();
@@ -175,6 +219,7 @@ function changeOutcomeText(o) {
 }
 
 function completeTrial(b) {
+    trialEndTime = Date.now();
     if (trialNum < obj.num_trials) {
         if (b !== "N/A") {
             responses.push(b);
@@ -183,11 +228,29 @@ function completeTrial(b) {
             changeOutcomeText(outcome);
             score += obj["v_" + outcome];
             $(".score span").text(score);
+            results['experiment_blocks'][results['experiment_blocks'].length-1]['trials'].push({
+                'trial_num': trialNum, 
+                'time': trialEndTime, 
+                'response_time': (trialEndTime-trialBeginTime), 
+                'signal': signals[trialNum], 
+                'alert': alerts[trialNum], 
+                'response': b, 
+                'outcome': outcome,
+            });
         }
         else {
             responses.push(b);
             outcomes.push(b);
             changeOutcomeText(b);
+            results['experiment_blocks'][results['experiment_blocks'].length-1]['trials'].push({
+                'trial_num': trialNum, 
+                'time': trialEndTime, 
+                'response_time': (trialEndTime-trialBeginTime), 
+                'signal': signals[trialNum], 
+                'alert': alerts[trialNum], 
+                'response': b, 
+                'outcome': b,
+            });
         }
         if (trialNum < obj.num_trials - 1) {
             trialNum++;
@@ -197,6 +260,7 @@ function completeTrial(b) {
             $(".rectangle").height(stimuli[trialNum] + "%");
             randomizeRectPosition();
             setTimeout(function() {
+                trialBeginTime = Date.now();
                 setTimeout(showStimulus, obj.stimulus_delay * 1000);
                 stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);
                 setTimeout(showAlert, obj.alert_delay * 1000);
@@ -205,9 +269,10 @@ function completeTrial(b) {
             }, obj.trial_delay * 1000);
         }
         else {
+            results['experiment_blocks'][results['experiment_blocks'].length-1]['score'] = score;
             trialNum++;
             moduleNum++;
-            renderModule(modules[moduleNum]);
+            renderModule(moduleNum);
         }
     }
 }

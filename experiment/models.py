@@ -101,3 +101,44 @@ class Question(models.Model):
 
     def __str__(self):
         return self.name 
+
+class TrialResult(models.Model):
+    block_result = models.ForeignKey('BlockResult')
+    num_trial = models.IntegerField('# of Trial in Block')
+    time = models.DateTimeField('DateTime at End of Trial')
+    response_time = models.FloatField('Response Time (in seconds)')
+    signal = models.BooleanField('Stimulus Signal/Noise')
+    alert = models.BooleanField('Alert Signal/Noise')
+    response = models.BooleanField('User Response Signal/Noise')
+    outcome = models.CharField('Outcome (Hit/Miss/CR/FA)', max_length=200)
+
+class BlockResult(models.Model):
+    experiment_condition = models.ForeignKey('ExperimentCondition')
+    experiment_result = models.ForeignKey('ExperimentResult')
+    score = models.FloatField('Cumulative Score')
+    hit_alert = models.IntegerField('# Hits With Correct Alert')
+    miss_alert = models.IntegerField('# Misses With Correct Alert')
+    fa_alert = models.IntegerField('# FA With Correct Alert')
+    cr_alert = models.IntegerField('# CR With Correct Alert')
+    hit_no_alert = models.IntegerField('# Hits With Incorrect Alert')
+    miss_no_alert = models.IntegerField('# Misses With Incorrect Alert')
+    fa_no_alert = models.IntegerField('# FA With Incorrect Alert')
+    cr_no_alert = models.IntegerField('# CR With Incorrect Alert')
+    p_hit_alert = models.FloatField('Proportion of Hits (out of all signals) With Correct Alert')
+    p_fa_alert = models.FloatField('Proportion of FA (out of all noise) With Correct Alert')
+    p_hit_no_alert = models.FloatField('Proportion of Hits (out of all signals) With Incorrect Alert')
+    p_fa_no_alert = models.FloatField('Proportion of FA (out of all noise) With Incorrect Alert')
+    rt_hit = models.FloatField('Average Response Time for Hit')
+    rt_miss = models.FloatField('Average Response Time for Miss')
+
+class QuestionResult(models.Model):
+    question = models.ForeignKey('Question')
+    questionnaire_result = models.ForeignKey('QuestionnaireResult')
+    answer = models.CharField('User Response', max_length=200)
+
+class QuestionnaireResult(models.Model):
+    questionnaire = models.ForeignKey('Questionnaire')
+    experiment_result = models.ForeignKey('ExperimentResult')
+
+class ExperimentResult(models.Model):
+    experiment = models.ForeignKey('Experiment')

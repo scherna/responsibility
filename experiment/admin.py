@@ -1,6 +1,6 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableInlineAdminMixin
-from .models import ExperimentCondition, Questionnaire, Question, Experiment, TextBlock
+from .models import *
 # Register your models here.
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('name', 'text', 'choices')
@@ -28,3 +28,8 @@ admin_site.register(Questionnaire)
 admin_site.register(TextBlock)
 admin_site.register(Experiment)
 admin_site.register(Question, QuestionAdmin)
+admin_site.register(QuestionResult)
+admin_site.register(QuestionnaireResult)
+admin_site.register(TrialResult)
+admin_site.register(BlockResult)
+admin_site.register(ExperimentResult)

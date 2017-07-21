@@ -4,10 +4,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'experiment/spectre.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'experiment/experiment.css' %}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="{% static 'experiment/jcanvas.min.js' %}"></script>
+<script src="{% static 'experiment/jquery.cookie.js' %}"></script>
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <script type="text/javascript">
-    var modules = "{{modules|escapejs}}";
+    var modules = JSON.parse("{{modules|escapejs}}");
+    var experimentId = parseInt("{{object.id}}");
 </script>
 <script type="text/javascript" src="{% static 'experiment/experiment.js' %}"></script>
 {% block content %}
