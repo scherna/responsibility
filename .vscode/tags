@@ -1,0 +1,394 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+0001_initial.py	../experiment/migrations/0001_initial.py	1;"	kind:file	line:1
+0002_experimentcondition_trial_delay.py	../experiment/migrations/0002_experimentcondition_trial_delay.py	1;"	kind:file	line:1
+0003_auto_20170622_1634.py	../experiment/migrations/0003_auto_20170622_1634.py	1;"	kind:file	line:1
+0004_auto_20170628_1443.py	../experiment/migrations/0004_auto_20170628_1443.py	1;"	kind:file	line:1
+0005_auto_20170628_1556.py	../experiment/migrations/0005_auto_20170628_1556.py	1;"	kind:file	line:1
+0006_auto_20170628_1613.py	../experiment/migrations/0006_auto_20170628_1613.py	1;"	kind:file	line:1
+0007_auto_20170628_1614.py	../experiment/migrations/0007_auto_20170628_1614.py	1;"	kind:file	line:1
+0008_experimentcondition_num_dec_places.py	../experiment/migrations/0008_experimentcondition_num_dec_places.py	1;"	kind:file	line:1
+0009_experiment_module.py	../experiment/migrations/0009_experiment_module.py	1;"	kind:file	line:1
+0010_experiment_modules.py	../experiment/migrations/0010_experiment_modules.py	1;"	kind:file	line:1
+0011_textblock.py	../experiment/migrations/0011_textblock.py	1;"	kind:file	line:1
+0012_auto_20170717_1535.py	../experiment/migrations/0012_auto_20170717_1535.py	1;"	kind:file	line:1
+0013_auto_20170717_1639.py	../experiment/migrations/0013_auto_20170717_1639.py	1;"	kind:file	line:1
+0014_auto_20170717_1714.py	../experiment/migrations/0014_auto_20170717_1714.py	1;"	kind:file	line:1
+0015_auto_20170721_1444.py	../experiment/migrations/0015_auto_20170721_1444.py	1;"	kind:file	line:1
+ALLOWED_HOSTS	../responsibility/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:28
+AUTH_PASSWORD_VALIDATORS	../responsibility/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:91
+AlterSortedManyToManyField	../experiment/migrations/0005_auto_20170628_1556.py	/^from sortedm2m.operations import AlterSortedManyToManyField$/;"	kind:namespace	line:7
+AlterSortedManyToManyField	../experiment/migrations/0007_auto_20170628_1614.py	/^from sortedm2m.operations import AlterSortedManyToManyField$/;"	kind:namespace	line:7
+AppConfig	../experiment/apps.py	/^from django.apps import AppConfig$/;"	kind:namespace	line:1
+BASE_DIR	../responsibility/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
+BlockResult	../experiment/models.py	/^class BlockResult(models.Model):$/;"	kind:class	line:115
+ColorField	../experiment/models.py	/^from colorfield.fields import ColorField$/;"	kind:namespace	line:3
+ContentType	../experiment/models.py	/^from django.contrib.contenttypes.models import ContentType$/;"	kind:namespace	line:5
+DATABASES	../responsibility/settings.py	/^DATABASES = {$/;"	kind:variable	line:80
+DEBUG	../responsibility/settings.py	/^DEBUG = True$/;"	kind:variable	line:26
+Experiment	../experiment/models.py	/^class Experiment(models.Model):$/;"	kind:class	line:8
+ExperimentAdminSite	../experiment/admin.py	/^class ExperimentAdminSite(admin.AdminSite):$/;"	kind:class	line:21
+ExperimentCondition	../experiment/models.py	/^class ExperimentCondition(models.Model):$/;"	kind:class	line:39
+ExperimentConditionAdmin	../experiment/admin.py	/^class ExperimentConditionAdmin(admin.ModelAdmin):$/;"	kind:class	line:8
+ExperimentConfig	../experiment/apps.py	/^class ExperimentConfig(AppConfig):$/;"	kind:class	line:4
+ExperimentResult	../experiment/models.py	/^class ExperimentResult(models.Model):$/;"	kind:class	line:143
+ExperimentView	../experiment/views.py	/^class ExperimentView(generic.DetailView):$/;"	kind:class	line:18
+HttpResponse	../experiment/views.py	/^from django.http import HttpResponse$/;"	kind:namespace	line:2
+INSTALLED_APPS	../responsibility/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:33
+IndexView	../experiment/views.py	/^class IndexView(generic.ListView):$/;"	kind:class	line:13
+LANGUAGE_CODE	../responsibility/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:110
+MIDDLEWARE	../responsibility/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:46
+Media	../experiment/admin.py	/^    class Media:$/;"	kind:class	line:15
+Migration	../experiment/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0003_auto_20170622_1634.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Migration	../experiment/migrations/0004_auto_20170628_1443.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Migration	../experiment/migrations/0005_auto_20170628_1556.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:10
+Migration	../experiment/migrations/0006_auto_20170628_1613.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0007_auto_20170628_1614.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Migration	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0009_experiment_module.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Migration	../experiment/migrations/0010_experiment_modules.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Migration	../experiment/migrations/0011_textblock.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0012_auto_20170717_1535.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0013_auto_20170717_1639.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0014_auto_20170717_1714.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../experiment/migrations/0015_auto_20170721_1444.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Module	../experiment/models.py	/^class Module(models.Model):$/;"	kind:class	line:15
+PostResultsView	../experiment/views.py	/^class PostResultsView(View):$/;"	kind:class	line:47
+Question	../experiment/models.py	/^class Question(models.Model):$/;"	kind:class	line:97
+QuestionAdmin	../experiment/admin.py	/^class QuestionAdmin(admin.ModelAdmin):$/;"	kind:class	line:5
+QuestionResult	../experiment/models.py	/^class QuestionResult(models.Model):$/;"	kind:class	line:134
+Questionnaire	../experiment/models.py	/^class Questionnaire(models.Model):$/;"	kind:class	line:82
+QuestionnaireResult	../experiment/models.py	/^class QuestionnaireResult(models.Model):$/;"	kind:class	line:139
+ROOT_URLCONF	../responsibility/settings.py	/^ROOT_URLCONF = 'responsibility.urls'$/;"	kind:variable	line:56
+STATIC_URL	../responsibility/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:124
+SortableInlineAdminMixin	../experiment/admin.py	/^from adminsortable2.admin import SortableInlineAdminMixin$/;"	kind:namespace	line:2
+SortedManyToManyField	../experiment/models.py	/^from sortedm2m.fields import SortedManyToManyField$/;"	kind:namespace	line:4
+TEMPLATES	../responsibility/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:58
+TIME_ZONE	../responsibility/settings.py	/^TIME_ZONE = 'Asia\/Jerusalem'$/;"	kind:variable	line:112
+TestCase	../experiment/tests.py	/^from django.test import TestCase$/;"	kind:namespace	line:1
+TextBlock	../experiment/models.py	/^class TextBlock(models.Model):$/;"	kind:class	line:24
+TrialResult	../experiment/models.py	/^class TrialResult(models.Model):$/;"	kind:class	line:105
+USE_I18N	../responsibility/settings.py	/^USE_I18N = True$/;"	kind:variable	line:114
+USE_L10N	../responsibility/settings.py	/^USE_L10N = True$/;"	kind:variable	line:116
+USE_TZ	../responsibility/settings.py	/^USE_TZ = True$/;"	kind:variable	line:118
+View	../experiment/views.py	/^from django.views import generic, View$/;"	kind:namespace	line:3
+WSGI_APPLICATION	../responsibility/settings.py	/^WSGI_APPLICATION = 'responsibility.wsgi.application'$/;"	kind:variable	line:74
+__init__.py	../experiment/__init__.py	1;"	kind:file	line:1
+__init__.py	../experiment/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	../responsibility/__init__.py	1;"	kind:file	line:1
+__str__	../experiment/models.py	/^    def __str__(self):$/;"	kind:member	line:102
+__str__	../experiment/models.py	/^    def __str__(self):$/;"	kind:member	line:12
+__str__	../experiment/models.py	/^    def __str__(self):$/;"	kind:member	line:21
+__str__	../experiment/models.py	/^    def __str__(self):$/;"	kind:member	line:29
+__str__	../experiment/models.py	/^    def __str__(self):$/;"	kind:member	line:72
+__str__	../experiment/models.py	/^    def __str__(self):$/;"	kind:member	line:87
+admin	../experiment/admin.py	/^from django.contrib import admin$/;"	kind:namespace	line:1
+admin	../responsibility/urls.py	/^from django.contrib import admin$/;"	kind:namespace	line:17
+admin.py	../experiment/admin.py	1;"	kind:file	line:1
+admin_site	../experiment/admin.py	/^admin_site = ExperimentAdminSite()$/;"	kind:variable	line:25
+admin_site	../responsibility/urls.py	/^from experiment.admin import admin_site$/;"	kind:namespace	line:18
+alert	../experiment/models.py	/^    alert = models.BooleanField('Alert Signal\/Noise')$/;"	kind:variable	line:111
+alert_delay	../experiment/models.py	/^    alert_delay = models.FloatField('Alert Delay (seconds)', default=0.0)$/;"	kind:variable	line:64
+alert_duration	../experiment/models.py	/^    alert_duration = models.FloatField('Alert Duration (seconds)', default=5.0)$/;"	kind:variable	line:63
+alert_noise_color	../experiment/models.py	/^    alert_noise_color = ColorField('Alert Color for Noise', default="#4ef442")$/;"	kind:variable	line:60
+alert_signal_color	../experiment/models.py	/^    alert_signal_color = ColorField('Alert Color for Signal', default="#f44141")$/;"	kind:variable	line:59
+answer	../experiment/models.py	/^    answer = models.CharField('User Response', max_length=200)$/;"	kind:variable	line:137
+app_name	../experiment/urls.py	/^app_name = 'experiment'$/;"	kind:variable	line:5
+application	../responsibility/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+apps.py	../experiment/apps.py	1;"	kind:file	line:1
+beta_alert	../experiment/models.py	/^    beta_alert = models.FloatField("Alert Criterion (beta)", default=0.5)$/;"	kind:variable	line:53
+block_result	../experiment/models.py	/^    block_result = models.ForeignKey('BlockResult')$/;"	kind:variable	line:106
+choices	../experiment/models.py	/^    choices = models.CharField('Answer Choices (separated by commas) \/ leave blank for open answer', max_length=200, blank=True)$/;"	kind:variable	line:100
+colorfield	../experiment/migrations/0003_auto_20170622_1634.py	/^import colorfield.fields$/;"	kind:namespace	line:5
+content_object	../experiment/models.py	/^    content_object = fields.GenericForeignKey('content_type', 'object_id')$/;"	kind:variable	line:19
+content_type	../experiment/models.py	/^    content_type = models.ForeignKey(ContentType)$/;"	kind:variable	line:17
+cr_alert	../experiment/models.py	/^    cr_alert = models.IntegerField('# CR With Correct Alert')$/;"	kind:variable	line:122
+cr_no_alert	../experiment/models.py	/^    cr_no_alert = models.IntegerField('# CR With Incorrect Alert')$/;"	kind:variable	line:126
+css	../experiment/admin.py	/^        css = {$/;"	kind:variable	line:16
+d_alert	../experiment/models.py	/^    d_alert = models.FloatField("Alert Sensitivity (d')", default=1.0)$/;"	kind:variable	line:52
+d_user	../experiment/models.py	/^    d_user = models.FloatField("User Sensitivity (d')", default=1.0)$/;"	kind:variable	line:51
+datetime	../experiment/views.py	/^from datetime import datetime$/;"	kind:namespace	line:11
+db	../experiment/migrations/0004_auto_20170628_1443.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+db	../experiment/migrations/0009_experiment_module.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+db	../experiment/migrations/0015_auto_20170721_1444.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+deletion	../experiment/migrations/0004_auto_20170628_1443.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+deletion	../experiment/migrations/0009_experiment_module.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+deletion	../experiment/migrations/0015_auto_20170721_1444.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+dependencies	../experiment/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:12
+dependencies	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0003_auto_20170622_1634.py	/^    dependencies = [$/;"	kind:variable	line:11
+dependencies	../experiment/migrations/0004_auto_20170628_1443.py	/^    dependencies = [$/;"	kind:variable	line:11
+dependencies	../experiment/migrations/0005_auto_20170628_1556.py	/^    dependencies = [$/;"	kind:variable	line:12
+dependencies	../experiment/migrations/0006_auto_20170628_1613.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0007_auto_20170628_1614.py	/^    dependencies = [$/;"	kind:variable	line:11
+dependencies	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0009_experiment_module.py	/^    dependencies = [$/;"	kind:variable	line:11
+dependencies	../experiment/migrations/0010_experiment_modules.py	/^    dependencies = [$/;"	kind:variable	line:11
+dependencies	../experiment/migrations/0011_textblock.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0012_auto_20170717_1535.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0013_auto_20170717_1639.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0014_auto_20170717_1714.py	/^    dependencies = [$/;"	kind:variable	line:10
+dependencies	../experiment/migrations/0015_auto_20170721_1444.py	/^    dependencies = [$/;"	kind:variable	line:11
+display_last_points	../experiment/models.py	/^    display_last_points = models.BooleanField('Display Points from Last Trial', default=True)$/;"	kind:variable	line:67
+display_total_points	../experiment/models.py	/^    display_total_points = models.BooleanField('Display Cumulative Points', default=True)$/;"	kind:variable	line:68
+display_trial_num	../experiment/models.py	/^    display_trial_num = models.BooleanField('Display Number of Trial in Block', default=True)$/;"	kind:variable	line:69
+django	../experiment/migrations/0004_auto_20170628_1443.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+django	../experiment/migrations/0009_experiment_module.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+django	../experiment/migrations/0015_auto_20170721_1444.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+django	../manage.py	/^            import django$/;"	kind:namespace	line:14
+ensure_csrf_cookie	../experiment/views.py	/^from django.views.decorators.csrf import ensure_csrf_cookie$/;"	kind:namespace	line:5
+execute_from_command_line	../manage.py	/^        from django.core.management import execute_from_command_line$/;"	kind:namespace	line:8
+experiment	../experiment/models.py	/^    experiment = models.ForeignKey('Experiment')$/;"	kind:variable	line:144
+experiment_condition	../experiment/models.py	/^    experiment_condition = models.ForeignKey('ExperimentCondition')$/;"	kind:variable	line:116
+experiment_result	../experiment/models.py	/^    experiment_result = models.ForeignKey('ExperimentResult')$/;"	kind:variable	line:117
+experiment_result	../experiment/models.py	/^    experiment_result = models.ForeignKey('ExperimentResult')$/;"	kind:variable	line:141
+fa_alert	../experiment/models.py	/^    fa_alert = models.IntegerField('# FA With Correct Alert')$/;"	kind:variable	line:121
+fa_no_alert	../experiment/models.py	/^    fa_no_alert = models.IntegerField('# FA With Incorrect Alert')$/;"	kind:variable	line:125
+field	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^            field=models.FloatField(default=3.0, verbose_name='Delay Between Trials (seconds)'),$/;"	kind:variable	line:18
+field	../experiment/migrations/0003_auto_20170622_1634.py	/^            field=colorfield.fields.ColorField(default='#4ef442', max_length=18, verbose_name='Alert Color for Noise'),$/;"	kind:variable	line:24
+field	../experiment/migrations/0003_auto_20170622_1634.py	/^            field=colorfield.fields.ColorField(default='#f44141', max_length=18, verbose_name='Alert Color for Signal'),$/;"	kind:variable	line:29
+field	../experiment/migrations/0004_auto_20170628_1443.py	/^            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='experiment.Question'),$/;"	kind:variable	line:43
+field	../experiment/migrations/0005_auto_20170628_1556.py	/^            field=models.PositiveIntegerField(default=0),$/;"	kind:variable	line:24
+field	../experiment/migrations/0005_auto_20170628_1556.py	/^            field=sortedm2m.fields.SortedManyToManyField(help_text=None, to='experiment.Question'),$/;"	kind:variable	line:29
+field	../experiment/migrations/0006_auto_20170628_1613.py	/^            field=models.ManyToManyField(to='experiment.Question'),$/;"	kind:variable	line:18
+field	../experiment/migrations/0007_auto_20170628_1614.py	/^            field=sortedm2m.fields.SortedManyToManyField(help_text=None, to='experiment.Question'),$/;"	kind:variable	line:19
+field	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^            field=models.IntegerField(default=1, verbose_name='# Decimal Places to Use for Stimulus'),$/;"	kind:variable	line:18
+field	../experiment/migrations/0010_experiment_modules.py	/^            field=sortedm2m.fields.SortedManyToManyField(help_text=None, to='experiment.Module'),$/;"	kind:variable	line:19
+field	../experiment/migrations/0012_auto_20170717_1535.py	/^            field=models.CharField(default='', max_length=200, verbose_name='Answer Choices (separated by commas)'),$/;"	kind:variable	line:26
+field	../experiment/migrations/0013_auto_20170717_1639.py	/^            field=models.CharField(blank=True, max_length=200, verbose_name='Answer Choices (separated by commas) \/ leave blank for open answer'),$/;"	kind:variable	line:18
+field	../experiment/migrations/0014_auto_20170717_1714.py	/^            field=models.FloatField(default=5.0, verbose_name='Mean (between signal\/noise distributions)'),$/;"	kind:variable	line:18
+field	../experiment/migrations/0015_auto_20170721_1444.py	/^            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='experiment.ExperimentResult'),$/;"	kind:variable	line:79
+fields	../experiment/admin.py	/^    fields = ('name', 'text', 'choices')$/;"	kind:variable	line:6
+fields	../experiment/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:18
+fields	../experiment/migrations/0003_auto_20170622_1634.py	/^import colorfield.fields$/;"	kind:namespace	line:5
+fields	../experiment/migrations/0004_auto_20170628_1443.py	/^            fields=[$/;"	kind:variable	line:18
+fields	../experiment/migrations/0004_auto_20170628_1443.py	/^            fields=[$/;"	kind:variable	line:25
+fields	../experiment/migrations/0004_auto_20170628_1443.py	/^            fields=[$/;"	kind:variable	line:34
+fields	../experiment/migrations/0005_auto_20170628_1556.py	/^import sortedm2m.fields$/;"	kind:namespace	line:6
+fields	../experiment/migrations/0007_auto_20170628_1614.py	/^import sortedm2m.fields$/;"	kind:namespace	line:6
+fields	../experiment/migrations/0009_experiment_module.py	/^            fields=[$/;"	kind:variable	line:19
+fields	../experiment/migrations/0009_experiment_module.py	/^            fields=[$/;"	kind:variable	line:26
+fields	../experiment/migrations/0010_experiment_modules.py	/^import sortedm2m.fields$/;"	kind:namespace	line:6
+fields	../experiment/migrations/0011_textblock.py	/^            fields=[$/;"	kind:variable	line:17
+fields	../experiment/migrations/0015_auto_20170721_1444.py	/^            fields=[$/;"	kind:variable	line:18
+fields	../experiment/migrations/0015_auto_20170721_1444.py	/^            fields=[$/;"	kind:variable	line:40
+fields	../experiment/migrations/0015_auto_20170721_1444.py	/^            fields=[$/;"	kind:variable	line:47
+fields	../experiment/migrations/0015_auto_20170721_1444.py	/^            fields=[$/;"	kind:variable	line:55
+fields	../experiment/migrations/0015_auto_20170721_1444.py	/^            fields=[$/;"	kind:variable	line:64
+fields	../experiment/models.py	/^from django.contrib.contenttypes import fields$/;"	kind:namespace	line:6
+fieldsets	../experiment/admin.py	/^    fieldsets = [$/;"	kind:variable	line:9
+generic	../experiment/views.py	/^from django.views import generic, View$/;"	kind:namespace	line:3
+get_context_data	../experiment/views.py	/^    def get_context_data(self, **kwargs):$/;"	kind:member	line:22
+get_wsgi_application	../responsibility/wsgi.py	/^from django.core.wsgi import get_wsgi_application$/;"	kind:namespace	line:12
+hit_alert	../experiment/models.py	/^    hit_alert = models.IntegerField('# Hits With Correct Alert')$/;"	kind:variable	line:119
+hit_no_alert	../experiment/models.py	/^    hit_no_alert = models.IntegerField('# Hits With Incorrect Alert')$/;"	kind:variable	line:123
+include	../responsibility/urls.py	/^from django.conf.urls import include, url$/;"	kind:namespace	line:16
+initial	../experiment/migrations/0001_initial.py	/^    initial = True$/;"	kind:variable	line:10
+js	../experiment/admin.py	/^        js = ("experiment\/experiment_condition_admin.js",)$/;"	kind:variable	line:19
+json	../experiment/views.py	/^import json$/;"	kind:namespace	line:10
+manage.py	../manage.py	1;"	kind:file	line:1
+math	../experiment/views.py	/^import math$/;"	kind:namespace	line:9
+mean	../experiment/models.py	/^    mean = models.FloatField('Mean (between signal\/noise distributions)', default=5.0)$/;"	kind:variable	line:54
+method_decorator	../experiment/views.py	/^from django.utils.decorators import method_decorator$/;"	kind:namespace	line:6
+migrations	../experiment/migrations/0001_initial.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0003_auto_20170622_1634.py	/^from django.db import migrations$/;"	kind:namespace	line:6
+migrations	../experiment/migrations/0004_auto_20170628_1443.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0005_auto_20170628_1556.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0006_auto_20170628_1613.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0007_auto_20170628_1614.py	/^from django.db import migrations$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0009_experiment_module.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0010_experiment_modules.py	/^from django.db import migrations$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0011_textblock.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0012_auto_20170717_1535.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0013_auto_20170717_1639.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0014_auto_20170717_1714.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+migrations	../experiment/migrations/0015_auto_20170721_1444.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+miss_alert	../experiment/models.py	/^    miss_alert = models.IntegerField('# Misses With Correct Alert')$/;"	kind:variable	line:120
+miss_no_alert	../experiment/models.py	/^    miss_no_alert = models.IntegerField('# Misses With Incorrect Alert')$/;"	kind:variable	line:124
+model	../experiment/views.py	/^    model = Experiment$/;"	kind:variable	line:15
+model	../experiment/views.py	/^    model = Experiment$/;"	kind:variable	line:20
+model_name	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:16
+model_name	../experiment/migrations/0003_auto_20170622_1634.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:17
+model_name	../experiment/migrations/0003_auto_20170622_1634.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:22
+model_name	../experiment/migrations/0003_auto_20170622_1634.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:27
+model_name	../experiment/migrations/0004_auto_20170628_1443.py	/^            model_name='choice',$/;"	kind:variable	line:41
+model_name	../experiment/migrations/0005_auto_20170628_1556.py	/^            model_name='choice',$/;"	kind:variable	line:22
+model_name	../experiment/migrations/0005_auto_20170628_1556.py	/^            model_name='questionnaire',$/;"	kind:variable	line:27
+model_name	../experiment/migrations/0006_auto_20170628_1613.py	/^            model_name='questionnaire',$/;"	kind:variable	line:16
+model_name	../experiment/migrations/0007_auto_20170628_1614.py	/^            model_name='questionnaire',$/;"	kind:variable	line:17
+model_name	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:16
+model_name	../experiment/migrations/0010_experiment_modules.py	/^            model_name='experiment',$/;"	kind:variable	line:17
+model_name	../experiment/migrations/0012_auto_20170717_1535.py	/^            model_name='choice',$/;"	kind:variable	line:16
+model_name	../experiment/migrations/0012_auto_20170717_1535.py	/^            model_name='question',$/;"	kind:variable	line:20
+model_name	../experiment/migrations/0012_auto_20170717_1535.py	/^            model_name='question',$/;"	kind:variable	line:24
+model_name	../experiment/migrations/0013_auto_20170717_1639.py	/^            model_name='question',$/;"	kind:variable	line:16
+model_name	../experiment/migrations/0014_auto_20170717_1714.py	/^            model_name='experimentcondition',$/;"	kind:variable	line:16
+model_name	../experiment/migrations/0015_auto_20170721_1444.py	/^            model_name='blockresult',$/;"	kind:variable	line:77
+models	../experiment/migrations/0001_initial.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0004_auto_20170628_1443.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0004_auto_20170628_1443.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+models	../experiment/migrations/0005_auto_20170628_1556.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0006_auto_20170628_1613.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0009_experiment_module.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0009_experiment_module.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+models	../experiment/migrations/0011_textblock.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0012_auto_20170717_1535.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0013_auto_20170717_1639.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0014_auto_20170717_1714.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0015_auto_20170721_1444.py	/^from django.db import migrations, models$/;"	kind:namespace	line:5
+models	../experiment/migrations/0015_auto_20170721_1444.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
+models	../experiment/models.py	/^from django.db import models$/;"	kind:namespace	line:1
+models.py	../experiment/models.py	1;"	kind:file	line:1
+module	../experiment/models.py	/^    module = fields.GenericRelation(Module)$/;"	kind:variable	line:27
+module	../experiment/models.py	/^    module = fields.GenericRelation(Module)$/;"	kind:variable	line:70
+module	../experiment/models.py	/^    module = fields.GenericRelation(Module)$/;"	kind:variable	line:85
+modules	../experiment/models.py	/^    modules = SortedManyToManyField('Module')$/;"	kind:variable	line:10
+name	../experiment/apps.py	/^    name = 'experiment'$/;"	kind:variable	line:5
+name	../experiment/migrations/0001_initial.py	/^            name='ExperimentCondition',$/;"	kind:variable	line:17
+name	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^            name='trial_delay',$/;"	kind:variable	line:17
+name	../experiment/migrations/0003_auto_20170622_1634.py	/^            name='alert_noise_color',$/;"	kind:variable	line:23
+name	../experiment/migrations/0003_auto_20170622_1634.py	/^            name='alert_signal_color',$/;"	kind:variable	line:28
+name	../experiment/migrations/0004_auto_20170628_1443.py	/^            name='Choice',$/;"	kind:variable	line:17
+name	../experiment/migrations/0004_auto_20170628_1443.py	/^            name='Question',$/;"	kind:variable	line:24
+name	../experiment/migrations/0004_auto_20170628_1443.py	/^            name='Questionnaire',$/;"	kind:variable	line:33
+name	../experiment/migrations/0004_auto_20170628_1443.py	/^            name='question',$/;"	kind:variable	line:42
+name	../experiment/migrations/0005_auto_20170628_1556.py	/^            name='choice',$/;"	kind:variable	line:18
+name	../experiment/migrations/0005_auto_20170628_1556.py	/^            name='order',$/;"	kind:variable	line:23
+name	../experiment/migrations/0005_auto_20170628_1556.py	/^            name='questions',$/;"	kind:variable	line:28
+name	../experiment/migrations/0006_auto_20170628_1613.py	/^            name='questions',$/;"	kind:variable	line:17
+name	../experiment/migrations/0007_auto_20170628_1614.py	/^            name='questions',$/;"	kind:variable	line:18
+name	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^            name='num_dec_places',$/;"	kind:variable	line:17
+name	../experiment/migrations/0009_experiment_module.py	/^            name='Experiment',$/;"	kind:variable	line:18
+name	../experiment/migrations/0009_experiment_module.py	/^            name='Module',$/;"	kind:variable	line:25
+name	../experiment/migrations/0010_experiment_modules.py	/^            name='modules',$/;"	kind:variable	line:18
+name	../experiment/migrations/0011_textblock.py	/^            name='TextBlock',$/;"	kind:variable	line:16
+name	../experiment/migrations/0012_auto_20170717_1535.py	/^            name='Choice',$/;"	kind:variable	line:30
+name	../experiment/migrations/0012_auto_20170717_1535.py	/^            name='answer',$/;"	kind:variable	line:21
+name	../experiment/migrations/0012_auto_20170717_1535.py	/^            name='choices',$/;"	kind:variable	line:25
+name	../experiment/migrations/0012_auto_20170717_1535.py	/^            name='question',$/;"	kind:variable	line:17
+name	../experiment/migrations/0013_auto_20170717_1639.py	/^            name='choices',$/;"	kind:variable	line:17
+name	../experiment/migrations/0014_auto_20170717_1714.py	/^            name='mean',$/;"	kind:variable	line:17
+name	../experiment/migrations/0015_auto_20170721_1444.py	/^            name='BlockResult',$/;"	kind:variable	line:17
+name	../experiment/migrations/0015_auto_20170721_1444.py	/^            name='ExperimentResult',$/;"	kind:variable	line:39
+name	../experiment/migrations/0015_auto_20170721_1444.py	/^            name='QuestionResult',$/;"	kind:variable	line:54
+name	../experiment/migrations/0015_auto_20170721_1444.py	/^            name='QuestionnaireResult',$/;"	kind:variable	line:46
+name	../experiment/migrations/0015_auto_20170721_1444.py	/^            name='TrialResult',$/;"	kind:variable	line:63
+name	../experiment/migrations/0015_auto_20170721_1444.py	/^            name='experiment_result',$/;"	kind:variable	line:78
+name	../experiment/models.py	/^    name = models.CharField('Name of Experiment Condition', max_length=200)$/;"	kind:variable	line:40
+name	../experiment/models.py	/^    name = models.CharField('Name of Experiment', max_length=200)$/;"	kind:variable	line:9
+name	../experiment/models.py	/^    name = models.CharField('Name of Module', max_length=200)$/;"	kind:variable	line:16
+name	../experiment/models.py	/^    name = models.CharField('Name of Question', max_length=200)$/;"	kind:variable	line:98
+name	../experiment/models.py	/^    name = models.CharField('Name of Questionnaire', max_length=200)$/;"	kind:variable	line:83
+name	../experiment/models.py	/^    name = models.CharField('Name of Text Block', max_length=200)$/;"	kind:variable	line:25
+new_name	../experiment/migrations/0003_auto_20170622_1634.py	/^            new_name='display_trial_num',$/;"	kind:variable	line:19
+num_dec_places	../experiment/models.py	/^    num_dec_places = models.IntegerField('# Decimal Places to Use for Stimulus', default=1)$/;"	kind:variable	line:58
+num_trial	../experiment/models.py	/^    num_trial = models.IntegerField('# of Trial in Block')$/;"	kind:variable	line:107
+num_trials	../experiment/models.py	/^    num_trials = models.IntegerField('# Trials', default=5)$/;"	kind:variable	line:41
+object_id	../experiment/models.py	/^    object_id = models.PositiveIntegerField()$/;"	kind:variable	line:18
+old_name	../experiment/migrations/0003_auto_20170622_1634.py	/^            old_name='display_num_trial',$/;"	kind:variable	line:18
+operations	../experiment/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:15
+operations	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0003_auto_20170622_1634.py	/^    operations = [$/;"	kind:variable	line:15
+operations	../experiment/migrations/0004_auto_20170628_1443.py	/^    operations = [$/;"	kind:variable	line:15
+operations	../experiment/migrations/0005_auto_20170628_1556.py	/^    operations = [$/;"	kind:variable	line:16
+operations	../experiment/migrations/0006_auto_20170628_1613.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0007_auto_20170628_1614.py	/^    operations = [$/;"	kind:variable	line:15
+operations	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0009_experiment_module.py	/^    operations = [$/;"	kind:variable	line:16
+operations	../experiment/migrations/0010_experiment_modules.py	/^    operations = [$/;"	kind:variable	line:15
+operations	../experiment/migrations/0011_textblock.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0012_auto_20170717_1535.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0013_auto_20170717_1639.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0014_auto_20170717_1714.py	/^    operations = [$/;"	kind:variable	line:14
+operations	../experiment/migrations/0015_auto_20170721_1444.py	/^    operations = [$/;"	kind:variable	line:15
+options	../experiment/migrations/0005_auto_20170628_1556.py	/^            options={'ordering': ('order',)},$/;"	kind:variable	line:19
+os	../manage.py	/^import os$/;"	kind:namespace	line:2
+os	../responsibility/settings.py	/^import os$/;"	kind:namespace	line:13
+os	../responsibility/wsgi.py	/^import os$/;"	kind:namespace	line:10
+outcome	../experiment/models.py	/^    outcome = models.CharField('Outcome (Hit\/Miss\/CR\/FA)', max_length=200)$/;"	kind:variable	line:113
+p_fa_alert	../experiment/models.py	/^    p_fa_alert = models.FloatField('Proportion of FA (out of all noise) With Correct Alert')$/;"	kind:variable	line:128
+p_fa_no_alert	../experiment/models.py	/^    p_fa_no_alert = models.FloatField('Proportion of FA (out of all noise) With Incorrect Alert')$/;"	kind:variable	line:130
+p_hit_alert	../experiment/models.py	/^    p_hit_alert = models.FloatField('Proportion of Hits (out of all signals) With Correct Alert')$/;"	kind:variable	line:127
+p_hit_no_alert	../experiment/models.py	/^    p_hit_no_alert = models.FloatField('Proportion of Hits (out of all signals) With Incorrect Alert')$/;"	kind:variable	line:129
+p_signal	../experiment/models.py	/^    p_signal = models.FloatField('Probability of Signal', default=0.5)$/;"	kind:variable	line:42
+post	../experiment/views.py	/^    def post(self, request):$/;"	kind:member	line:48
+preserve_default	../experiment/migrations/0012_auto_20170717_1535.py	/^            preserve_default=False,$/;"	kind:variable	line:27
+question	../experiment/models.py	/^    question = models.ForeignKey('Question')$/;"	kind:variable	line:135
+questionnaire	../experiment/models.py	/^    questionnaire = models.ForeignKey('Questionnaire')$/;"	kind:variable	line:140
+questionnaire_result	../experiment/models.py	/^    questionnaire_result = models.ForeignKey('QuestionnaireResult')$/;"	kind:variable	line:136
+questions	../experiment/models.py	/^    questions = SortedManyToManyField('Question')$/;"	kind:variable	line:84
+random	../experiment/views.py	/^import random$/;"	kind:namespace	line:8
+render	../experiment/views.py	/^from django.shortcuts import render$/;"	kind:namespace	line:1
+response	../experiment/models.py	/^    response = models.BooleanField('User Response Signal\/Noise')$/;"	kind:variable	line:112
+response_time	../experiment/models.py	/^    response_time = models.FloatField('Response Time (in seconds)')$/;"	kind:variable	line:109
+rt_hit	../experiment/models.py	/^    rt_hit = models.FloatField('Average Response Time for Hit')$/;"	kind:variable	line:131
+rt_miss	../experiment/models.py	/^    rt_miss = models.FloatField('Average Response Time for Miss')$/;"	kind:variable	line:132
+save	../experiment/models.py	/^    def save(self, *args, **kwargs):$/;"	kind:member	line:32
+save	../experiment/models.py	/^    def save(self, *args, **kwargs):$/;"	kind:member	line:75
+save	../experiment/models.py	/^    def save(self, *args, **kwargs):$/;"	kind:member	line:90
+score	../experiment/models.py	/^    score = models.FloatField('Cumulative Score')$/;"	kind:variable	line:118
+sd	../experiment/models.py	/^    sd = models.FloatField('Standard Deviation', default=0.5)$/;"	kind:variable	line:55
+serializers	../experiment/views.py	/^from django.core import serializers$/;"	kind:namespace	line:4
+settings.py	../responsibility/settings.py	1;"	kind:file	line:1
+signal	../experiment/models.py	/^    signal = models.BooleanField('Stimulus Signal\/Noise')$/;"	kind:variable	line:110
+site_header	../experiment/admin.py	/^    site_header = 'Experiment Administration'$/;"	kind:variable	line:22
+site_title	../experiment/admin.py	/^    site_title = 'Responsibility Experiment Administration'$/;"	kind:variable	line:23
+sortedm2m	../experiment/migrations/0005_auto_20170628_1556.py	/^import sortedm2m.fields$/;"	kind:namespace	line:6
+sortedm2m	../experiment/migrations/0007_auto_20170628_1614.py	/^import sortedm2m.fields$/;"	kind:namespace	line:6
+sortedm2m	../experiment/migrations/0010_experiment_modules.py	/^import sortedm2m.fields$/;"	kind:namespace	line:6
+stimulus	../experiment/models.py	/^    stimulus = models.CharField('Choice of Stimulus', max_length=200, choices=stimulus_choices, default='num')$/;"	kind:variable	line:57
+stimulus_choices	../experiment/models.py	/^    stimulus_choices = (('num', 'Numbers'), ('rect', 'Rectangles'))$/;"	kind:variable	line:56
+stimulus_delay	../experiment/models.py	/^    stimulus_delay = models.FloatField('Stimulus Delay (seconds)', default=0.0)$/;"	kind:variable	line:62
+stimulus_duration	../experiment/models.py	/^    stimulus_duration = models.FloatField('Stimulus Duration (seconds)', default=5.0)$/;"	kind:variable	line:61
+sys	../manage.py	/^import sys$/;"	kind:namespace	line:3
+template_name	../experiment/views.py	/^    template_name = "experiment\/experiment.html"$/;"	kind:variable	line:19
+template_name	../experiment/views.py	/^    template_name = "experiment\/index.html"$/;"	kind:variable	line:14
+tests.py	../experiment/tests.py	1;"	kind:file	line:1
+text	../experiment/models.py	/^    text = models.CharField('Question Text', max_length=200)$/;"	kind:variable	line:99
+text	../experiment/models.py	/^    text = models.TextField()$/;"	kind:variable	line:26
+time	../experiment/models.py	/^    time = models.DateTimeField('DateTime at End of Trial')$/;"	kind:variable	line:108
+timedelta	../experiment/models.py	/^from datetime import timedelta$/;"	kind:namespace	line:2
+trial_delay	../experiment/models.py	/^    trial_delay = models.FloatField('Delay Between Trials (seconds)', default=3.0)$/;"	kind:variable	line:66
+trial_duration	../experiment/models.py	/^    trial_duration = models.FloatField('Total Trial Duration (seconds)', default=5.0)$/;"	kind:variable	line:65
+unicode_literals	../experiment/migrations/0001_initial.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0002_experimentcondition_trial_delay.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0003_auto_20170622_1634.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0004_auto_20170628_1443.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0005_auto_20170628_1556.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0006_auto_20170628_1613.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0007_auto_20170628_1614.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0008_experimentcondition_num_dec_places.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0009_experiment_module.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0010_experiment_modules.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0011_textblock.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0012_auto_20170717_1535.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0013_auto_20170717_1639.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0014_auto_20170717_1714.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+unicode_literals	../experiment/migrations/0015_auto_20170721_1444.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:3
+url	../experiment/urls.py	/^from django.conf.urls import url$/;"	kind:namespace	line:1
+url	../responsibility/urls.py	/^from django.conf.urls import include, url$/;"	kind:namespace	line:16
+urlpatterns	../experiment/urls.py	/^urlpatterns = [$/;"	kind:variable	line:6
+urlpatterns	../responsibility/urls.py	/^urlpatterns = [$/;"	kind:variable	line:20
+urls.py	../experiment/urls.py	1;"	kind:file	line:1
+urls.py	../responsibility/urls.py	1;"	kind:file	line:1
+v_cr_n	../experiment/models.py	/^    v_cr_n = models.FloatField(default=0.0)$/;"	kind:variable	line:48
+v_cr_s	../experiment/models.py	/^    v_cr_s = models.FloatField(default=0.0)$/;"	kind:variable	line:47
+v_fa_n	../experiment/models.py	/^    v_fa_n = models.FloatField(default=0.0)$/;"	kind:variable	line:50
+v_fa_s	../experiment/models.py	/^    v_fa_s = models.FloatField(default=0.0)$/;"	kind:variable	line:49
+v_hit_n	../experiment/models.py	/^    v_hit_n = models.FloatField(default=1.5)$/;"	kind:variable	line:44
+v_hit_s	../experiment/models.py	/^    v_hit_s = models.FloatField(default=1.0)$/;"	kind:variable	line:43
+v_miss_n	../experiment/models.py	/^    v_miss_n = models.FloatField(default=-1.0)$/;"	kind:variable	line:46
+v_miss_s	../experiment/models.py	/^    v_miss_s = models.FloatField(default=-1.5)$/;"	kind:variable	line:45
+views	../experiment/urls.py	/^from . import views$/;"	kind:namespace	line:3
+views.py	../experiment/views.py	1;"	kind:file	line:1
+wsgi.py	../responsibility/wsgi.py	1;"	kind:file	line:1

@@ -50,7 +50,7 @@ function renderModule(moduleNum) {
         });
         results['experiment_blocks'] = JSON.stringify(results['experiment_blocks'])
         results['questionnaires'] = JSON.stringify(results['questionnaires'])
-        $.post("/experiment/postresults/", results, function() {
+        $.post("/experiment/results/", results, function() {
             $(".content").html('<h5>Your results have been successfully uploaded. Thank you for your participation.</h5>');
         });
     }
@@ -220,6 +220,7 @@ function changeOutcomeText(o) {
 
 function completeTrial(b) {
     trialEndTime = Date.now();
+    $("button").prop("disabled", true);
     if (trialNum < obj.num_trials) {
         if (b !== "N/A") {
             responses.push(b);
@@ -260,6 +261,7 @@ function completeTrial(b) {
             $(".rectangle").height(stimuli[trialNum] + "%");
             randomizeRectPosition();
             setTimeout(function() {
+                $("button").prop("disabled", false);
                 trialBeginTime = Date.now();
                 setTimeout(showStimulus, obj.stimulus_delay * 1000);
                 stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);

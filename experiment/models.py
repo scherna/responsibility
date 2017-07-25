@@ -112,6 +112,9 @@ class TrialResult(models.Model):
     response = models.BooleanField('User Response Signal/Noise')
     outcome = models.CharField('Outcome (Hit/Miss/CR/FA)', max_length=200)
 
+    def __str__(self):
+        return str(self.id)
+
 class BlockResult(models.Model):
     experiment_condition = models.ForeignKey('ExperimentCondition')
     experiment_result = models.ForeignKey('ExperimentResult')
@@ -131,14 +134,26 @@ class BlockResult(models.Model):
     rt_hit = models.FloatField('Average Response Time for Hit')
     rt_miss = models.FloatField('Average Response Time for Miss')
 
+    def __str__(self):
+        return str(self.id)
+
 class QuestionResult(models.Model):
     question = models.ForeignKey('Question')
     questionnaire_result = models.ForeignKey('QuestionnaireResult')
     answer = models.CharField('User Response', max_length=200)
 
+    def __str__(self):
+        return str(self.id)
+
 class QuestionnaireResult(models.Model):
     questionnaire = models.ForeignKey('Questionnaire')
     experiment_result = models.ForeignKey('ExperimentResult')
 
+    def __str__(self):
+        return str(self.id)
+
 class ExperimentResult(models.Model):
     experiment = models.ForeignKey('Experiment')
+
+    def __str__(self):
+        return str(self.id)

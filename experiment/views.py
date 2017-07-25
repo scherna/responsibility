@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template.defaultfilters import slugify
 from django.views import generic, View
 from django.core import serializers
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
 from .models import *
+import csv
 import random
 import math
 import json
@@ -44,10 +46,10 @@ class ExperimentView(generic.DetailView):
         context['modules'] = json.dumps(modules)
         return context
 
-class PostResultsView(View):
+class ResultsView(View):
+
     def post(self, request):
         data = request.POST
-        print(data)
         experiment_instance = Experiment.objects.get(pk=data['experiment_id'])
         experiment_result_instance = ExperimentResult(experiment=experiment_instance)
         experiment_result_instance.save()
@@ -84,3 +86,32 @@ class PostResultsView(View):
                 trial_result_instance = TrialResult(block_result=block_result_instance, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'])
                 trial_result_instance.save()
         return HttpResponse('Success!')
+
+    def get(self, request):
+        data = request.GET
+        model = None
+        if data['type'] == 'trial':
+            model = TrialResult
+        elif data['type'] == 'block':
+            model = BlockResult
+        elif data['type'] == 'question':
+            model = QuestionResult
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=%s.csv' % slugify(model.__name__)
+        writer = csv.writer(response)
+        # Write headers to CSV file
+        headers = []
+        for field in model._meta.fields:
+            headers.append(field.name)
+        writer.writerow(headers)
+        # Write data to CSV file
+        for obj in model.objects.all():
+            row = []
+            for field in headers:
+                val = getattr(obj, field)
+                if callable(val):
+                    val = val()
+                row.append(val)
+            writer.writerow(row)
+        # Return CSV file to browser as download
+        return response
