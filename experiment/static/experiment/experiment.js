@@ -14,7 +14,7 @@ var trialBeginTime;
 var trialEndTime;
 var results = {
     'experiment_id': experimentId,
-    'experiment_blocks': [],
+    'blocks': [],
     'questionnaires': [],
 };
 
@@ -26,13 +26,13 @@ function renderModule(moduleNum) {
     if (moduleNum < modules.length) {
         var module = modules[moduleNum];
         if (module.constructor === Array) {
-            if (module[0].model === "experiment.textblock") {
-                renderTextBlock(module);
+            if (module[0].model === "experiment.text") {
+                renderText(module);
             }
         }
         else {
-            if (module.obj[0].model === 'experiment.experimentcondition') {
-                renderExperimentBlock(module);
+            if (module.obj[0].model === 'experiment.block') {
+                renderBlock(module);
             }
             else {
                 renderQuestionnaire(module);
@@ -48,7 +48,7 @@ function renderModule(moduleNum) {
                 }
             }
         });
-        results['experiment_blocks'] = JSON.stringify(results['experiment_blocks'])
+        results['blocks'] = JSON.stringify(results['blocks'])
         results['questionnaires'] = JSON.stringify(results['questionnaires'])
         $.post("/experiment/results/", results, function() {
             $(".content").html('<h5>Your results have been successfully uploaded. Thank you for your participation.</h5>');
@@ -103,7 +103,7 @@ function renderQuestionnaire(module) {
     });
 }
 
-function renderTextBlock(module) {
+function renderText(module) {
     var text = module[0].fields.text;
     $(".content").html(`<div class="columns intro-text">
                             <div class="column col-xl-3 hide-xs"></div>
@@ -118,7 +118,7 @@ function renderTextBlock(module) {
     });
 }
 
-function renderExperimentBlock(module) {
+function renderBlock(module) {
     obj = module.obj[0].fields;
     signals = module.signals;
     alerts = module.alerts;
@@ -168,7 +168,7 @@ function renderExperimentBlock(module) {
     alertTimeout = setTimeout(hideAlert, (obj.alert_delay + obj.alert_duration) * 1000);
     trialTimeout = setTimeout(completeTrial, obj.trial_duration * 1000, "N/A");
     trialBeginTime = Date.now();
-    results['experiment_blocks'].push({'id':module.obj[0].pk, 'score':0, 'trials':[]});
+    results['blocks'].push({'id':module.obj[0].pk, 'score':0, 'trials':[]});
     $(".button-accept").click(function() {
         clearTimeout(stimulusTimeout);
         hideStimulus();
@@ -202,16 +202,16 @@ function changeOutcomeText(o) {
     }
     switch (o.slice(0, -2)) {
         case "hit":
-            $(".outcome").text("Hit!");
+            $(".outcome").text("Correct!");
             break;
         case "fa":
-            $(".outcome").text("False alarm...");
+            $(".outcome").text("Incorrect...");
             break;
         case "miss":
-            $(".outcome").text("Miss...");
+            $(".outcome").text("Incorrect...");
             break;
         case "cr":
-            $(".outcome").text("Correct rejection!");
+            $(".outcome").text("Correct!");
             break;
         default:
             $(".outcome").text("Did not complete in time...");
@@ -227,9 +227,10 @@ function completeTrial(b) {
             var outcome = outcomeMap[b][signals[trialNum]][alerts[trialNum]];
             outcomes.push(outcome);
             changeOutcomeText(outcome);
-            score += obj["v_" + outcome];
+            var points = obj["v_" + outcome];
+            score += points;
             $(".score span").text(score);
-            results['experiment_blocks'][results['experiment_blocks'].length-1]['trials'].push({
+            results['blocks'][results['blocks'].length-1]['trials'].push({
                 'trial_num': trialNum, 
                 'time': trialEndTime, 
                 'response_time': (trialEndTime-trialBeginTime), 
@@ -237,13 +238,14 @@ function completeTrial(b) {
                 'alert': alerts[trialNum], 
                 'response': b, 
                 'outcome': outcome,
+                'points': points,
             });
         }
         else {
             responses.push(b);
             outcomes.push(b);
             changeOutcomeText(b);
-            results['experiment_blocks'][results['experiment_blocks'].length-1]['trials'].push({
+            results['blocks'][results['blocks'].length-1]['trials'].push({
                 'trial_num': trialNum, 
                 'time': trialEndTime, 
                 'response_time': (trialEndTime-trialBeginTime), 
@@ -251,6 +253,7 @@ function completeTrial(b) {
                 'alert': alerts[trialNum], 
                 'response': b, 
                 'outcome': b,
+                'points': 0,
             });
         }
         if (trialNum < obj.num_trials - 1) {
@@ -271,7 +274,7 @@ function completeTrial(b) {
             }, obj.trial_delay * 1000);
         }
         else {
-            results['experiment_blocks'][results['experiment_blocks'].length-1]['score'] = score;
+            results['blocks'][results['blocks'].length-1]['score'] = score;
             trialNum++;
             moduleNum++;
             renderModule(moduleNum);

@@ -4,6 +4,8 @@ from colorfield.fields import ColorField
 from sortedm2m.fields import SortedManyToManyField
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import fields
+from django.urls import reverse
+from django.utils.html import format_html
 
 class Experiment(models.Model):
     name = models.CharField('Name of Experiment', max_length=200)
@@ -13,16 +15,15 @@ class Experiment(models.Model):
         return self.name 
 
 class Module(models.Model):
-    name = models.CharField('Name of Module', max_length=200)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = fields.GenericForeignKey('content_type', 'object_id')
 
     def __str__(self):
-        return self.name 
+        return self.content_object.name 
 
-class TextBlock(models.Model):
-    name = models.CharField('Name of Text Block', max_length=200)
+class Text(models.Model):
+    name = models.CharField('Name of Text', max_length=200)
     text = models.TextField()
     module = fields.GenericRelation(Module)
 
@@ -31,13 +32,13 @@ class TextBlock(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            super(TextBlock, self).save(*args, **kwargs)
-            m = Module(content_object=self, name=self.name)
+            super(Text, self).save(*args, **kwargs)
+            m = Module(content_object=self)
             m.save()
-        super(TextBlock, self).save(*args, **kwargs)
+        super(Text, self).save(*args, **kwargs)
 
-class ExperimentCondition(models.Model):
-    name = models.CharField('Name of Experiment Condition', max_length=200)
+class Block(models.Model):
+    name = models.CharField('Name of Experiment Block', max_length=200)
     num_trials = models.IntegerField('# Trials', default=5)
     p_signal = models.FloatField('Probability of Signal', default=0.5)
     v_hit_s = models.FloatField(default=1.0)
@@ -74,10 +75,10 @@ class ExperimentCondition(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            super(ExperimentCondition, self).save(*args, **kwargs)
-            m = Module(content_object=self, name=self.name)
+            super(Block, self).save(*args, **kwargs)
+            m = Module(content_object=self)
             m.save()
-        super(ExperimentCondition, self).save(*args, **kwargs)
+        super(Block, self).save(*args, **kwargs)
 
 class Questionnaire(models.Model):
     name = models.CharField('Name of Questionnaire', max_length=200)
@@ -90,7 +91,7 @@ class Questionnaire(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             super(Questionnaire, self).save(*args, **kwargs)
-            m = Module(content_object=self, name=self.name)
+            m = Module(content_object=self)
             m.save()
         super(Questionnaire, self).save(*args, **kwargs)
 
@@ -104,33 +105,46 @@ class Question(models.Model):
 
 class TrialResult(models.Model):
     block_result = models.ForeignKey('BlockResult')
+    experiment_result = models.ForeignKey('ExperimentResult')
     num_trial = models.IntegerField('# of Trial in Block')
     time = models.DateTimeField('DateTime at End of Trial')
     response_time = models.FloatField('Response Time (in seconds)')
     signal = models.BooleanField('Stimulus Signal/Noise')
     alert = models.BooleanField('Alert Signal/Noise')
-    response = models.BooleanField('User Response Signal/Noise')
+    response = models.CharField('User Response Signal/Noise', max_length=200)
     outcome = models.CharField('Outcome (Hit/Miss/CR/FA)', max_length=200)
+    points = models.FloatField('Points from Trial')
 
     def __str__(self):
         return str(self.id)
 
 class BlockResult(models.Model):
-    experiment_condition = models.ForeignKey('ExperimentCondition')
+    block = models.ForeignKey('Block')
     experiment_result = models.ForeignKey('ExperimentResult')
-    score = models.FloatField('Cumulative Score')
-    hit_alert = models.IntegerField('# Hits With Correct Alert')
-    miss_alert = models.IntegerField('# Misses With Correct Alert')
-    fa_alert = models.IntegerField('# FA With Correct Alert')
-    cr_alert = models.IntegerField('# CR With Correct Alert')
-    hit_no_alert = models.IntegerField('# Hits With Incorrect Alert')
-    miss_no_alert = models.IntegerField('# Misses With Incorrect Alert')
-    fa_no_alert = models.IntegerField('# FA With Incorrect Alert')
-    cr_no_alert = models.IntegerField('# CR With Incorrect Alert')
-    p_hit_alert = models.FloatField('Proportion of Hits (out of all signals) With Correct Alert')
-    p_fa_alert = models.FloatField('Proportion of FA (out of all noise) With Correct Alert')
-    p_hit_no_alert = models.FloatField('Proportion of Hits (out of all signals) With Incorrect Alert')
-    p_fa_no_alert = models.FloatField('Proportion of FA (out of all noise) With Incorrect Alert')
+    cum_score = models.FloatField('Cumulative Score')
+    hits = models.IntegerField('# Hits')
+    misses = models.IntegerField('# Misses')
+    fa = models.IntegerField('# FA')
+    cr = models.IntegerField('# CR')
+    p_hit = models.FloatField('Proportion of Hits (out of all signals)')
+    p_miss = models.FloatField('Proportion of Misses (out of all signals)')
+    p_fa = models.FloatField('Proportion of FA (out of all noise)')
+    p_cr = models.FloatField('Proportion of CR (out of all noise)')
+    d_prime = models.FloatField("Calculated User d'")
+    beta = models.FloatField("Calculated User beta")
+    c = models.FloatField("Calculated User c'")
+    hits_alertcorrect = models.IntegerField('# Hits With Correct Alert')
+    misses_alertcorrect = models.IntegerField('# Misses With Correct Alert')
+    fa_alertcorrect = models.IntegerField('# FA With Correct Alert')
+    cr_alertcorrect = models.IntegerField('# CR With Correct Alert')
+    hits_alertincorrect = models.IntegerField('# Hits With Incorrect Alert')
+    misses_alertincorrect = models.IntegerField('# Misses With Incorrect Alert')
+    fa_alertincorrect = models.IntegerField('# FA With Incorrect Alert')
+    cr_alertincorrect = models.IntegerField('# CR With Incorrect Alert')
+    p_hit_alertcorrect = models.FloatField('Proportion of Hits (out of all signals) With Correct Alert')
+    p_fa_alertcorrect = models.FloatField('Proportion of FA (out of all noise) With Correct Alert')
+    p_hit_alertincorrect = models.FloatField('Proportion of Hits (out of all signals) With Incorrect Alert')
+    p_fa_alertincorrect = models.FloatField('Proportion of FA (out of all noise) With Incorrect Alert')
     rt_hit = models.FloatField('Average Response Time for Hit')
     rt_miss = models.FloatField('Average Response Time for Miss')
 
@@ -157,3 +171,14 @@ class ExperimentResult(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class OutputFile(models.Model):
+    name = models.CharField('Name of File', max_length=200)
+    header = models.CharField('CSV Headers', max_length=400)
+    text = models.CharField('CSV Text', max_length=2000)
+
+    def __str__(self):
+        return self.name
+
+    def download_url(self):
+        return format_html('<a href="{}">Download</a>', reverse('experiment:output', args=[self.id]))

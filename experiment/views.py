@@ -16,7 +16,7 @@ class IndexView(generic.ListView):
     template_name = "experiment/index.html"
     model = Experiment
 
-@method_decorator(ensure_csrf_cookie, name="dispatch")
+
 class ExperimentView(generic.DetailView):
     template_name = "experiment/experiment.html"
     model = Experiment
@@ -27,7 +27,7 @@ class ExperimentView(generic.DetailView):
         modules = []
         for module in obj.modules.all():
             content = module.content_object
-            if type(content) is ExperimentCondition:
+            if type(content) is Block:
                 user_mean_s = content.mean + 0.5 * content.d_user * content.sd
                 user_mean_n = content.mean - 0.5 * content.d_user * content.sd
                 alert_mean_s = content.mean + 0.5 * content.d_alert * content.sd
@@ -41,7 +41,7 @@ class ExperimentView(generic.DetailView):
             elif type(content) is Questionnaire:
                 questions = [[q.text, q.choices.split(","), q.id] for q in content.questions.all()]
                 modules.append({"obj":json.loads(serializers.serialize("json", [content])), "questions":questions})
-            elif type(content) is TextBlock:
+            elif type(content) is Text:
                 modules.append(json.loads(serializers.serialize("json", [content])))
         context['modules'] = json.dumps(modules)
         return context
@@ -53,7 +53,7 @@ class ResultsView(View):
         experiment_instance = Experiment.objects.get(pk=data['experiment_id'])
         experiment_result_instance = ExperimentResult(experiment=experiment_instance)
         experiment_result_instance.save()
-        experiment_blocks = json.loads(data['experiment_blocks'])
+        blocks = json.loads(data['blocks'])
         questionnaires = json.loads(data['questionnaires'])
         for questionnaire in questionnaires:
             questionnaire_instance = Questionnaire.objects.get(pk=questionnaire['id'])
@@ -63,55 +63,100 @@ class ResultsView(View):
                 question_instance = Question.objects.get(pk=question['id'])
                 question_result_instance = QuestionResult(question=question_instance, questionnaire_result=questionnaire_result_instance, answer=question['answer'])
                 question_result_instance.save()
-        for experiment_block in experiment_blocks:
-            experiment_condition_instance = ExperimentCondition.objects.get(pk=experiment_block['id'])
-            hit_alert_i = sum([1 if t['outcome'] == 'hit_s' else 0 for t in experiment_block['trials']])
-            miss_alert_i = sum([1 if t['outcome'] == 'miss_s' else 0 for t in experiment_block['trials']])
-            fa_alert_i = sum([1 if t['outcome'] == 'fa_n' else 0 for t in experiment_block['trials']])
-            cr_alert_i = sum([1 if t['outcome'] == 'cr_n' else 0 for t in experiment_block['trials']])
-            hit_no_alert_i = sum([1 if t['outcome'] == 'hit_n' else 0 for t in experiment_block['trials']])
-            miss_no_alert_i = sum([1 if t['outcome'] == 'miss_n' else 0 for t in experiment_block['trials']])
-            fa_no_alert_i = sum([1 if t['outcome'] == 'fa_s' else 0 for t in experiment_block['trials']])
-            cr_no_alert_i = sum([1 if t['outcome'] == 'cr_s' else 0 for t in experiment_block['trials']])
-            p_hit_alert_i = float(hit_alert_i) / (hit_alert_i + miss_alert_i) if (hit_alert_i + miss_alert_i > 0) else 0
-            p_fa_alert_i = float(fa_alert_i) / (fa_alert_i + cr_alert_i) if (fa_alert_i + cr_alert_i > 0) else 0
-            p_hit_no_alert_i = float(hit_no_alert_i) / (hit_no_alert_i + miss_no_alert_i) if (hit_no_alert_i + miss_no_alert_i > 0) else 0
-            p_fa_no_alert_i = float(fa_no_alert_i) / (fa_no_alert_i + cr_no_alert_i) if (fa_no_alert_i + cr_no_alert_i > 0) else 0
-            rt_hit_i = sum([float(t['response_time'])/1000 if t['outcome'][:-2] == 'hit' else 0 for t in experiment_block['trials']])/len(experiment_block['trials'])
-            rt_miss_i = sum([float(t['response_time'])/1000 if t['outcome'][:-2] == 'miss' else 0 for t in experiment_block['trials']])/len(experiment_block['trials'])
-            block_result_instance = BlockResult(experiment_condition=experiment_condition_instance, experiment_result=experiment_result_instance, score=experiment_block['score'], hit_alert=hit_alert_i, miss_alert=miss_alert_i, fa_alert=fa_alert_i, cr_alert=cr_alert_i, hit_no_alert=hit_no_alert_i, miss_no_alert=miss_no_alert_i, fa_no_alert=fa_no_alert_i, cr_no_alert=cr_no_alert_i, p_hit_alert=p_hit_alert_i, p_fa_alert=p_fa_alert_i, p_hit_no_alert=p_hit_no_alert_i, p_fa_no_alert=p_fa_no_alert_i, rt_hit=rt_hit_i, rt_miss=rt_miss_i)
+        for block in blocks:
+            block_instance = Block.objects.get(pk=block['id'])
+            hits_i = sum([1 if t['outcome'][:-2] == 'hit' else 0 for t in block['trials']])
+            misses_i = sum([1 if t['outcome'][:-2] == 'miss' else 0 for t in block['trials']])
+            fa_i = sum([1 if t['outcome'][:-2] == 'fa' else 0 for t in block['trials']])
+            cr_i = sum([1 if t['outcome'][:-2] == 'cr' else 0 for t in block['trials']])
+            p_hit_i = float(hits_i) / (hits_i + misses_i) if (hits_i + misses_i > 0) else 0
+            p_miss_i = float(misses_i) / (hits_i + misses_i) if (hits_i + misses_i > 0) else 0
+            p_fa_i = float(fa_i) / (fa_i + cr_i) if (fa_i + cr_i > 0) else 0
+            p_cr_i = float(cr_i) / (fa_i + cr_i) if (fa_i + cr_i > 0) else 0
+            if 0 < p_hit_i < 1:
+                z_hit_i = normal_CDF_inverse(p_hit_i)
+            elif p_hit_i < 1:
+                z_hit_i = normal_CDF_inverse(0.001)
+            else:
+                z_hit_i = normal_CDF_inverse(0.999)
+            if 0 < p_fa_i < 1:
+                z_fa_i = normal_CDF_inverse(p_fa_i)
+            elif p_fa_i < 1:
+                z_fa_i = normal_CDF_inverse(0.001)
+            else:
+                z_fa_i = normal_CDF_inverse(0.999)
+            d_prime_i = z_hit_i - z_fa_i
+            c_i = -0.5 * (z_hit_i + z_fa_i)
+            beta_i = math.exp(d_prime_i * c_i)
+            hits_alertcorrect_i = sum([1 if t['outcome'] == 'hit_s' else 0 for t in block['trials']])
+            misses_alertcorrect_i = sum([1 if t['outcome'] == 'miss_s' else 0 for t in block['trials']])
+            fa_alertcorrect_i = sum([1 if t['outcome'] == 'fa_n' else 0 for t in block['trials']])
+            cr_alertcorrect_i = sum([1 if t['outcome'] == 'cr_n' else 0 for t in block['trials']])
+            hits_alertincorrect_i = sum([1 if t['outcome'] == 'hit_n' else 0 for t in block['trials']])
+            misses_alertincorrect_i = sum([1 if t['outcome'] == 'miss_n' else 0 for t in block['trials']])
+            fa_alertincorrect_i = sum([1 if t['outcome'] == 'fa_s' else 0 for t in block['trials']])
+            cr_alertincorrect_i = sum([1 if t['outcome'] == 'cr_s' else 0 for t in block['trials']])
+            p_hit_alertcorrect_i = float(hits_alertcorrect_i) / (hits_alertcorrect_i + misses_alertcorrect_i) if (hits_alertcorrect_i + misses_alertcorrect_i > 0) else 0
+            p_fa_alertcorrect_i = float(fa_alertcorrect_i) / (fa_alertcorrect_i + cr_alertcorrect_i) if (fa_alertcorrect_i + cr_alertcorrect_i > 0) else 0
+            p_hit_alertincorrect_i = float(hits_alertincorrect_i) / (hits_alertincorrect_i + misses_alertincorrect_i) if (hits_alertincorrect_i + misses_alertincorrect_i > 0) else 0
+            p_fa_alertincorrect_i = float(fa_alertincorrect_i) / (fa_alertincorrect_i + cr_alertincorrect_i) if (fa_alertincorrect_i + cr_alertincorrect_i > 0) else 0
+            rt_hit_i = sum([float(t['response_time'])/1000 if t['outcome'][:-2] == 'hit' else 0 for t in block['trials']])/len(block['trials'])
+            rt_miss_i = sum([float(t['response_time'])/1000 if t['outcome'][:-2] == 'miss' else 0 for t in block['trials']])/len(block['trials'])
+            block_result_instance = BlockResult(block=block_instance, experiment_result=experiment_result_instance, cum_score=block['score'], hits=hits_i, misses=misses_i, fa=fa_i, cr=cr_i, p_hit=p_hit_i, p_miss=p_miss_i, p_fa=p_fa_i, p_cr=p_cr_i, d_prime=d_prime_i, beta=beta_i, c=c_i, hits_alertcorrect=hits_alertcorrect_i, misses_alertcorrect=misses_alertcorrect_i, fa_alertcorrect=fa_alertcorrect_i, cr_alertcorrect=cr_alertcorrect_i, hits_alertincorrect=hits_alertincorrect_i, misses_alertincorrect=misses_alertincorrect_i, fa_alertincorrect=fa_alertincorrect_i, cr_alertincorrect=cr_alertincorrect_i, p_hit_alertcorrect=p_hit_alertcorrect_i, p_fa_alertcorrect=p_fa_alertcorrect_i, p_hit_alertincorrect=p_hit_alertincorrect_i, p_fa_alertincorrect=p_fa_alertincorrect_i, rt_hit=rt_hit_i, rt_miss=rt_miss_i)
             block_result_instance.save()
-            for trial in experiment_block['trials']:
+            for trial in block['trials']:
                 time_i = datetime.fromtimestamp(float(trial['time'])/1000)
-                trial_result_instance = TrialResult(block_result=block_result_instance, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'])
+                trial_result_instance = TrialResult(block_result=block_result_instance, experiment_result=experiment_result_instance, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'], points=trial['points'])
                 trial_result_instance.save()
+        trial_output_header = "id,experiment name,block name,trial num,datetime,response time,signal,alert,response,outcome,points"
+        trial_output_text = ";".join([",".join(str(v) for v in [t.id, experiment_instance.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for t in TrialResult.objects.filter(experiment_result=experiment_result_instance)])
+        trial_output_file = OutputFile(name="{}_Trials_{}.csv".format(experiment_instance.name.replace(" ", "_"), experiment_result_instance.id), text=trial_output_text, header=trial_output_header)
+        block_output_header = "id,experiment name,block name,cummulative score,hits,misses,fa,cr,p hit,p miss,p fa,p cr,d',beta,c,hits alertcorrect,misses alertcorrect,fa alertcorrect,cr alertcorrect,hits alertincorrect,misses alertincorrect,fa alertincorrect,cr alertincorrect,p hit alertcorrect,p fa alertcorrect,p hit alertincorrect,p fa alertincorrect,rt hit, rt miss"
+        block_output_text = ";".join([",".join(str(v) for v in [b.id, experiment_instance.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertcorrect, b.misses_alertcorrect, b.fa_alertcorrect, b.cr_alertcorrect, b.hits_alertincorrect, b.misses_alertincorrect, b.fa_alertincorrect, b.cr_alertincorrect, b.p_hit_alertcorrect, b.p_fa_alertcorrect, b.p_hit_alertincorrect, b.p_fa_alertincorrect, b.rt_hit, b.rt_miss]) for b in BlockResult.objects.filter(experiment_result=experiment_result_instance)])
+        block_output_file = OutputFile(name="{}_Blocks_{}.csv".format(experiment_instance.name.replace(" ", "_"), experiment_result_instance.id), text=block_output_text, header=block_output_header)
+        question_output_header = "id,experiment name,questionnaire name,question name,answer"
+        question_output_text = ";".join([",".join(str(v) for v in [q.id, experiment_instance.name, q.questionnaire_result.questionnaire.name, q.question.name, q.answer]) for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_instance)])
+        question_output_file = OutputFile(name="{}_Questions_{}.csv".format(experiment_instance.name.replace(" ", "_"), experiment_result_instance.id), text=question_output_text, header=question_output_header)
+        trial_output_file.save()
+        block_output_file.save()
+        question_output_file.save()
         return HttpResponse('Success!')
 
-    def get(self, request):
-        data = request.GET
-        model = None
-        if data['type'] == 'trial':
-            model = TrialResult
-        elif data['type'] == 'block':
-            model = BlockResult
-        elif data['type'] == 'question':
-            model = QuestionResult
+class OutputView(View):
+
+    def get(self, request, output_id):
+        output_file = OutputFile.objects.get(id=output_id)
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=%s.csv' % slugify(model.__name__)
+        response['Content-Disposition'] = 'attachment; filename={}'.format(output_file.name)
         writer = csv.writer(response)
         # Write headers to CSV file
-        headers = []
-        for field in model._meta.fields:
-            headers.append(field.name)
-        writer.writerow(headers)
+        writer.writerow(output_file.header.split(","))
         # Write data to CSV file
-        for obj in model.objects.all():
-            row = []
-            for field in headers:
-                val = getattr(obj, field)
-                if callable(val):
-                    val = val()
-                row.append(val)
-            writer.writerow(row)
+        for row in output_file.text.split(";"):
+            writer.writerow(row.split(","))
         # Return CSV file to browser as download
         return response
+
+#code borrowed from https://www.johndcook.com/blog/python_phi_inverse/
+def rational_approximation(t):
+ 
+    # Abramowitz and Stegun formula 26.2.23.
+    # The absolute value of the error should be less than 4.5 e-4.
+    c = [2.515517, 0.802853, 0.010328]
+    d = [1.432788, 0.189269, 0.001308]
+    numerator = (c[2]*t + c[1])*t + c[0]
+    denominator = ((d[2]*t + d[1])*t + d[0])*t + 1.0
+    return t - numerator / denominator
+ 
+#code borrowed from https://www.johndcook.com/blog/python_phi_inverse/
+def normal_CDF_inverse(p):
+ 
+    assert p > 0.0 and p < 1
+ 
+    # See article above for explanation of this section.
+    if p < 0.5:
+        # F^-1(p) = - G^-1(p)
+        return -rational_approximation( math.sqrt(-2.0*math.log(p)) )
+    else:
+        # F^-1(p) = G^-1(1-p)
+        return rational_approximation( math.sqrt(-2.0*math.log(1.0-p)) )

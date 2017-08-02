@@ -5,7 +5,7 @@ from .models import *
 class QuestionAdmin(admin.ModelAdmin):
     fields = ('name', 'text', 'choices')
 
-class ExperimentConditionAdmin(admin.ModelAdmin):
+class BlockAdmin(admin.ModelAdmin):
     fieldsets = [
         (None ,{'fields':['name', 'num_trials']}),
         ('System Parameters' ,{'fields':['p_signal','d_user',('d_alert','beta_alert'),('mean','sd')]}),
@@ -14,22 +14,26 @@ class ExperimentConditionAdmin(admin.ModelAdmin):
     ]
     class Media:
         css = {
-            "all": ("experiment/experiment_condition_admin.css",)
+            "all": ("experiment/block_admin.css",)
         }
-        js = ("experiment/experiment_condition_admin.js",)
+        js = ("experiment/block_admin.js",)
+
+class OutputFileAdmin(admin.ModelAdmin):
+    list_display = ('name', 'download_url')
 
 class ExperimentAdminSite(admin.AdminSite):
     site_header = 'Experiment Administration'
     site_title = 'Responsibility Experiment Administration'
 
 admin_site = ExperimentAdminSite()
-admin_site.register(ExperimentCondition, ExperimentConditionAdmin)
+admin_site.register(Block, BlockAdmin)
 admin_site.register(Questionnaire)
-admin_site.register(TextBlock)
+admin_site.register(Text)
 admin_site.register(Experiment)
 admin_site.register(Question, QuestionAdmin)
-admin_site.register(QuestionResult)
-admin_site.register(QuestionnaireResult)
-admin_site.register(TrialResult)
-admin_site.register(BlockResult)
-admin_site.register(ExperimentResult)
+admin_site.register(OutputFile, OutputFileAdmin)
+# admin_site.register(QuestionResult)
+# admin_site.register(QuestionnaireResult)
+# admin_site.register(TrialResult)
+# admin_site.register(BlockResult)
+# admin_site.register(ExperimentResult)
