@@ -1,0 +1,60 @@
+body {
+    text-align: center;
+}
+
+.page-header {
+    margin-top: 20px;
+}
+
+.stimulus-number {
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 24px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.stimulus-rectangle {
+    position: relative;
+    margin-top: 20px;
+    padding-top: 100%;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.rectangle {
+    position: absolute;
+    top: 0px;
+    width:15%;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.stimulus-alert {
+    width: 25%;
+    padding-top: 25%;
+    border: 1px solid black;
+    border-radius: 25%;
+}
+
+.trial-num {
+    font-size: 16px;
+}
+
+.score {
+    font-size: 16px;
+}
+
+.outcome {
+    font-size:16px;
+}
+
+.button-accept {
+    margin-top: 10px;
+}
+
+.button-reject {
+    margin-top: 10px;
+}
+
