@@ -66,6 +66,7 @@ class Block(models.Model):
     trial_duration = models.FloatField('Total Trial Duration (seconds)', default=5.0)
     trial_delay = models.FloatField('Delay Between Trials (seconds)', default=3.0)
     display_last_points = models.BooleanField('Display Points from Last Trial', default=True)
+    display_outcome = models.BooleanField('Display Points from Last Trial', default=True)
     display_total_points = models.BooleanField('Display Cumulative Points', default=True)
     display_trial_num = models.BooleanField('Display Number of Trial in Block', default=True)
     module = fields.GenericRelation(Module)
@@ -147,6 +148,8 @@ class BlockResult(models.Model):
     p_fa_alertincorrect = models.FloatField('Proportion of FA (out of all noise) With Incorrect Alert')
     rt_hit = models.FloatField('Average Response Time for Hit')
     rt_miss = models.FloatField('Average Response Time for Miss')
+    rt_fa = models.FloatField('Average Response Time for FA')
+    rt_cr = models.FloatField('Average Response Time for CR')
 
     def __str__(self):
         return str(self.id)

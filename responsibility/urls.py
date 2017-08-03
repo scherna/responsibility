@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from experiment.admin import admin_site
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='/experiment/', permanent=False)),
     url(r'^experiment/', include('experiment.urls')),
     url(r'^admin/', admin_site.urls),
 ]

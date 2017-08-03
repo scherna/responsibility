@@ -50,25 +50,29 @@ class ResultsView(View):
 
     def post(self, request):
         data = request.POST
-        experiment_instance = Experiment.objects.get(pk=data['experiment_id'])
-        experiment_result_instance = ExperimentResult(experiment=experiment_instance)
-        experiment_result_instance.save()
+        experiment_i = Experiment.objects.get(pk=data['experiment_id'])
+        experiment_result_i = ExperimentResult(experiment=experiment_i)
+        experiment_result_i.save()
         blocks = json.loads(data['blocks'])
         questionnaires = json.loads(data['questionnaires'])
         for questionnaire in questionnaires:
-            questionnaire_instance = Questionnaire.objects.get(pk=questionnaire['id'])
-            questionnaire_result_instance = QuestionnaireResult(questionnaire=questionnaire_instance, experiment_result=experiment_result_instance)
-            questionnaire_result_instance.save()
+            questionnaire_i = Questionnaire.objects.get(pk=questionnaire['id'])
+            questionnaire_result_i = QuestionnaireResult(questionnaire=questionnaire_i, experiment_result=experiment_result_i)
+            questionnaire_result_i.save()
             for question in questionnaire['questions']:
-                question_instance = Question.objects.get(pk=question['id'])
-                question_result_instance = QuestionResult(question=question_instance, questionnaire_result=questionnaire_result_instance, answer=question['answer'])
-                question_result_instance.save()
+                question_i = Question.objects.get(pk=question['id'])
+                question_result_i = QuestionResult(question=question_i, questionnaire_result=questionnaire_result_i, answer=question['answer'])
+                question_result_i.save()
         for block in blocks:
-            block_instance = Block.objects.get(pk=block['id'])
-            hits_i = sum([1 if t['outcome'][:-2] == 'hit' else 0 for t in block['trials']])
-            misses_i = sum([1 if t['outcome'][:-2] == 'miss' else 0 for t in block['trials']])
-            fa_i = sum([1 if t['outcome'][:-2] == 'fa' else 0 for t in block['trials']])
-            cr_i = sum([1 if t['outcome'][:-2] == 'cr' else 0 for t in block['trials']])
+            block_i = Block.objects.get(pk=block['id'])
+            hit_list = [t for t in block['trials'] if t['outcome'][:-2] == 'hit']
+            miss_list = [t for t in block['trials'] if t['outcome'][:-2] == 'miss']
+            fa_list = [t for t in block['trials'] if t['outcome'][:-2] == 'fa']
+            cr_list = [t for t in block['trials'] if t['outcome'][:-2] == 'cr']
+            hits_i = len(hit_list)
+            misses_i = len(miss_list)
+            fa_i = len(fa_list)
+            cr_i = len(cr_list)
             p_hit_i = float(hits_i) / (hits_i + misses_i) if (hits_i + misses_i > 0) else 0
             p_miss_i = float(misses_i) / (hits_i + misses_i) if (hits_i + misses_i > 0) else 0
             p_fa_i = float(fa_i) / (fa_i + cr_i) if (fa_i + cr_i > 0) else 0
@@ -100,23 +104,25 @@ class ResultsView(View):
             p_fa_alertcorrect_i = float(fa_alertcorrect_i) / (fa_alertcorrect_i + cr_alertcorrect_i) if (fa_alertcorrect_i + cr_alertcorrect_i > 0) else 0
             p_hit_alertincorrect_i = float(hits_alertincorrect_i) / (hits_alertincorrect_i + misses_alertincorrect_i) if (hits_alertincorrect_i + misses_alertincorrect_i > 0) else 0
             p_fa_alertincorrect_i = float(fa_alertincorrect_i) / (fa_alertincorrect_i + cr_alertincorrect_i) if (fa_alertincorrect_i + cr_alertincorrect_i > 0) else 0
-            rt_hit_i = sum([float(t['response_time'])/1000 if t['outcome'][:-2] == 'hit' else 0 for t in block['trials']])/len(block['trials'])
-            rt_miss_i = sum([float(t['response_time'])/1000 if t['outcome'][:-2] == 'miss' else 0 for t in block['trials']])/len(block['trials'])
-            block_result_instance = BlockResult(block=block_instance, experiment_result=experiment_result_instance, cum_score=block['score'], hits=hits_i, misses=misses_i, fa=fa_i, cr=cr_i, p_hit=p_hit_i, p_miss=p_miss_i, p_fa=p_fa_i, p_cr=p_cr_i, d_prime=d_prime_i, beta=beta_i, c=c_i, hits_alertcorrect=hits_alertcorrect_i, misses_alertcorrect=misses_alertcorrect_i, fa_alertcorrect=fa_alertcorrect_i, cr_alertcorrect=cr_alertcorrect_i, hits_alertincorrect=hits_alertincorrect_i, misses_alertincorrect=misses_alertincorrect_i, fa_alertincorrect=fa_alertincorrect_i, cr_alertincorrect=cr_alertincorrect_i, p_hit_alertcorrect=p_hit_alertcorrect_i, p_fa_alertcorrect=p_fa_alertcorrect_i, p_hit_alertincorrect=p_hit_alertincorrect_i, p_fa_alertincorrect=p_fa_alertincorrect_i, rt_hit=rt_hit_i, rt_miss=rt_miss_i)
-            block_result_instance.save()
+            rt_hit_i = sum([float(t['response_time'])/1000 for t in hit_list])/hits_i if hits_i > 0 else 0
+            rt_miss_i = sum([float(t['response_time'])/1000 for t in miss_list])/misses_i if misses_i > 0 else 0
+            rt_fa_i = sum([float(t['response_time'])/1000 for t in fa_list])/fa_i if fa_i > 0 else 0
+            rt_cr_i = sum([float(t['response_time'])/1000 for t in cr_list])/cr_i if cr_i > 0 else 0
+            block_result_i = BlockResult(block=block_i, experiment_result=experiment_result_i, cum_score=block['score'], hits=hits_i, misses=misses_i, fa=fa_i, cr=cr_i, p_hit=p_hit_i, p_miss=p_miss_i, p_fa=p_fa_i, p_cr=p_cr_i, d_prime=d_prime_i, beta=beta_i, c=c_i, hits_alertcorrect=hits_alertcorrect_i, misses_alertcorrect=misses_alertcorrect_i, fa_alertcorrect=fa_alertcorrect_i, cr_alertcorrect=cr_alertcorrect_i, hits_alertincorrect=hits_alertincorrect_i, misses_alertincorrect=misses_alertincorrect_i, fa_alertincorrect=fa_alertincorrect_i, cr_alertincorrect=cr_alertincorrect_i, p_hit_alertcorrect=p_hit_alertcorrect_i, p_fa_alertcorrect=p_fa_alertcorrect_i, p_hit_alertincorrect=p_hit_alertincorrect_i, p_fa_alertincorrect=p_fa_alertincorrect_i, rt_hit=rt_hit_i, rt_miss=rt_miss_i, rt_fa=rt_fa_i, rt_cr=rt_cr_i)
+            block_result_i.save()
             for trial in block['trials']:
                 time_i = datetime.fromtimestamp(float(trial['time'])/1000)
-                trial_result_instance = TrialResult(block_result=block_result_instance, experiment_result=experiment_result_instance, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'], points=trial['points'])
-                trial_result_instance.save()
+                trial_result_i = TrialResult(block_result=block_result_i, experiment_result=experiment_result_i, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'], points=trial['points'])
+                trial_result_i.save()
         trial_output_header = "id,experiment name,block name,trial num,datetime,response time,signal,alert,response,outcome,points"
-        trial_output_text = ";".join([",".join(str(v) for v in [t.id, experiment_instance.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for t in TrialResult.objects.filter(experiment_result=experiment_result_instance)])
-        trial_output_file = OutputFile(name="{}_Trials_{}.csv".format(experiment_instance.name.replace(" ", "_"), experiment_result_instance.id), text=trial_output_text, header=trial_output_header)
-        block_output_header = "id,experiment name,block name,cummulative score,hits,misses,fa,cr,p hit,p miss,p fa,p cr,d',beta,c,hits alertcorrect,misses alertcorrect,fa alertcorrect,cr alertcorrect,hits alertincorrect,misses alertincorrect,fa alertincorrect,cr alertincorrect,p hit alertcorrect,p fa alertcorrect,p hit alertincorrect,p fa alertincorrect,rt hit, rt miss"
-        block_output_text = ";".join([",".join(str(v) for v in [b.id, experiment_instance.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertcorrect, b.misses_alertcorrect, b.fa_alertcorrect, b.cr_alertcorrect, b.hits_alertincorrect, b.misses_alertincorrect, b.fa_alertincorrect, b.cr_alertincorrect, b.p_hit_alertcorrect, b.p_fa_alertcorrect, b.p_hit_alertincorrect, b.p_fa_alertincorrect, b.rt_hit, b.rt_miss]) for b in BlockResult.objects.filter(experiment_result=experiment_result_instance)])
-        block_output_file = OutputFile(name="{}_Blocks_{}.csv".format(experiment_instance.name.replace(" ", "_"), experiment_result_instance.id), text=block_output_text, header=block_output_header)
+        trial_output_text = ";".join([",".join(str(v) for v in [i, experiment_i.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for (i,t) in enumerate(TrialResult.objects.filter(experiment_result=experiment_result_i))])
+        trial_output_file = OutputFile(name="{}_Trials_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=trial_output_text, header=trial_output_header)
+        block_output_header = "id,experiment name,block name,cummulative score,hits,misses,fa,cr,p hit,p miss,p fa,p cr,d',beta,c,hits alertcorrect,misses alertcorrect,fa alertcorrect,cr alertcorrect,hits alertincorrect,misses alertincorrect,fa alertincorrect,cr alertincorrect,p hit alertcorrect,p fa alertcorrect,p hit alertincorrect,p fa alertincorrect,rt hit, rt miss,rt fa,rt cr"
+        block_output_text = ";".join([",".join(str(v) for v in [i, experiment_i.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertcorrect, b.misses_alertcorrect, b.fa_alertcorrect, b.cr_alertcorrect, b.hits_alertincorrect, b.misses_alertincorrect, b.fa_alertincorrect, b.cr_alertincorrect, b.p_hit_alertcorrect, b.p_fa_alertcorrect, b.p_hit_alertincorrect, b.p_fa_alertincorrect, b.rt_hit, b.rt_miss, b.rt_fa, b.rt_cr]) for (i,b) in enumerate(BlockResult.objects.filter(experiment_result=experiment_result_i))])
+        block_output_file = OutputFile(name="{}_Blocks_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=block_output_text, header=block_output_header)
         question_output_header = "id,experiment name,questionnaire name,question name,answer"
-        question_output_text = ";".join([",".join(str(v) for v in [q.id, experiment_instance.name, q.questionnaire_result.questionnaire.name, q.question.name, q.answer]) for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_instance)])
-        question_output_file = OutputFile(name="{}_Questions_{}.csv".format(experiment_instance.name.replace(" ", "_"), experiment_result_instance.id), text=question_output_text, header=question_output_header)
+        question_output_text = ";".join([",".join(str(v) for v in [i, experiment_i.name, q.questionnaire_result.questionnaire.name, q.question.name, q.answer]) for (i,q) in enumerate(QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i))])
+        question_output_file = OutputFile(name="{}_Questions_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=question_output_text, header=question_output_header)
         trial_output_file.save()
         block_output_file.save()
         question_output_file.save()

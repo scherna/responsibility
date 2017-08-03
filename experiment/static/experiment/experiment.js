@@ -5,6 +5,7 @@ var alerts;
 var stimuli;
 var trialNum;
 var score;
+var points;
 var responses;
 var outcomes;
 var alertTimeout;
@@ -51,7 +52,7 @@ function renderModule(moduleNum) {
         results['blocks'] = JSON.stringify(results['blocks'])
         results['questionnaires'] = JSON.stringify(results['questionnaires'])
         $.post("/experiment/results/", results, function() {
-            $(".content").html('<h5>Your results have been successfully uploaded. Thank you for your participation.</h5>');
+            $(".content").html('<h6>Your results have been successfully uploaded. Thank you for your participation.</h6>');
         });
     }
 }
@@ -59,8 +60,8 @@ function renderModule(moduleNum) {
 function renderQuestionnaire(module) {
     var questions = module.questions;
     var myHtml = `<div class="columns">
-                    <div class="column col-xl-3 hide-xs"></div>
-                    <div class="column col-xl-6 col-xs-12">
+                    <div class="column col-2 hide-xs"></div>
+                    <div class="column col-8 col-xs-12">
                         <form style="text-align:left;" id="myForm">`;
     questions.forEach(function(q) {
         if (q[1][0] === '') {
@@ -81,7 +82,7 @@ function renderQuestionnaire(module) {
             myHtml += `</div>`;
         }
     }, this);
-    myHtml += `<button type="submit" class="btn btn-primary" style="text-align:center;">Next</button></form></div></div>`;
+    myHtml += `<div style="text-align:center;"><button type="submit" class="btn btn-primary">Next</button></div></form></div></div>`;
     $(".content").html(myHtml);
     $("#myForm").submit(function(event) {
         event.preventDefault();
@@ -106,8 +107,8 @@ function renderQuestionnaire(module) {
 function renderText(module) {
     var text = module[0].fields.text;
     $(".content").html(`<div class="columns intro-text">
-                            <div class="column col-xl-3 hide-xs"></div>
-                            <div class="column col-xl-6 col-xs-12">
+                            <div class="column col-2 hide-xs"></div>
+                            <div class="column col-8 col-xs-12">
                                 <p style="text-align:justify;">${text}</p>
                             </div>
                         </div>
@@ -125,37 +126,47 @@ function renderBlock(module) {
     stimuli = module.stimuli;
     trialNum = 0;
     score = 0;
+    points = 0;
     responses = [];
     outcomes = [];
     alertTimeout;
     stimulusTimeout;
     trialTimeout;
     $(".content").html(`<div class="columns">
-                            <div class="column col-xl-4 hide-xs"></div>
-                            <div class="column col-xl-1 col-xs-3">
+                            <div class="column col-3 hide-xs"></div>
+                            <div class="column col-2 col-xs-4">
                                 ${obj.display_trial_num ? '<div class="trial-num">Trial#: <span></span></div>' : ''}
                             </div>
-                            <div class="column col-xl-2 col-xs-6">
+                            <div class="column col-2 col-xs-4">
                                 <div class="stimulus-alert centered"></div>
                             </div>
-                            <div class="column col-xl-1 col-xs-3">
-                                ${obj.display_total_points ? '<div class="score">Score: <span></span></div>' : ''}
+                            <div class="column col-2 col-xs-2">
+                                ${obj.display_last_points ? '<div class="points">Last Trial: <span></span></div>' : ''}
+                            </div>
+                            <div class="column col-2 col-xs-2">
+                                ${obj.display_total_points ? '<div class="score">Total Score: <span></span></div>' : ''}
                             </div>
                         </div>
                         <div class="columns">
-                            <div class="column col-xl-4 hide-xs"></div>
-                            <div class="column col-xl-4 col-xs-12">
+                            <div class="column col-7 hide-xs"></div>
+                            <div class="column col-4 col-xs-12">
+                                ${obj.display_outcome ? '<div class="outcome invisible">Hidden</div>' : ''}
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column col-4 hide-xs"></div>
+                            <div class="column col-4 col-xs-12">
                                 ${obj.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
                             </div>
                         </div>
-                        ${obj.display_last_points ? '<div class="outcome invisible">Hidden</div>' : ''}
                         <div class="columns">
-                            <div class="column col-xl-5 col-xs-1"></div>
-                            <div class="column col-xl-1 col-xs-5"><button type="button" class="button-accept btn btn-primary">Accept</button></div>
-                            <div class="column col-xl-1 col-xs-5"><button type="button" class="button-reject btn btn-primary">Reject</button></div>
+                            <div class="column col-5 col-xs-1"></div>
+                            <div class="column col-1 col-xs-5"><button type="button" class="button-accept btn btn-primary">Accept</button></div>
+                            <div class="column col-1 col-xs-5"><button type="button" class="button-reject btn btn-primary">Reject</button></div>
                         </div>`);
     $(".trial-num span").text(trialNum + 1);
     $(".score span").text(score);
+    $(".points span").text(points);
     changeAlertColor(alerts[trialNum]);
     $(".number").text(stimuli[trialNum]);
     $(".rectangle").height(stimuli[trialNum] + "%");
@@ -214,7 +225,7 @@ function changeOutcomeText(o) {
             $(".outcome").text("Correct!");
             break;
         default:
-            $(".outcome").text("Did not complete in time...");
+            $(".outcome").text("Out of time...");
     }
 }
 
@@ -227,9 +238,10 @@ function completeTrial(b) {
             var outcome = outcomeMap[b][signals[trialNum]][alerts[trialNum]];
             outcomes.push(outcome);
             changeOutcomeText(outcome);
-            var points = obj["v_" + outcome];
+            points = obj["v_" + outcome];
             score += points;
             $(".score span").text(score);
+            $(".points span").text(points);
             results['blocks'][results['blocks'].length-1]['trials'].push({
                 'trial_num': trialNum, 
                 'time': trialEndTime, 
@@ -245,6 +257,7 @@ function completeTrial(b) {
             responses.push(b);
             outcomes.push(b);
             changeOutcomeText(b);
+            points = 0;
             results['blocks'][results['blocks'].length-1]['trials'].push({
                 'trial_num': trialNum, 
                 'time': trialEndTime, 
@@ -253,7 +266,7 @@ function completeTrial(b) {
                 'alert': alerts[trialNum], 
                 'response': b, 
                 'outcome': b,
-                'points': 0,
+                'points': points,
             });
         }
         if (trialNum < obj.num_trials - 1) {
