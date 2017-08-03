@@ -175,7 +175,7 @@ class ExperimentResult(models.Model):
 class OutputFile(models.Model):
     name = models.CharField('Name of File', max_length=200)
     header = models.CharField('CSV Headers', max_length=400)
-    #text = models.CharField('CSV Text', max_length=10000)
+    text = models.CharField('CSV Text', max_length=20000)
 
     def __str__(self):
         return self.name
