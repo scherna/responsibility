@@ -43,6 +43,8 @@ class ExperimentView(generic.DetailView):
                 modules.append({"obj":json.loads(serializers.serialize("json", [content])), "questions":questions})
             elif type(content) is Text:
                 modules.append(json.loads(serializers.serialize("json", [content])))
+            elif type(content) is Example:
+                modules.append(json.loads(serializers.serialize("json", [content])))
         context['modules'] = json.dumps(modules)
         return context
 

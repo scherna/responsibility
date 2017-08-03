@@ -81,6 +81,28 @@ class Block(models.Model):
             m.save()
         super(Block, self).save(*args, **kwargs)
 
+class Example(models.Model):
+    name = models.CharField('Name of Example', max_length=200)
+    num_trial = models.IntegerField('Trial Number')
+    alert_color = ColorField('Color of Alert (green default is #4ef442)', default="#f44141")
+    points = models.FloatField('Points from Last Trial')
+    score = models.FloatField('Score')
+    outcome = models.CharField('Outcome from Last Trial', max_length=200)
+    stimulus_choices = (('num', 'Numbers'), ('rect', 'Rectangles'))
+    stimulus = models.CharField('Choice of Stimulus', max_length=200, choices=stimulus_choices, default='num')
+    val = models.FloatField('Value of Stimulus (rectangle value is percent of box height)')
+    module = fields.GenericRelation(Module)
+
+    def __str__(self):
+        return self.name 
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Example, self).save(*args, **kwargs)
+            m = Module(content_object=self)
+            m.save()
+        super(Example, self).save(*args, **kwargs)
+
 class Questionnaire(models.Model):
     name = models.CharField('Name of Questionnaire', max_length=200)
     questions = SortedManyToManyField('Question')

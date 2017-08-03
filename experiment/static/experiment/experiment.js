@@ -30,6 +30,9 @@ function renderModule(moduleNum) {
             if (module[0].model === "experiment.text") {
                 renderText(module);
             }
+            else {
+                renderExample(module);
+            }
         }
         else {
             if (module.obj[0].model === 'experiment.block') {
@@ -113,6 +116,50 @@ function renderText(module) {
                             </div>
                         </div>
                         <button type="button" class="button-next btn btn-primary">Next</button>`);
+    $(".button-next").click(function() {
+        moduleNum++;
+        renderModule(moduleNum);
+    });
+}
+
+function renderExample(module) {
+    var object = module[0].fields;
+    $(".content").html(`<div class="columns">
+                            <div class="column col-3 hide-xs"></div>
+                            <div class="column col-2 col-xs-4">
+                                <div class="trial-num">Trial#: <span></span></div>
+                            </div>
+                            <div class="column col-2 col-xs-4">
+                                <div class="stimulus-alert centered"></div>
+                            </div>
+                            <div class="column col-2 col-xs-2">
+                                <div class="points">Last Trial: <span></span></div>
+                            </div>
+                            <div class="column col-2 col-xs-2">
+                                <div class="score">Total Score: <span></span></div>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column col-7 hide-xs"></div>
+                            <div class="column col-4 col-xs-12">
+                                <div class="outcome"></div>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column col-4 hide-xs"></div>
+                            <div class="column col-4 col-xs-12">
+                                ${object.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
+                            </div>
+                        </div>
+                        <button type="button" class="button-next btn btn-primary">Next</button>`);
+    $(".trial-num span").text(object.num_trial);
+    $(".score span").text(object.score);
+    $(".points span").text(object.points);
+    $(".outcome").text(object.outcome);
+    $(".stimulus-alert").css("background-color", object.alert_color);
+    $(".number").text(object.val);
+    $(".rectangle").height(object.val + "%");
+    randomizeRectPosition();
     $(".button-next").click(function() {
         moduleNum++;
         renderModule(moduleNum);
