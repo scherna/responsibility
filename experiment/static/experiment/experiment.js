@@ -68,19 +68,19 @@ function renderQuestionnaire(module) {
                         <form style="text-align:left;" id="myForm">`;
     questions.forEach(function(q) {
         if (q[1][0] === '') {
-            myHtml += `<div class="form-group">
+            myHtml += `<div class="form-group" dir="auto">
                         <label class="form-label" for="${q[2]}">${q[0]}</label>
                         <input class="form-input" type="text" id="${q[2]}" name="${q[2]}" required/>
-                     </div>`;
+                      </div>`;
         }
         else {
-            myHtml += `<div class="form-group">
+            myHtml += `<div class="form-group" dir="auto">
                         <label class="form-label">${q[0]}</label>`;
             q[1].forEach(function(c) {
                 myHtml += `<label class="form-radio">
                             <input type="radio" name="${q[2]}" value="${c}" required/>
                             <i class="form-icon"></i> ${c}
-                        </label>`;
+                          </label>`;
             });
             myHtml += `</div>`;
         }
@@ -112,7 +112,7 @@ function renderText(module) {
     $(".content").html(`<div class="columns intro-text">
                             <div class="column col-2 hide-xs"></div>
                             <div class="column col-8 col-xs-12">
-                                <p style="text-align:justify;">${text}</p>
+                                <p style="text-align:justify;" dir="auto">${text}</p>
                             </div>
                         </div>
                         <button type="button" class="button-next btn btn-primary">Next</button>`);
@@ -283,7 +283,7 @@ function completeTrial(b) {
         $(".score span").text(score);
         $(".points span").text(points);
         results['blocks'][results['blocks'].length-1]['trials'].push({
-            'trial_num': trialNum, 
+            'trial_num': trialNum+1, 
             'time': trialEndTime, 
             'response_time': (trialEndTime-trialBeginTime), 
             'signal': signals[trialNum], 

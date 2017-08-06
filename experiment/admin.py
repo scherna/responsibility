@@ -31,7 +31,7 @@ class OutputFileAdmin(admin.ModelAdmin):
         s = BytesIO()
         zf = zipfile.ZipFile(s, "w")
         for output_file in queryset:
-            zf.writestr(output_file.name, output_file.header + "\n" + output_file.text)
+            zf.writestr(output_file.name, '\uFEFF' + output_file.header + "\n" + output_file.text)
         zf.close()
         response = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
         response['Content-Disposition'] = 'attachment; filename={}'.format('results.zip')
