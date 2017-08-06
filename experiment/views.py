@@ -34,9 +34,9 @@ class ExperimentView(generic.DetailView):
                 alert_mean_n = content.mean - 0.5 * content.d_alert * content.sd
                 signals = [random.random() < content.p_signal for i in range(content.num_trials)]
                 alert_distribution = [random.gauss(alert_mean_s, content.sd) if s else random.gauss(alert_mean_n, content.sd) for (i,s) in enumerate(signals)]
-                c = (math.log(content.beta_alert) / content.d_alert)
+                c = content.mean + ((math.log(content.beta_alert) * content.sd)  / content.d_alert)
                 stimuli = [round(random.gauss(user_mean_s, content.sd), content.num_dec_places) if s else round(random.gauss(user_mean_n, content.sd), content.num_dec_places) for (i,s) in enumerate(signals)]
-                alerts = [a > content.mean + c for a in alert_distribution]
+                alerts = [a > c for a in alert_distribution]
                 modules.append({"obj":json.loads(serializers.serialize("json", [content])),"signals":signals,"alerts":alerts,"stimuli":stimuli})
             elif type(content) is Questionnaire:
                 questions = [[q.text, q.choices.split(","), q.id] for q in content.questions.all()]
@@ -93,7 +93,7 @@ class ResultsView(View):
                 z_fa_i = normal_CDF_inverse(0.999)
             d_prime_i = z_hit_i - z_fa_i
             c_i = -0.5 * (z_hit_i + z_fa_i)
-            beta_i = math.exp(d_prime_i * c_i)
+            beta_i = math.exp(d_prime_i * (c_i - block_i.mean) / block_i.sd)
             hits_alertcorrect_i = sum([1 if t['outcome'] == 'hit_s' else 0 for t in block['trials']])
             misses_alertcorrect_i = sum([1 if t['outcome'] == 'miss_s' else 0 for t in block['trials']])
             fa_alertcorrect_i = sum([1 if t['outcome'] == 'fa_n' else 0 for t in block['trials']])
