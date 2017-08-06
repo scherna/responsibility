@@ -92,7 +92,7 @@ class ResultsView(View):
             else:
                 z_fa_i = normal_CDF_inverse(0.999)
             d_prime_i = z_hit_i - z_fa_i
-            c_i = -0.5 * (z_hit_i + z_fa_i)
+            c_i = -0.5 * (z_hit_i + z_fa_i) * block_i.sd + block_i.mean
             beta_i = math.exp(d_prime_i * (c_i - block_i.mean) / block_i.sd)
             hits_alertcorrect_i = sum([1 if t['outcome'] == 'hit_s' else 0 for t in block['trials']])
             misses_alertcorrect_i = sum([1 if t['outcome'] == 'miss_s' else 0 for t in block['trials']])
