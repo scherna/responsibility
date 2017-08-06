@@ -108,7 +108,7 @@ function renderQuestionnaire(module) {
 }
 
 function renderText(module) {
-    var text = module[0].fields.text;
+    var text = module[0].fields.text.replace(/\n/g, "<br />");
     $(".content").html(`<div class="columns intro-text">
                             <div class="column col-2 hide-xs"></div>
                             <div class="column col-8 col-xs-12">
@@ -274,42 +274,24 @@ function completeTrial(b) {
     trialEndTime = Date.now();
     $("button").prop("disabled", true);
     if (trialNum < obj.num_trials) {
-        if (b !== "N/A") {
-            responses.push(b);
-            var outcome = outcomeMap[b][signals[trialNum]][alerts[trialNum]];
-            outcomes.push(outcome);
-            changeOutcomeText(outcome);
-            points = obj["v_" + outcome];
-            score += points;
-            $(".score span").text(score);
-            $(".points span").text(points);
-            results['blocks'][results['blocks'].length-1]['trials'].push({
-                'trial_num': trialNum, 
-                'time': trialEndTime, 
-                'response_time': (trialEndTime-trialBeginTime), 
-                'signal': signals[trialNum], 
-                'alert': alerts[trialNum], 
-                'response': b, 
-                'outcome': outcome,
-                'points': points,
-            });
-        }
-        else {
-            responses.push(b);
-            outcomes.push(b);
-            changeOutcomeText(b);
-            points = 0;
-            results['blocks'][results['blocks'].length-1]['trials'].push({
-                'trial_num': trialNum, 
-                'time': trialEndTime, 
-                'response_time': (trialEndTime-trialBeginTime), 
-                'signal': signals[trialNum], 
-                'alert': alerts[trialNum], 
-                'response': b, 
-                'outcome': b,
-                'points': points,
-            });
-        }
+        responses.push(b);
+        var outcome = b !== "N/A" ? outcomeMap[b][signals[trialNum]][alerts[trialNum]] : "N/A";
+        outcomes.push(outcome);
+        changeOutcomeText(outcome);
+        points = b !== "N/A" ? obj["v_" + outcome] : obj["v_na"];
+        score += points;
+        $(".score span").text(score);
+        $(".points span").text(points);
+        results['blocks'][results['blocks'].length-1]['trials'].push({
+            'trial_num': trialNum, 
+            'time': trialEndTime, 
+            'response_time': (trialEndTime-trialBeginTime), 
+            'signal': signals[trialNum], 
+            'alert': alerts[trialNum], 
+            'response': b, 
+            'outcome': outcome,
+            'points': points,
+        });
         if (trialNum < obj.num_trials - 1) {
             trialNum++;
             $(".trial-num span").text(trialNum + 1);

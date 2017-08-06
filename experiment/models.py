@@ -49,6 +49,7 @@ class Block(models.Model):
     v_cr_n = models.FloatField(default=0.0)
     v_fa_s = models.FloatField(default=0.0)
     v_fa_n = models.FloatField(default=0.0)
+    v_na = models.FloatField('Payoff Value of N/A (did not complete in time)', default=0.0)
     d_user = models.FloatField("User Sensitivity (d')", default=1.0)
     d_alert = models.FloatField("Alert Sensitivity (d')", default=1.0)
     beta_alert = models.FloatField("Alert Criterion (beta)", default=0.5)

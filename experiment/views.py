@@ -137,12 +137,12 @@ class ResultsView(View):
                 trial_result_i = TrialResult(block_result=block_result_i, experiment_result=experiment_result_i, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'], points=trial['points'])
                 trial_result_i.save()
         trial_output_header = "id,user id,experiment name,block name,trial num,datetime,response time,signal,alert,response,outcome,points"
-        trial_output_text = ";".join([",".join(str(v) for v in [t.id+1, experiment_result_i.id, experiment_i.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for t in TrialResult.objects.filter(experiment_result=experiment_result_i).order_by('id')])
+        trial_output_text = "\n".join([",".join(str(v) for v in [t.id+1, experiment_result_i.id, experiment_i.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for t in TrialResult.objects.filter(experiment_result=experiment_result_i).order_by('id')])
         trial_output_file = OutputFile(name="{}_Trials_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=trial_output_text, header=trial_output_header)
         block_output_header = "id,user id,experiment name,block name,cummulative score,hits,misses,fa,cr,p hit,p miss,p fa,p cr,d',beta,c,hits alertsignal,misses alertsignal,fa alertsignal,cr alertsignal,hits alertnoise,misses alertnoise,fa alertnoise,cr alertnoise,p hit alertsignal,p miss alertsignal,p fa alertsignal,p cr alertsignal,p hit alertnoise,p miss alertnoise,p fa alertnoise,p cr alertnoise,rt hit, rt miss,rt fa,rt cr,rt hit alertsignal, rt miss alertsignal,rt fa alertsignal,rt cr alertsignal,rt hit alertnoise, rt miss alertnoise,rt fa alertnoise,rt cr alertnoise"
-        block_output_text = ";".join([",".join(str(v) for v in [b.id+1, experiment_result_i.id, experiment_i.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertsignal, b.misses_alertsignal, b.fa_alertsignal, b.cr_alertsignal, b.hits_alertnoise, b.misses_alertnoise, b.fa_alertnoise, b.cr_alertnoise, b.p_hit_alertsignal, b.p_miss_alertsignal, b.p_fa_alertsignal, b.p_cr_alertsignal, b.p_hit_alertnoise, b.p_miss_alertnoise, b.p_fa_alertnoise, b.p_cr_alertnoise, b.rt_hit, b.rt_miss, b.rt_fa, b.rt_cr, b.rt_hit_alertsignal, b.rt_miss_alertsignal, b.rt_fa_alertsignal, b.rt_cr_alertsignal, b.rt_hit_alertnoise, b.rt_miss_alertnoise, b.rt_fa_alertnoise, b.rt_cr_alertnoise]) for b in BlockResult.objects.filter(experiment_result=experiment_result_i).order_by('id')])
+        block_output_text = "\n".join([",".join(str(v) for v in [b.id+1, experiment_result_i.id, experiment_i.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertsignal, b.misses_alertsignal, b.fa_alertsignal, b.cr_alertsignal, b.hits_alertnoise, b.misses_alertnoise, b.fa_alertnoise, b.cr_alertnoise, b.p_hit_alertsignal, b.p_miss_alertsignal, b.p_fa_alertsignal, b.p_cr_alertsignal, b.p_hit_alertnoise, b.p_miss_alertnoise, b.p_fa_alertnoise, b.p_cr_alertnoise, b.rt_hit, b.rt_miss, b.rt_fa, b.rt_cr, b.rt_hit_alertsignal, b.rt_miss_alertsignal, b.rt_fa_alertsignal, b.rt_cr_alertsignal, b.rt_hit_alertnoise, b.rt_miss_alertnoise, b.rt_fa_alertnoise, b.rt_cr_alertnoise]) for b in BlockResult.objects.filter(experiment_result=experiment_result_i).order_by('id')])
         block_output_file = OutputFile(name="{}_Blocks_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=block_output_text, header=block_output_header)
-        question_output_header = "user id,experiment name," + ','.join(['{}_{}'.format(q.questionnaire.name, q.question.name) for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i).order_by('id')])
+        question_output_header = ','.join(['user id', 'experiment name'] + ['{}_{}'.format(q.questionnaire.name, q.question.name) for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i).order_by('id')])
         question_output_text = ",".join([str(experiment_result_i.id), experiment_i.name] + [q.answer for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i).order_by('id')])
         question_output_file = OutputFile(name="{}_Questions_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=question_output_text, header=question_output_header)
         trial_output_file.save()
@@ -157,12 +157,9 @@ class OutputView(View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}'.format(output_file.name)
         writer = csv.writer(response)
-        # Write headers to CSV file
         writer.writerow(output_file.header.split(","))
-        # Write data to CSV file
-        for row in output_file.text.split(";"):
+        for row in output_file.text.split("\n"):
             writer.writerow(row.split(","))
-        # Return CSV file to browser as download
         return response
 
 #code borrowed from https://www.johndcook.com/blog/python_phi_inverse/
