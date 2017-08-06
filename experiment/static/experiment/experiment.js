@@ -140,15 +140,12 @@ function renderExample(module) {
                             </div>
                         </div>
                         <div class="columns">
-                            <div class="column col-7 hide-xs"></div>
-                            <div class="column col-4 col-xs-12">
-                                <div class="outcome"></div>
-                            </div>
-                        </div>
-                        <div class="columns">
                             <div class="column col-4 hide-xs"></div>
                             <div class="column col-4 col-xs-12">
                                 ${object.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
+                            </div>
+                            <div class="column col-2 col-xs-12">
+                                <div class="outcome"></div>
                             </div>
                         </div>
                         <button type="button" class="button-next btn btn-primary">Next</button>`);
@@ -195,15 +192,12 @@ function renderBlock(module) {
                             </div>
                         </div>
                         <div class="columns">
-                            <div class="column col-7 hide-xs"></div>
-                            <div class="column col-4 col-xs-12">
-                                ${obj.display_outcome ? '<div class="outcome invisible">Hidden</div>' : ''}
-                            </div>
-                        </div>
-                        <div class="columns">
                             <div class="column col-4 hide-xs"></div>
                             <div class="column col-4 col-xs-12">
                                 ${obj.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
+                            </div>
+                            <div class="column col-2 col-xs-12">
+                                ${obj.display_outcome ? '<div class="outcome invisible">Hidden</div>' : ''}
                             </div>
                         </div>
                         <div class="columns">

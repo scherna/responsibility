@@ -66,7 +66,7 @@ class Block(models.Model):
     trial_duration = models.FloatField('Total Trial Duration (seconds)', default=5.0)
     trial_delay = models.FloatField('Delay Between Trials (seconds)', default=3.0)
     display_last_points = models.BooleanField('Display Points from Last Trial', default=True)
-    display_outcome = models.BooleanField('Display Points from Last Trial', default=True)
+    display_outcome = models.BooleanField('Display Outcome from Last Trial', default=True)
     display_total_points = models.BooleanField('Display Cumulative Points', default=True)
     display_trial_num = models.BooleanField('Display Number of Trial in Block', default=True)
     module = fields.GenericRelation(Module)
