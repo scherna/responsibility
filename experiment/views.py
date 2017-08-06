@@ -71,6 +71,14 @@ class ResultsView(View):
             miss_list = [t for t in block['trials'] if t['outcome'][:-2] == 'miss']
             fa_list = [t for t in block['trials'] if t['outcome'][:-2] == 'fa']
             cr_list = [t for t in block['trials'] if t['outcome'][:-2] == 'cr']
+            hit_alertsignal_list = [t for t in block['trials'] if t['outcome'] == 'hit_s']
+            miss_alertsignal_list = [t for t in block['trials'] if t['outcome'] == 'miss_s']
+            fa_alertsignal_list = [t for t in block['trials'] if t['outcome'] == 'fa_s']
+            cr_alertsignal_list = [t for t in block['trials'] if t['outcome'] == 'cr_s']
+            hit_alertnoise_list = [t for t in block['trials'] if t['outcome'] == 'hit_n']
+            miss_alertnoise_list = [t for t in block['trials'] if t['outcome'] == 'miss_n']
+            fa_alertnoise_list = [t for t in block['trials'] if t['outcome'] == 'fa_n']
+            cr_alertnoise_list = [t for t in block['trials'] if t['outcome'] == 'cr_n']
             hits_i = len(hit_list)
             misses_i = len(miss_list)
             fa_i = len(fa_list)
@@ -94,36 +102,48 @@ class ResultsView(View):
             d_prime_i = z_hit_i - z_fa_i
             c_i = -0.5 * (z_hit_i + z_fa_i) * block_i.sd + block_i.mean
             beta_i = math.exp(d_prime_i * (c_i - block_i.mean) / block_i.sd)
-            hits_alertcorrect_i = sum([1 if t['outcome'] == 'hit_s' else 0 for t in block['trials']])
-            misses_alertcorrect_i = sum([1 if t['outcome'] == 'miss_s' else 0 for t in block['trials']])
-            fa_alertcorrect_i = sum([1 if t['outcome'] == 'fa_n' else 0 for t in block['trials']])
-            cr_alertcorrect_i = sum([1 if t['outcome'] == 'cr_n' else 0 for t in block['trials']])
-            hits_alertincorrect_i = sum([1 if t['outcome'] == 'hit_n' else 0 for t in block['trials']])
-            misses_alertincorrect_i = sum([1 if t['outcome'] == 'miss_n' else 0 for t in block['trials']])
-            fa_alertincorrect_i = sum([1 if t['outcome'] == 'fa_s' else 0 for t in block['trials']])
-            cr_alertincorrect_i = sum([1 if t['outcome'] == 'cr_s' else 0 for t in block['trials']])
-            p_hit_alertcorrect_i = float(hits_alertcorrect_i) / (hits_alertcorrect_i + misses_alertcorrect_i) if (hits_alertcorrect_i + misses_alertcorrect_i > 0) else 0
-            p_fa_alertcorrect_i = float(fa_alertcorrect_i) / (fa_alertcorrect_i + cr_alertcorrect_i) if (fa_alertcorrect_i + cr_alertcorrect_i > 0) else 0
-            p_hit_alertincorrect_i = float(hits_alertincorrect_i) / (hits_alertincorrect_i + misses_alertincorrect_i) if (hits_alertincorrect_i + misses_alertincorrect_i > 0) else 0
-            p_fa_alertincorrect_i = float(fa_alertincorrect_i) / (fa_alertincorrect_i + cr_alertincorrect_i) if (fa_alertincorrect_i + cr_alertincorrect_i > 0) else 0
+            hits_alertsignal_i = len(hit_alertsignal_list)
+            misses_alertsignal_i = len(miss_alertsignal_list)
+            fa_alertsignal_i = len(fa_alertsignal_list)
+            cr_alertsignal_i = len(cr_alertsignal_list)
+            hits_alertnoise_i = len(hit_alertnoise_list)
+            misses_alertnoise_i = len(miss_alertnoise_list)
+            fa_alertnoise_i = len(fa_alertnoise_list)
+            cr_alertnoise_i = len(cr_alertnoise_list)
+            p_hit_alertsignal_i = float(hits_alertsignal_i) / (hits_alertsignal_i + misses_alertsignal_i) if (hits_alertsignal_i + misses_alertsignal_i > 0) else 0
+            p_miss_alertsignal_i = float(misses_alertsignal_i) / (hits_alertsignal_i + misses_alertsignal_i) if (hits_alertsignal_i + misses_alertsignal_i > 0) else 0
+            p_fa_alertsignal_i = float(fa_alertsignal_i) / (fa_alertsignal_i + cr_alertsignal_i) if (fa_alertsignal_i + cr_alertsignal_i > 0) else 0
+            p_cr_alertsignal_i = float(cr_alertsignal_i) / (fa_alertsignal_i + cr_alertsignal_i) if (fa_alertsignal_i + cr_alertsignal_i > 0) else 0
+            p_hit_alertnoise_i = float(hits_alertnoise_i) / (hits_alertnoise_i + misses_alertnoise_i) if (hits_alertnoise_i + misses_alertnoise_i > 0) else 0
+            p_miss_alertnoise_i = float(misses_alertnoise_i) / (hits_alertnoise_i + misses_alertnoise_i) if (hits_alertnoise_i + misses_alertnoise_i > 0) else 0
+            p_fa_alertnoise_i = float(fa_alertnoise_i) / (fa_alertnoise_i + cr_alertnoise_i) if (fa_alertnoise_i + cr_alertnoise_i > 0) else 0
+            p_cr_alertnoise_i = float(cr_alertnoise_i) / (fa_alertnoise_i + cr_alertnoise_i) if (fa_alertnoise_i + cr_alertnoise_i > 0) else 0
             rt_hit_i = sum([float(t['response_time'])/1000 for t in hit_list])/hits_i if hits_i > 0 else 0
             rt_miss_i = sum([float(t['response_time'])/1000 for t in miss_list])/misses_i if misses_i > 0 else 0
             rt_fa_i = sum([float(t['response_time'])/1000 for t in fa_list])/fa_i if fa_i > 0 else 0
             rt_cr_i = sum([float(t['response_time'])/1000 for t in cr_list])/cr_i if cr_i > 0 else 0
-            block_result_i = BlockResult(block=block_i, experiment_result=experiment_result_i, cum_score=block['score'], hits=hits_i, misses=misses_i, fa=fa_i, cr=cr_i, p_hit=p_hit_i, p_miss=p_miss_i, p_fa=p_fa_i, p_cr=p_cr_i, d_prime=d_prime_i, beta=beta_i, c=c_i, hits_alertcorrect=hits_alertcorrect_i, misses_alertcorrect=misses_alertcorrect_i, fa_alertcorrect=fa_alertcorrect_i, cr_alertcorrect=cr_alertcorrect_i, hits_alertincorrect=hits_alertincorrect_i, misses_alertincorrect=misses_alertincorrect_i, fa_alertincorrect=fa_alertincorrect_i, cr_alertincorrect=cr_alertincorrect_i, p_hit_alertcorrect=p_hit_alertcorrect_i, p_fa_alertcorrect=p_fa_alertcorrect_i, p_hit_alertincorrect=p_hit_alertincorrect_i, p_fa_alertincorrect=p_fa_alertincorrect_i, rt_hit=rt_hit_i, rt_miss=rt_miss_i, rt_fa=rt_fa_i, rt_cr=rt_cr_i)
+            rt_hit_alertsignal_i = sum([float(t['response_time'])/1000 for t in hit_alertsignal_list])/hits_alertsignal_i if hits_alertsignal_i > 0 else 0
+            rt_miss_alertsignal_i = sum([float(t['response_time'])/1000 for t in miss_alertsignal_list])/misses_alertsignal_i if misses_alertsignal_i > 0 else 0
+            rt_fa_alertsignal_i = sum([float(t['response_time'])/1000 for t in fa_alertsignal_list])/fa_alertsignal_i if fa_alertsignal_i > 0 else 0
+            rt_cr_alertsignal_i = sum([float(t['response_time'])/1000 for t in cr_alertsignal_list])/cr_alertsignal_i if cr_alertsignal_i > 0 else 0
+            rt_hit_alertnoise_i = sum([float(t['response_time'])/1000 for t in hit_alertnoise_list])/hits_alertnoise_i if hits_alertnoise_i > 0 else 0
+            rt_miss_alertnoise_i = sum([float(t['response_time'])/1000 for t in miss_alertnoise_list])/misses_alertnoise_i if misses_alertnoise_i > 0 else 0
+            rt_fa_alertnoise_i = sum([float(t['response_time'])/1000 for t in fa_alertnoise_list])/fa_alertnoise_i if fa_alertnoise_i > 0 else 0
+            rt_cr_alertnoise_i = sum([float(t['response_time'])/1000 for t in cr_alertnoise_list])/cr_alertnoise_i if cr_alertnoise_i > 0 else 0
+            block_result_i = BlockResult(block=block_i, experiment_result=experiment_result_i, cum_score=block['score'], hits=hits_i, misses=misses_i, fa=fa_i, cr=cr_i, p_hit=p_hit_i, p_miss=p_miss_i, p_fa=p_fa_i, p_cr=p_cr_i, d_prime=d_prime_i, beta=beta_i, c=c_i, hits_alertsignal=hits_alertsignal_i, misses_alertsignal=misses_alertsignal_i, fa_alertsignal=fa_alertsignal_i, cr_alertsignal=cr_alertsignal_i, hits_alertnoise=hits_alertnoise_i, misses_alertnoise=misses_alertnoise_i, fa_alertnoise=fa_alertnoise_i, cr_alertnoise=cr_alertnoise_i, p_hit_alertsignal=p_hit_alertsignal_i, p_miss_alertsignal=p_miss_alertsignal_i, p_fa_alertsignal=p_fa_alertsignal_i, p_cr_alertsignal=p_cr_alertsignal_i, p_hit_alertnoise=p_hit_alertnoise_i, p_miss_alertnoise=p_miss_alertnoise_i, p_fa_alertnoise=p_fa_alertnoise_i, p_cr_alertnoise=p_cr_alertnoise_i, rt_hit=rt_hit_i, rt_miss=rt_miss_i, rt_fa=rt_fa_i, rt_cr=rt_cr_i, rt_hit_alertsignal=rt_hit_alertsignal_i, rt_miss_alertsignal=rt_miss_alertsignal_i, rt_fa_alertsignal=rt_fa_alertsignal_i, rt_cr_alertsignal=rt_cr_alertsignal_i, rt_hit_alertnoise=rt_hit_alertnoise_i, rt_miss_alertnoise=rt_miss_alertnoise_i, rt_fa_alertnoise=rt_fa_alertnoise_i, rt_cr_alertnoise=rt_cr_alertnoise_i)
             block_result_i.save()
             for trial in block['trials']:
                 time_i = datetime.fromtimestamp(float(trial['time'])/1000)
                 trial_result_i = TrialResult(block_result=block_result_i, experiment_result=experiment_result_i, num_trial=trial['trial_num'], time=time_i, response_time=float(trial['response_time'])/1000, signal=trial['signal'], alert=trial['alert'], response=trial['response'], outcome=trial['outcome'], points=trial['points'])
                 trial_result_i.save()
-        trial_output_header = "id,experiment name,block name,trial num,datetime,response time,signal,alert,response,outcome,points"
-        trial_output_text = ";".join([",".join(str(v) for v in [i, experiment_i.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for (i,t) in enumerate(TrialResult.objects.filter(experiment_result=experiment_result_i))])
+        trial_output_header = "id,user id,experiment name,block name,trial num,datetime,response time,signal,alert,response,outcome,points"
+        trial_output_text = ";".join([",".join(str(v) for v in [t.id+1, experiment_result_i.id, experiment_i.name, t.block_result.block.name, t.num_trial, t.time, t.response_time, t.signal, t.alert, t.response, t.outcome, t.points]) for t in TrialResult.objects.filter(experiment_result=experiment_result_i).order_by('id')])
         trial_output_file = OutputFile(name="{}_Trials_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=trial_output_text, header=trial_output_header)
-        block_output_header = "id,experiment name,block name,cummulative score,hits,misses,fa,cr,p hit,p miss,p fa,p cr,d',beta,c,hits alertcorrect,misses alertcorrect,fa alertcorrect,cr alertcorrect,hits alertincorrect,misses alertincorrect,fa alertincorrect,cr alertincorrect,p hit alertcorrect,p fa alertcorrect,p hit alertincorrect,p fa alertincorrect,rt hit, rt miss,rt fa,rt cr"
-        block_output_text = ";".join([",".join(str(v) for v in [i, experiment_i.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertcorrect, b.misses_alertcorrect, b.fa_alertcorrect, b.cr_alertcorrect, b.hits_alertincorrect, b.misses_alertincorrect, b.fa_alertincorrect, b.cr_alertincorrect, b.p_hit_alertcorrect, b.p_fa_alertcorrect, b.p_hit_alertincorrect, b.p_fa_alertincorrect, b.rt_hit, b.rt_miss, b.rt_fa, b.rt_cr]) for (i,b) in enumerate(BlockResult.objects.filter(experiment_result=experiment_result_i))])
+        block_output_header = "id,user id,experiment name,block name,cummulative score,hits,misses,fa,cr,p hit,p miss,p fa,p cr,d',beta,c,hits alertsignal,misses alertsignal,fa alertsignal,cr alertsignal,hits alertnoise,misses alertnoise,fa alertnoise,cr alertnoise,p hit alertsignal,p miss alertsignal,p fa alertsignal,p cr alertsignal,p hit alertnoise,p miss alertnoise,p fa alertnoise,p cr alertnoise,rt hit, rt miss,rt fa,rt cr,rt hit alertsignal, rt miss alertsignal,rt fa alertsignal,rt cr alertsignal,rt hit alertnoise, rt miss alertnoise,rt fa alertnoise,rt cr alertnoise"
+        block_output_text = ";".join([",".join(str(v) for v in [b.id+1, experiment_result_i.id, experiment_i.name, b.block.name, b.cum_score, b.hits, b.misses, b.fa, b.cr, b.p_hit, b.p_miss, b.p_fa, b.p_cr, b.d_prime, b.beta, b.c, b.hits_alertsignal, b.misses_alertsignal, b.fa_alertsignal, b.cr_alertsignal, b.hits_alertnoise, b.misses_alertnoise, b.fa_alertnoise, b.cr_alertnoise, b.p_hit_alertsignal, b.p_miss_alertsignal, b.p_fa_alertsignal, b.p_cr_alertsignal, b.p_hit_alertnoise, b.p_miss_alertnoise, b.p_fa_alertnoise, b.p_cr_alertnoise, b.rt_hit, b.rt_miss, b.rt_fa, b.rt_cr, b.rt_hit_alertsignal, b.rt_miss_alertsignal, b.rt_fa_alertsignal, b.rt_cr_alertsignal, b.rt_hit_alertnoise, b.rt_miss_alertnoise, b.rt_fa_alertnoise, b.rt_cr_alertnoise]) for b in BlockResult.objects.filter(experiment_result=experiment_result_i).order_by('id')])
         block_output_file = OutputFile(name="{}_Blocks_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=block_output_text, header=block_output_header)
-        question_output_header = "id,experiment name,questionnaire name,question name,answer"
-        question_output_text = ";".join([",".join(str(v) for v in [i, experiment_i.name, q.questionnaire_result.questionnaire.name, q.question.name, q.answer]) for (i,q) in enumerate(QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i))])
+        question_output_header = "user id,experiment name," + ','.join(['{}_{}'.format(q.questionnaire.name, q.question.name) for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i).order_by('id')])
+        question_output_text = ",".join([str(experiment_result_i.id), experiment_i.name] + [q.answer for q in QuestionResult.objects.filter(questionnaire_result__experiment_result=experiment_result_i).order_by('id')])
         question_output_file = OutputFile(name="{}_Questions_{}.csv".format(experiment_i.name.replace(" ", "_"), experiment_result_i.id), text=question_output_text, header=question_output_header)
         trial_output_file.save()
         block_output_file.save()
