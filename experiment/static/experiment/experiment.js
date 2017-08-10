@@ -129,23 +129,28 @@ function renderExample(module) {
                             <div class="column col-2 col-xs-4">
                                 <div class="trial-num">Trial#: <span></span></div>
                             </div>
-                            <div class="column col-2 col-xs-4">
+                            <div class="column col-half"></div>
+                            <div class="column col-1 col-xs-4">
                                 <div class="stimulus-alert centered"></div>
                             </div>
-                            <div class="column col-2 col-xs-2">
-                                <div class="points">Last Trial: <span></span></div>
-                            </div>
-                            <div class="column col-2 col-xs-2">
-                                <div class="score">Total Score: <span></span></div>
+                            <div class="column col-5">
+                                <div class="columns">
+                                    <div class="column col-4">
+                                        <div class="points">Last Trial: <span></span></div>
+                                    </div>
+                                    <div class="column col-4">
+                                        <div class="outcome"></div>
+                                    </div>
+                                    <div class="column col-4">
+                                        <div class="score">Total Score: <span></span></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="columns">
                             <div class="column col-4 hide-xs"></div>
                             <div class="column col-4 col-xs-12">
                                 ${object.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
-                            </div>
-                            <div class="column col-2 col-xs-12">
-                                <div class="outcome"></div>
                             </div>
                         </div>
                         <button type="button" class="button-next btn btn-primary">Next</button>`);
@@ -181,23 +186,28 @@ function renderBlock(module) {
                             <div class="column col-2 col-xs-4">
                                 ${obj.display_trial_num ? '<div class="trial-num">Trial#: <span></span></div>' : ''}
                             </div>
-                            <div class="column col-2 col-xs-4">
+                            <div class="column col-half"></div>
+                            <div class="column col-1 col-xs-4">
                                 <div class="stimulus-alert centered"></div>
                             </div>
-                            <div class="column col-2 col-xs-2">
-                                ${obj.display_last_points ? '<div class="points">Last Trial: <span></span></div>' : ''}
-                            </div>
-                            <div class="column col-2 col-xs-2">
-                                ${obj.display_total_points ? '<div class="score">Total Score: <span></span></div>' : ''}
+                            <div class="column col-5">
+                                <div class="columns">
+                                    <div class="column col-4">
+                                        ${obj.display_last_points ? '<div class="points">Last Trial: <span></span></div>' : ''}
+                                    </div>
+                                    <div class="column col-4">
+                                        ${obj.display_outcome ? '<div class="outcome invisible">Hidden</div>' : ''}
+                                    </div>
+                                    <div class="column col-4">
+                                        ${obj.display_total_points ? '<div class="score">Total Score: <span></span></div>' : ''}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="columns">
                             <div class="column col-4 hide-xs"></div>
                             <div class="column col-4 col-xs-12">
                                 ${obj.stimulus === "num" ? '<div class="stimulus-number"><div class="number"></div></div>' : '<div class="stimulus-rectangle"><div class="rectangle"></div></div>'}
-                            </div>
-                            <div class="column col-2 col-xs-12">
-                                ${obj.display_outcome ? '<div class="outcome invisible">Hidden</div>' : ''}
                             </div>
                         </div>
                         <div class="columns">
@@ -301,6 +311,7 @@ function completeTrial(b) {
             randomizeRectPosition();
             setTimeout(function() {
                 $("button").prop("disabled", false);
+                hideOutcome();
                 trialBeginTime = Date.now();
                 setTimeout(showStimulus, obj.stimulus_delay * 1000);
                 stimulusTimeout = setTimeout(hideStimulus, (obj.stimulus_delay + obj.stimulus_duration) * 1000);
@@ -334,6 +345,14 @@ function hideAlert() {
 
 function showAlert() {
     $(".stimulus-alert").removeClass("invisible");
+}
+
+function hideOutcome() {
+    $(".outcome").addClass("invisible");
+}
+
+function showOutcome() {
+    $(".outcome").removeClass("invisible");
 }
 
 function randomizeRectPosition() {
