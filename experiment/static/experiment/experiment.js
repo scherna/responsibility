@@ -133,15 +133,15 @@ function renderExample(module) {
                             <div class="column col-1 col-xs-4">
                                 <div class="stimulus-alert centered"></div>
                             </div>
-                            <div class="column col-5">
-                                <div class="columns">
-                                    <div class="column col-4">
+                            <div class="column col-5-half">
+                                <div class="columns" style="margin-top:0px;padding-top:0px;">
+                                    <div class="column col-4" style="margin-top:0px;padding-top:0px;">
                                         <div class="points">Last Trial: <span></span></div>
                                     </div>
-                                    <div class="column col-4">
+                                    <div class="column col-4" style="margin-top:0px;padding-top:0px;">
                                         <div class="outcome"></div>
                                     </div>
-                                    <div class="column col-4">
+                                    <div class="column col-4" style="margin-top:0px;padding-top:0px;">
                                         <div class="score">Total Score: <span></span></div>
                                     </div>
                                 </div>
@@ -190,15 +190,15 @@ function renderBlock(module) {
                             <div class="column col-1 col-xs-4">
                                 <div class="stimulus-alert centered"></div>
                             </div>
-                            <div class="column col-5">
-                                <div class="columns">
-                                    <div class="column col-4">
+                            <div class="column col-5-half">
+                                <div class="columns" style="margin-top:0px;padding-top:0px;">
+                                    <div class="column col-4" style="margin-top:0px;padding-top:0px;">
                                         ${obj.display_last_points ? '<div class="points">Last Trial: <span></span></div>' : ''}
                                     </div>
-                                    <div class="column col-4">
+                                    <div class="column col-4" style="margin-top:0px;padding-top:0px;">
                                         ${obj.display_outcome ? '<div class="outcome invisible">Hidden</div>' : ''}
                                     </div>
-                                    <div class="column col-4">
+                                    <div class="column col-4" style="margin-top:0px;padding-top:0px;">
                                         ${obj.display_total_points ? '<div class="score">Total Score: <span></span></div>' : ''}
                                     </div>
                                 </div>

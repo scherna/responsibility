@@ -70,3 +70,31 @@ body {
    flex: none;
    width: 4.166666667%;
 }
+
+.col-5-half {
+   -webkit-flex: none;
+   -ms-flex: none;
+   flex: none;
+   width: 45.833333333%;
+}
+
+.col-4-half {
+   -webkit-flex: none;
+   -ms-flex: none;
+   flex: none;
+   width: 37.5%;
+}
+
+.col-4-quarter {
+   -webkit-flex: none;
+   -ms-flex: none;
+   flex: none;
+   width: 35.416666667%;
+}
+
+.col-3-half {
+   -webkit-flex: none;
+   -ms-flex: none;
+   flex: none;
+   width: 29.166666667%;
+}
