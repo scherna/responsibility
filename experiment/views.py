@@ -16,7 +16,7 @@ class IndexView(generic.ListView):
     template_name = "experiment/index.html"
     model = Experiment
 
-
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class ExperimentView(generic.DetailView):
     template_name = "experiment/experiment.html"
     model = Experiment
@@ -48,6 +48,7 @@ class ExperimentView(generic.DetailView):
         context['modules'] = json.dumps(modules)
         return context
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class ResultsView(View):
 
     def post(self, request):
